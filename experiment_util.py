@@ -45,6 +45,13 @@ INIT_MODEL = "deepseek-v4-pro"
 MAX_WORKERS = 5
 SLEEP_BETWEEN = 0.2
 MAX_NEIGHBORS_IN_PROMPT = 8
+THINKING_CONTROL_MODELS = {
+    "deepseek-v4-pro",
+    "deepseek-v4-flash",
+    "deepseek-v3.2",
+    "deepseek-v3.2-exp",
+    "deepseek-v3.1",
+}
 
 # 1=deny rumor, 5=support rumor
 OPINION_LABELS = {
@@ -520,6 +527,9 @@ def llm_call(
         "temperature": temperature,
         "stream": False,
     }
+
+    if selected_model in THINKING_CONTROL_MODELS:
+        payload["enable_thinking"] = False
 
     # GPT-5 Mini 不要发送 temperature=0.0。
     # 其他模型仍然可以使用调用方传入的 temperature。
