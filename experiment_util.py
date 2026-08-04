@@ -781,6 +781,12 @@ def _stance_prompt_topic_key(source_text: str) -> str:
     ):
         return "gun_control"
 
+    if thread_id == "524947030616313856" or (
+        "active shooting in canada" in source_lower
+        and "america, wednesday" in source_lower
+    ):
+        return "us_shooting_normalization"
+
     if thread_id == "524934142958788608" or (
         "flurry of muslim hate tweets" in source_lower
         and "we are better than this" in source_lower
@@ -841,6 +847,53 @@ def _stance_prompt_spec(source_text: str) -> Dict[str, str]:
             "support_rule": (
                 "the comment clearly supports the source post's gun-control / "
                 "gun-violence framing."
+            ),
+        }
+
+    if topic_key == "us_shooting_normalization":
+        return {
+            "discussion": (
+                "the source post's claim that shootings are much more normalized "
+                "in America than in Canada"
+            ),
+            "important": """- The source post says: "active shooting in Canada, or as we call it in
+  america, wednesday". It is a sarcastic criticism of America's normalized gun
+  violence / frequent shooting problem, not a literal claim that the Ottawa
+  shooting is unimportant.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source framing by
+  saying the comparison is offensive, ignorant, minimizing the Ottawa attack,
+  or wrong because this was terrorism / an attack on Parliament rather than a
+  normal shooting.
+- Score 2 (Deny): The comment rejects or pushes back on the source framing less
+  forcefully, for example by saying Canada is different, the event is not
+  comparable to American shootings, or the source should not downplay it.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks a question,
+  only reports facts about the Ottawa shooting, jokes/socializes, congratulates
+  the author, or does not take a clear stance toward the comparison.
+- Score 4 (Support): The comment supports the source framing by agreeing that
+  America is desensitized to shootings, that shootings are frequent in the US,
+  or that Canada has much lower gun-death / shooting frequency.
+- Score 5 (Strongly Support): The comment STRONGLY supports the source framing,
+  for example by emphatically agreeing, citing frequent US mass-shooting or gun
+  death statistics, or forcefully arguing that American gun violence has become
+  routine.""",
+            "critical": """- Judge stance toward the source post's comparison: shootings feel routine in
+  America but not in Canada.
+- A comment that says "sadly, you nailed it", "my thoughts exactly", "America
+  is desensitized", or cites frequent US shootings is SUPPORT (4-5).
+- A comment that says the source is minimizing/downplaying the Ottawa shooting,
+  that this was terrorism, an attack on Parliament, or not comparable to normal
+  American shootings is DENY (1-2).
+- Merely mentioning guns, Canada, America, terrorism, or the shooting does NOT
+  determine stance. Identify whether the comment accepts or rejects the source
+  post's comparison.
+- A comment that only expresses sympathy, reports casualties, socializes,
+  jokes, shares links, or lacks a clear position on the comparison is NEUTRAL
+  (3).
+- If the position toward the comparison is unclear, classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's America-vs-"
+                "Canada shooting-normalization comparison."
             ),
         }
 
