@@ -1924,6 +1924,7 @@ def run_comment_threshold_condition(
     ],
     neighbor_count: int,
     *,
+    total_neighbor_count: int = 6,
     repetitions: int = 1,
     temperature: float = 0.0,
 ) -> List[Dict[str, Any]]:
@@ -1950,14 +1951,21 @@ def run_comment_threshold_condition(
         int(neighbor_count),
     )
 
+    total_neighbor_count = max(
+        neighbor_count,
+        int(total_neighbor_count),
+    )
+
 
     # _call_agent 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
     def _call_agent(
         agent_id: int,
         rep: int,
     ) -> Dict[str, Any]:
-        # T0/T1/T3/T5 use fixed opposite/support rankings with 6 total neighbors.
-        support_count = max(0, 6 - neighbor_count)
+        support_count = max(
+            0,
+            total_neighbor_count - neighbor_count,
+        )
         ranking = neighbor_rankings[agent_id]
         opposite_items = ranking["opposite"][:neighbor_count]
         support_items = ranking["support"][:support_count]
