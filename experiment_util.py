@@ -3,7 +3,7 @@
 Utility functions for the PHEME four behavioral-signature experiments.
 
 This module contains:
-- OpenRouter request and stance parsing helpers
+- Bailian/DashScope request and stance parsing helpers
 - PHEME thread loading and graph construction
 - controlled and real-neighbor prompt builders
 - controlled and real-graph experiment runners
@@ -11,9 +11,9 @@ This module contains:
 - agent selection and graph summary helpers
 
 The experiment workflow itself is in ``pheme_four_effects.ipynb``.
-Set the OpenRouter key through the environment instead of hardcoding it:
+Set the Bailian/DashScope key through the environment instead of hardcoding it:
 
-    export API_KEY="your_openrouter_key"
+    export DASHSCOPE_API_KEY="your_dashscope_key"
 """
 
 from __future__ import annotations
@@ -37,10 +37,10 @@ import requests
 # Runtime globals
 # ============================================================
 
-API_URL = "https://openrouter.ai/api/v1/chat/completions"
-API_KEY = os.getenv("API_KEY", "")
-MODEL = "gpt-5-mini" 
-INIT_MODEL = "openai/gpt-5-mini"
+API_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+API_KEY = os.getenv("DASHSCOPE_API_KEY", os.getenv("API_KEY", ""))
+MODEL = "qwen3.7-plus"
+INIT_MODEL = "qwen3.7-plus"
 
 MAX_WORKERS = 5
 SLEEP_BETWEEN = 0.2
@@ -474,7 +474,7 @@ def save_llm_comment_score_outputs(
 
 
 # ============================================================
-# OpenRouter calls
+# Bailian/DashScope calls
 # ============================================================
 
 # llm_call 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
@@ -486,14 +486,14 @@ def llm_call(
     max_tokens: int = 500,
     max_retries: int = 5,
 ) -> Tuple[str, Dict[str, Any]]:
-    """Call OpenRouter chat completion API."""
+    """Call Bailian/DashScope OpenAI-compatible chat completion API."""
     global call_count
     call_count += 1
 
     if not API_KEY:
         raise RuntimeError(
             "API key is empty. Please run: "
-            "export API_KEY='your_openrouter_key' or pass --api-key."
+            "export DASHSCOPE_API_KEY='your_dashscope_key' or pass --api-key."
         )
 
     selected_model = model or MODEL
@@ -516,19 +516,13 @@ def llm_call(
             {"role": "system", "content": system_msg},
             {"role": "user", "content": user_msg},
         ],
-        "max_completion_tokens": max_tokens,
-        "reasoning": {
-            "effort": "minimal",
-            "exclude": True,
-        },
+        "max_tokens": max_tokens,
+        "temperature": temperature,
         "stream": False,
     }
 
     # GPT-5 Mini 不要发送 temperature=0.0。
     # 其他模型仍然可以使用调用方传入的 temperature。
-    if "gpt-5" not in selected_model.lower():
-        payload["temperature"] = temperature
-
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json",
