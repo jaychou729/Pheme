@@ -39,8 +39,8 @@ import requests
 
 API_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
 API_KEY = os.getenv("DASHSCOPE_API_KEY", os.getenv("API_KEY", ""))
-MODEL = "qwen3.7-plus"
-INIT_MODEL = "qwen3.7-plus"
+MODEL = "deepseek-v4-pro"
+INIT_MODEL = "deepseek-v4-pro"
 
 MAX_WORKERS = 5
 SLEEP_BETWEEN = 0.2
