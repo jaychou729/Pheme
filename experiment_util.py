@@ -1431,19 +1431,10 @@ def load_pheme_thread(
             if ui not in graph[vi]:
                 graph[vi].append(ui)
 
-    source_idx = id_map[source_id]
-    for tid in keep_ids:
-        i = id_map[tid]
-        if i == source_idx:
-            continue
-        if len(graph[i]) == 0:
-            graph[i].append(source_idx)
-            if i not in graph[source_idx]:
-                graph[source_idx].append(i)
-
     agent_names: Dict[int, str] = {}
     agent_texts: Dict[int, str] = {}
     initial_opinions: Dict[int, int] = {}
+    source_idx = id_map[source_id]
 
     # 在初始化所有评论立场之前，先获得 source tweet 原文。
     topic = (
@@ -1496,6 +1487,55 @@ def load_pheme_thread(
                 is_source=(tid == source_id),
                 use_llm=use_llm_init,
             )
+
+    name_to_agent_ids: Dict[str, List[int]] = {}
+    for agent_id, name in agent_names.items():
+        if agent_id == source_idx:
+            continue
+        if not agent_texts.get(agent_id, "").strip():
+            continue
+        name_to_agent_ids.setdefault(
+            name.lower(),
+            [],
+        ).append(agent_id)
+
+    mention_edge_count = 0
+    for agent_id, text in agent_texts.items():
+        if agent_id == source_idx:
+            continue
+
+        for mentioned_name in extract_mentioned_screen_names(text):
+            mentioned_agent_ids = name_to_agent_ids.get(
+                mentioned_name.lower(),
+                [],
+            )
+
+            for mentioned_agent_id in mentioned_agent_ids:
+                if mentioned_agent_id == agent_id:
+                    continue
+
+                if mentioned_agent_id not in graph[agent_id]:
+                    graph[agent_id].append(mentioned_agent_id)
+                    mention_edge_count += 1
+
+                if agent_id not in graph[mentioned_agent_id]:
+                    graph[mentioned_agent_id].append(agent_id)
+
+    if mention_edge_count:
+        print(
+            "[PHEME] Added mention edges between comments: "
+            f"{mention_edge_count}"
+        )
+
+    for tid in keep_ids:
+        i = id_map[tid]
+        if i == source_idx:
+            continue
+        if len(graph[i]) == 0:
+            graph[i].append(source_idx)
+            if i not in graph[source_idx]:
+                graph[source_idx].append(i)
+
     for i in graph:
         graph[i] = sorted(graph[i])
 
@@ -1761,6 +1801,77 @@ def build_threshold_neighbor_rankings(
 
     dropped_agents: List[int] = []
 
+    def _ids_with_scores(
+        agent_id: int,
+        scores: set,
+    ) -> set:
+        return {
+            other_id
+            for other_id, score in opinions.items()
+            if (
+                other_id != agent_id
+                and other_id != 0
+                and score in scores
+            )
+        }
+
+    def _real_neighbor_count(
+        agent_id: int,
+        eligible_ids: set,
+    ) -> int:
+        return sum(
+            neighbor_id in eligible_ids
+            for neighbor_id in graph.get(
+                agent_id,
+                [],
+            )
+        )
+
+    def _neutral_opposite_ids(
+        agent_id: int,
+    ) -> set:
+        low_side_ids = _ids_with_scores(
+            agent_id,
+            {1, 2},
+        )
+        high_side_ids = _ids_with_scores(
+            agent_id,
+            {4, 5},
+        )
+
+        options = [
+            ("low", low_side_ids),
+            ("high", high_side_ids),
+        ]
+        viable_options = [
+            option
+            for option in options
+            if len(option[1]) >= required_count
+        ]
+
+        candidate_options = (
+            viable_options
+            if viable_options
+            else options
+        )
+
+        rng = random.Random(
+            f"{seed}:{agent_id}:neutral_opposite_side"
+        )
+        rng.shuffle(candidate_options)
+        candidate_options.sort(
+            key=lambda option: (
+                _real_neighbor_count(
+                    agent_id,
+                    option[1],
+                ),
+                len(option[1]),
+            ),
+            reverse=True,
+        )
+
+        return candidate_options[0][1]
+
     # _rank_candidates 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
     def _rank_candidates(
         *,
@@ -1818,12 +1929,17 @@ def build_threshold_neighbor_rankings(
         if agent_id not in opinions:
             continue
 
-        opposite_ids = set(
-            get_opposite_candidate_ids(
-                agent_id,
-                opinions,
+        if opinions[agent_id] == 3:
+            opposite_ids = _neutral_opposite_ids(
+                agent_id
             )
-        )
+        else:
+            opposite_ids = set(
+                get_opposite_candidate_ids(
+                    agent_id,
+                    opinions,
+                )
+            )
 
         support_ids = set(
             get_support_candidate_ids(
