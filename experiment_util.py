@@ -3,7 +3,7 @@
 Utility functions for the PHEME four behavioral-signature experiments.
 
 This module contains:
-- Bailian/DashScope request and stance parsing helpers
+- DeepSeek request and stance parsing helpers
 - PHEME thread loading and graph construction
 - controlled and real-neighbor prompt builders
 - controlled and real-graph experiment runners
@@ -11,9 +11,9 @@ This module contains:
 - agent selection and graph summary helpers
 
 The experiment workflow itself is in ``pheme_four_effects.ipynb``.
-Set the Bailian/DashScope key through the environment instead of hardcoding it:
+Set the DeepSeek key through the environment instead of hardcoding it:
 
-    export DASHSCOPE_API_KEY="your_dashscope_key"
+    export DEEPSEEK_API_KEY="your_deepseek_key"
 """
 
 from __future__ import annotations
@@ -37,8 +37,8 @@ import requests
 # Runtime globals
 # ============================================================
 
-API_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
-API_KEY = os.getenv("DASHSCOPE_API_KEY", os.getenv("API_KEY", ""))
+API_URL = "https://api.deepseek.com/chat/completions"
+API_KEY = os.getenv("DEEPSEEK_API_KEY", os.getenv("API_KEY", ""))
 MODEL = "deepseek-v4-pro"
 INIT_MODEL = "deepseek-v4-pro"
 
@@ -481,7 +481,7 @@ def save_llm_comment_score_outputs(
 
 
 # ============================================================
-# Bailian/DashScope calls
+# DeepSeek calls
 # ============================================================
 
 # llm_call 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
@@ -493,14 +493,14 @@ def llm_call(
     max_tokens: int = 500,
     max_retries: int = 5,
 ) -> Tuple[str, Dict[str, Any]]:
-    """Call Bailian/DashScope OpenAI-compatible chat completion API."""
+    """Call DeepSeek's OpenAI-compatible chat completion API."""
     global call_count
     call_count += 1
 
     if not API_KEY:
         raise RuntimeError(
             "API key is empty. Please run: "
-            "export DASHSCOPE_API_KEY='your_dashscope_key' or pass --api-key."
+            "export DEEPSEEK_API_KEY='your_deepseek_key' or pass --api-key."
         )
 
     selected_model = model or MODEL
@@ -528,8 +528,12 @@ def llm_call(
         "stream": False,
     }
 
-    if selected_model in THINKING_CONTROL_MODELS:
+    if selected_model in THINKING_CONTROL_MODELS and "dashscope" in API_URL:
         payload["enable_thinking"] = False
+    elif selected_model in THINKING_CONTROL_MODELS:
+        payload["thinking"] = {
+            "type": "disabled",
+        }
 
     # GPT-5 Mini 不要发送 temperature=0.0。
     # 其他模型仍然可以使用调用方传入的 temperature。
