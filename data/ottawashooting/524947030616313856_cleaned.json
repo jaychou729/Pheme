@@ -1,0 +1,254 @@
+{
+  "thread_id": "524947030616313856",
+  "event": "ottawashooting",
+  "thread_path": "ottawashooting/non-rumours/524947030616313856",
+  "source": {
+    "id": "524947030616313856",
+    "user": "chrissyteigen",
+    "created_at": "Wed Oct 22 15:34:58 +0000 2014",
+    "text": "active shooting in Canada, or as we call it in america, wednesday"
+  },
+  "selection_rule": "Strict explicit stance only. Keep comments that clearly support or oppose the source tweet's framing that shootings are normalized in America compared with Canada. Exclude neutral, unclear, sympathy-only, factual-only, pure link/congratulation, and weakly context-dependent comments.",
+  "note": "Only 26 reactions meet the strict explicit-stance rule. A 30-comment set would require adding ambiguous or context-dependent comments, so this file keeps the stricter 26-comment set.",
+  "counts": {
+    "support": 9,
+    "oppose": 17,
+    "total": 26
+  },
+  "comments": [
+    {
+      "id": "524947182252597248",
+      "user": "faesavoirfaire",
+      "created_at": "Wed Oct 22 15:35:35 +0000 2014",
+      "text": "@chrissyteigen Word.",
+      "stance": "support",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524947249923911680",
+      "user": "feck12a",
+      "created_at": "Wed Oct 22 15:35:52 +0000 2014",
+      "text": "@chrissyteigen sadly, you nailed it.",
+      "stance": "support",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524948172071006208",
+      "user": "Jackie_Pepper",
+      "created_at": "Wed Oct 22 15:39:31 +0000 2014",
+      "text": "“@chrissyteigen: active shooting in Canada, or as we call it in america, wednesday” my thoughts exactly.Incredibly low # of gun deaths there",
+      "stance": "support",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524948805394132992",
+      "user": "4lisaguerrero",
+      "created_at": "Wed Oct 22 15:42:02 +0000 2014",
+      "text": "Yep. “@Jackie_Pepper: “@chrissyteigen: active shooting in Canada, or as we call it in america, wednesday”  low # of gun deaths there”",
+      "stance": "support",
+      "in_reply_to_status_id": "524948172071006208",
+      "in_reply_to_user": "Jackie_Pepper"
+    },
+    {
+      "id": "525033019623477249",
+      "user": "freakinquizy",
+      "created_at": "Wed Oct 22 21:16:41 +0000 2014",
+      "text": "@millionmomma @chrissyteigen  lol ok, its just a twitter comment ok, its not the gen, or pres \"downplaying,\" so relax.",
+      "stance": "support",
+      "in_reply_to_status_id": "524964635108057088",
+      "in_reply_to_user": "millionmomma"
+    },
+    {
+      "id": "525045321425252353",
+      "user": "JackAnderson75",
+      "created_at": "Wed Oct 22 22:05:34 +0000 2014",
+      "text": "@wikimapper Need any more examples? #Gunsense",
+      "stance": "support",
+      "in_reply_to_status_id": "525041644463460353",
+      "in_reply_to_user": "wikimapper"
+    },
+    {
+      "id": "525045999631605762",
+      "user": "JackAnderson75",
+      "created_at": "Wed Oct 22 22:08:15 +0000 2014",
+      "text": "@wikimapper Well, I guess they don't count then. We can all sleep easily. Do technicalities count where you work?",
+      "stance": "support",
+      "in_reply_to_status_id": "525045403616829440",
+      "in_reply_to_user": "wikimapper"
+    },
+    {
+      "id": "525415858307600386",
+      "user": "ERN_Malleyscrub",
+      "created_at": "Thu Oct 23 22:37:57 +0000 2014",
+      "text": "@AshleySiegs @chrissyteigen Perhaps, but the nastiness reaction is the dark side of twitter. Looks like NRA style campaign.",
+      "stance": "support",
+      "in_reply_to_status_id": "525414050696822785",
+      "in_reply_to_user": "AshleySiegs"
+    },
+    {
+      "id": "526136878203162625",
+      "user": "emarceg",
+      "created_at": "Sat Oct 25 22:23:01 +0000 2014",
+      "text": "@millionmomma @4lisaguerrero @Jackie_Pepper @chrissyteigen It was an indictment on the horrible gun situation in the U.S. It wasn't a joke.",
+      "stance": "support",
+      "in_reply_to_status_id": "524965927788367874",
+      "in_reply_to_user": "millionmomma"
+    },
+    {
+      "id": "524947934899888128",
+      "user": "yvalarevolution",
+      "created_at": "Wed Oct 22 15:38:35 +0000 2014",
+      "text": "@chrissyteigen This is more like the 2x a year when someone gets near the a white House.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524948964857348098",
+      "user": "capo_of_clifton",
+      "created_at": "Wed Oct 22 15:42:40 +0000 2014",
+      "text": "@chrissyteigen potential terrorist attacks are definitely the norm here…",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524950657934303232",
+      "user": "belindafcg",
+      "created_at": "Wed Oct 22 15:49:24 +0000 2014",
+      "text": "Fuck kinda ignorance... RT @chrissyteigen: active shooting in Canada, or as we call it in america, wednesday",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524953701346476032",
+      "user": "scriptcomes1st",
+      "created_at": "Wed Oct 22 16:01:30 +0000 2014",
+      "text": "@chrissyteigen @Kenny_Mayne Terrorist shot, actually.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524955345333284864",
+      "user": "MAGICALTHOT",
+      "created_at": "Wed Oct 22 16:08:02 +0000 2014",
+      "text": "“@chrissyteigen: active shooting in Canada, or as we call it in america, wednesday” not in the main government building calm down",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524963006393106432",
+      "user": "wikimapper",
+      "created_at": "Wed Oct 22 16:38:28 +0000 2014",
+      "text": "@TheNewYawker @chrissyteigen haven't had a shooting in the halls of Congress.  This was an assault on Democracy.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524964635108057088",
+      "user": "millionmomma",
+      "created_at": "Wed Oct 22 16:44:57 +0000 2014",
+      "text": "@chrissyteigen this active attack is happening at our parliament (equivalent to American senate). Please don't down play this act of terror",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947030616313856",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524965747991142400",
+      "user": "millionmomma",
+      "created_at": "Wed Oct 22 16:49:22 +0000 2014",
+      "text": "@4lisaguerrero @Jackie_Pepper @chrissyteigen this is an attack at our Parliament building and an attack on our soldiers.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524948805394132992",
+      "in_reply_to_user": "4lisaguerrero"
+    },
+    {
+      "id": "524965927788367874",
+      "user": "millionmomma",
+      "created_at": "Wed Oct 22 16:50:05 +0000 2014",
+      "text": "@4lisaguerrero @Jackie_Pepper @chrissyteigen thanks for the neighbourly love in this time of pain in Canada. Acts of terror are not funny",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524948805394132992",
+      "in_reply_to_user": "4lisaguerrero"
+    },
+    {
+      "id": "524966510503026688",
+      "user": "millionmomma",
+      "created_at": "Wed Oct 22 16:52:24 +0000 2014",
+      "text": "@demethagod @chrissyteigen yes it was in our main parliament building and it all started when a man shot a solider at a war memorial",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524955345333284864",
+      "in_reply_to_user": "MAGICALTHOT"
+    },
+    {
+      "id": "525323321865699328",
+      "user": "truecallin",
+      "created_at": "Thu Oct 23 16:30:14 +0000 2014",
+      "text": "@millionmomma @chrissyteigen I'm sorry for an ignorant American making comments like that while a tragedy has taken place in your country!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524964635108057088",
+      "in_reply_to_user": "millionmomma"
+    },
+    {
+      "id": "525460169380352000",
+      "user": "DaysFitness",
+      "created_at": "Fri Oct 24 01:34:01 +0000 2014",
+      "text": "@Jackie_Pepper @chrissyteigen A soldier was shot dead! How can you be so inconsiderate. You have no respect what so ever.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524948172071006208",
+      "in_reply_to_user": "Jackie_Pepper"
+    },
+    {
+      "id": "525707670377201664",
+      "user": "bmenyhert",
+      "created_at": "Fri Oct 24 17:57:30 +0000 2014",
+      "text": "@millionmomma @JeremyStolz256 @chrissyteigen apologies for the dumbass calling it wednesday. Our Pres calls it workplace violence",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524964635108057088",
+      "in_reply_to_user": "millionmomma"
+    },
+    {
+      "id": "525725571800911872",
+      "user": "LadySAN_MD",
+      "created_at": "Fri Oct 24 19:08:38 +0000 2014",
+      "text": "@Jackie_Pepper @chrissyteigen remember there was a life lost in this tragedy. One who defended our country. Have some respect!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524948172071006208",
+      "in_reply_to_user": "Jackie_Pepper"
+    },
+    {
+      "id": "525814778548473856",
+      "user": "Lovelylife_7",
+      "created_at": "Sat Oct 25 01:03:07 +0000 2014",
+      "text": "@Jackie_Pepper @chrissyteigen Think before you speak. SO disrespectful. #disgusted",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524948172071006208",
+      "in_reply_to_user": "Jackie_Pepper"
+    },
+    {
+      "id": "525815087442165760",
+      "user": "Lovelylife_7",
+      "created_at": "Sat Oct 25 01:04:20 +0000 2014",
+      "text": "@4lisaguerrero @Jackie_Pepper @chrissyteigen A Canadian soldier that fought with your country to protect you was murdered. Show respect!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524948805394132992",
+      "in_reply_to_user": "4lisaguerrero"
+    },
+    {
+      "id": "526189569352278016",
+      "user": "millionmomma",
+      "created_at": "Sun Oct 26 01:52:24 +0000 2014",
+      "text": "@emarceg I do realize that. But poor timing. Seemed like she was minimizing the Can shooting. 4lisaguerrero @Jackie_Pepper @chrissyteigen",
+      "stance": "oppose",
+      "in_reply_to_status_id": "526136878203162625",
+      "in_reply_to_user": "emarceg"
+    }
+  ]
+}

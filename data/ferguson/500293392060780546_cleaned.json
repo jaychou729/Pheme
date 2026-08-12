@@ -1,0 +1,290 @@
+{
+  "thread_id": "500293392060780546",
+  "event": "ferguson",
+  "thread_path": "ferguson/rumours/500293392060780546",
+  "source": {
+    "id": "500293392060780546",
+    "user": "larryelder",
+    "created_at": "Fri Aug 15 14:50:14 +0000 2014",
+    "text": "Assuming #MichaelBrown and #DorianJohnson were involved in robbery, when can we expect President Obama's apology to the #Ferguson PD? #tcot"
+  },
+  "selection_rule": "Strict explicit stance only. Support means the comment accepts the source's pro-police/anti-Obama framing, treats Brown's alleged robbery or conduct as materially relevant, or defends the Ferguson police response. Oppose means the comment rejects the source framing, argues Obama need not apologize, emphasizes due process, excessive force, over-militarized policing, or that alleged robbery would not justify shooting.",
+  "note": "Selected 30 explicit comments with balanced stances. Off-topic race-war side-thread comments, jokes, and ambiguous replies were excluded where possible.",
+  "counts": {
+    "support": 15,
+    "oppose": 15,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "500293835000668160",
+      "user": "HellBlazeRaiser",
+      "created_at": "Fri Aug 15 14:51:59 +0000 2014",
+      "text": "@larryelder Ha! Never. #Obama barely scraped together enough to make His press conference yesterday. He'll never retract.",
+      "stance": "support",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500304503531634689",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 15:34:23 +0000 2014",
+      "text": "@larryelder @mrtom2360 that's what I want to know..and why does the race of the cop matter anyway?..that's RACISM",
+      "stance": "support",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500307238767308800",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 15:45:15 +0000 2014",
+      "text": "@angryblackpat witnesses were in their homes. seems he attacked cop went for a gun grab. don't make a thug a hero @larryelder",
+      "stance": "support",
+      "in_reply_to_status_id": "500306450309476354",
+      "in_reply_to_user": "angryblackpat"
+    },
+    {
+      "id": "500308480889454592",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 15:50:11 +0000 2014",
+      "text": "@angryblackpat @larryelder a cop, not matter his race has a right to defend himself against attack..",
+      "stance": "support",
+      "in_reply_to_status_id": "500307821477756929",
+      "in_reply_to_user": "angryblackpat"
+    },
+    {
+      "id": "500310782522171393",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 15:59:20 +0000 2014",
+      "text": "@angryblackpat in the real world..you go for a cops gun..you're probably going to get smoked..no matter race..stop with the black privilege",
+      "stance": "support",
+      "in_reply_to_status_id": "500310276806164480",
+      "in_reply_to_user": "angryblackpat"
+    },
+    {
+      "id": "500315935211663362",
+      "user": "99twoot",
+      "created_at": "Fri Aug 15 16:19:49 +0000 2014",
+      "text": ".@MakeeshaThomas @larryelder If the police backed off, &amp; let outsiders burn Ferguson down, you'd be whining about that too. Violence is met.",
+      "stance": "support",
+      "in_reply_to_status_id": "500296845382672385",
+      "in_reply_to_user": "MakeeshaThomas"
+    },
+    {
+      "id": "500317316387991552",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 16:25:18 +0000 2014",
+      "text": "@angryblackpat I thought you said you were waiting for the completion of the investigation?..so far kid was a Blood's Thug..",
+      "stance": "support",
+      "in_reply_to_status_id": "500316625233780736",
+      "in_reply_to_user": "angryblackpat"
+    },
+    {
+      "id": "500318703385575425",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 16:30:49 +0000 2014",
+      "text": "@angryblackpat how has ur slave mentality helped u? stop w/the victimhood..its tiring, old. it's not a blk/wht issue. it's a law/order issue",
+      "stance": "support",
+      "in_reply_to_status_id": "500318152820269056",
+      "in_reply_to_user": "angryblackpat"
+    },
+    {
+      "id": "500322456784363521",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 16:45:43 +0000 2014",
+      "text": "@WutangGeorgia @angryblackpat I'm watching..and if this guy was a blood thug..their community is better off with this criminal dead..",
+      "stance": "support",
+      "in_reply_to_status_id": "500321594477387776",
+      "in_reply_to_user": "CelticOwlWisdom"
+    },
+    {
+      "id": "500323087582511105",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 16:48:14 +0000 2014",
+      "text": "@WutangGeorgia @angryblackpat yes..a whole page of shooting gang signs..upstanding citizen..this is their hero",
+      "stance": "support",
+      "in_reply_to_status_id": "500322867578667008",
+      "in_reply_to_user": "CelticOwlWisdom"
+    },
+    {
+      "id": "500324247890571264",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 16:52:50 +0000 2014",
+      "text": "@angryblackpat @WutangGeorgia because you keep defending his actions by continually trying to paint his as a victim while he's a perpetrator",
+      "stance": "support",
+      "in_reply_to_status_id": "500323373957005314",
+      "in_reply_to_user": "angryblackpat"
+    },
+    {
+      "id": "500330353190797312",
+      "user": "Coslopuss",
+      "created_at": "Fri Aug 15 17:17:06 +0000 2014",
+      "text": "@angryblackpat @WutangGeorgia the PD did that community a favor..I don't expect you to see that tho..you need crisis to affirm your racism",
+      "stance": "support",
+      "in_reply_to_status_id": "500329584655474689",
+      "in_reply_to_user": "angryblackpat"
+    },
+    {
+      "id": "500336403390402560",
+      "user": "l8r_days",
+      "created_at": "Fri Aug 15 17:41:09 +0000 2014",
+      "text": "@larryelder @laserpaddy A) Looting is a lawful shoot (B) BHO apologize 4 f'in up, that would be a 1st.",
+      "stance": "support",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500337211825721346",
+      "user": "oldhickory49",
+      "created_at": "Fri Aug 15 17:44:21 +0000 2014",
+      "text": ".@larryelder @rustythimble54 Obama spoke stupidly.",
+      "stance": "support",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500338346351411201",
+      "user": "ihisloan",
+      "created_at": "Fri Aug 15 17:48:52 +0000 2014",
+      "text": "@larryelder don't hold your breath Larry! Hell,CNNs Don Lemming is trying to restart the rioting! He should be charged with inciting a riot!",
+      "stance": "support",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500293975535009792",
+      "user": "angryblackpat",
+      "created_at": "Fri Aug 15 14:52:33 +0000 2014",
+      "text": "@larryelder Why do you assume that? And if it's true, the reaction far outweighed the action.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500295618288295937",
+      "user": "MakeeshaThomas",
+      "created_at": "Fri Aug 15 14:59:05 +0000 2014",
+      "text": "@larryelder What should POTUS apologize for in this case? He was right about what he said about #Ferguson PD. You'd think #ISIS was there.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500296845382672385",
+      "user": "MakeeshaThomas",
+      "created_at": "Fri Aug 15 15:03:57 +0000 2014",
+      "text": "@larryelder Community did not recognize the looters and rioters, but community was punished by police state. #Obama was right \"on this one.\"",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500306450309476354",
+      "user": "angryblackpat",
+      "created_at": "Fri Aug 15 15:42:07 +0000 2014",
+      "text": "@Coslopuss @larryelder I have heard from witnesses as well as the PD's version of events. Shooting an unarmed person over cigars?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500304800840704000",
+      "in_reply_to_user": "Coslopuss"
+    },
+    {
+      "id": "500307821477756929",
+      "user": "angryblackpat",
+      "created_at": "Fri Aug 15 15:47:34 +0000 2014",
+      "text": "@Coslopuss @larryelder Oh please, I didn't say anything about hero. It looks like excessive force, but I'm open minded. Let's wait and see.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500307238767308800",
+      "in_reply_to_user": "Coslopuss"
+    },
+    {
+      "id": "500310008790126592",
+      "user": "angryblackpat",
+      "created_at": "Fri Aug 15 15:56:16 +0000 2014",
+      "text": "@Coslopuss @larryelder There's tension between blacks &amp; police in area. If Brown had his hands up, unarmed, he shouldn't have been shot.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500308480889454592",
+      "in_reply_to_user": "Coslopuss"
+    },
+    {
+      "id": "500310276806164480",
+      "user": "angryblackpat",
+      "created_at": "Fri Aug 15 15:57:19 +0000 2014",
+      "text": "@Coslopuss @larryelder If there was a shot fired in the car, there didn't need to be more shooting when Brown fled. He was already wounded.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500308480889454592",
+      "in_reply_to_user": "Coslopuss"
+    },
+    {
+      "id": "500310325796044800",
+      "user": "Frank_Turk",
+      "created_at": "Fri Aug 15 15:57:31 +0000 2014",
+      "text": "@larryelder Larry, maybe we should wait until after the funeral to start calling the man a criminal",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500312708915687424",
+      "user": "LaurieSpezzano",
+      "created_at": "Fri Aug 15 16:06:59 +0000 2014",
+      "text": "@larryelder We have a LEGAL system. Cops not supposed to find and shoot the suspect. Even ARMED suspect not to be executed by cops. Right?!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500316484942716928",
+      "user": "clareberrys",
+      "created_at": "Fri Aug 15 16:22:00 +0000 2014",
+      "text": "@larryelder @NoreenR1 why would he apologize to Ferguson PD? They still reacted with over militarized force to peaceful protesters!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500316629105135616",
+      "user": "clareberrys",
+      "created_at": "Fri Aug 15 16:22:34 +0000 2014",
+      "text": "@larryelder @NoreenR1 even if he was involved, in America you are still supposed to be innocent until proven guilty by trial of your peers",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500293392060780546",
+      "in_reply_to_user": "larryelder"
+    },
+    {
+      "id": "500316806225989632",
+      "user": "angryblackpat",
+      "created_at": "Fri Aug 15 16:23:16 +0000 2014",
+      "text": "@Coslopuss A police officer is not judge, jury, and executioner.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500310782522171393",
+      "in_reply_to_user": "Coslopuss"
+    },
+    {
+      "id": "500317512064851969",
+      "user": "JMOKC",
+      "created_at": "Fri Aug 15 16:26:04 +0000 2014",
+      "text": "@angryblackpat The reaction DID outweigh the circumstances! It's NOT a white vs black issue. It's a Police State issue!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500293975535009792",
+      "in_reply_to_user": "angryblackpat"
+    },
+    {
+      "id": "500324023856005121",
+      "user": "angryblackpat",
+      "created_at": "Fri Aug 15 16:51:57 +0000 2014",
+      "text": "@Coslopuss @WutangGeorgia You're completely missing the point if you think anyone is calling him a hero or a saint.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500323589393227777",
+      "in_reply_to_user": "Coslopuss"
+    },
+    {
+      "id": "500329584655474689",
+      "user": "angryblackpat",
+      "created_at": "Fri Aug 15 17:14:03 +0000 2014",
+      "text": "@Coslopuss @WutangGeorgia I can condemn the actions of the police without condoning the actions of Mike Brown.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500324247890571264",
+      "in_reply_to_user": "Coslopuss"
+    }
+  ]
+}

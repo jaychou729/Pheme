@@ -1,0 +1,290 @@
+{
+  "thread_id": "524947716393414656",
+  "event": "ottawashooting",
+  "thread_path": "ottawashooting/non-rumours/524947716393414656",
+  "source": {
+    "id": "524947716393414656",
+    "user": "chrissyteigen",
+    "created_at": "Wed Oct 22 15:37:43 +0000 2014",
+    "text": "Sorry you don't understand that is a knock at america and our issues with gun control. No one is minimizing the Ottawa shooting."
+  },
+  "selection_rule": "Strict explicit stance only. Support means the comment accepts the source tweet's framing that the post is a criticism of America's gun control/gun violence problem, or argues for gun control. Oppose means the comment rejects the gun-control framing, argues gun control does not work, or argues more lawful guns/good guys with guns are needed.",
+  "note": "Selected 30 explicit comments with balanced stances. Ambiguous, social-only, link-only, and purely meta comments were excluded.",
+  "counts": {
+    "support": 15,
+    "oppose": 15,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "524948138654973952",
+      "user": "kristinbingham",
+      "created_at": "Wed Oct 22 15:39:23 +0000 2014",
+      "text": "@chrissyteigen people only hear/read what they wanna hear/read. As a Canadian who has also lived in the States, I respect you and your tweet",
+      "stance": "support",
+      "in_reply_to_status_id": "524947716393414656",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524950915703640065",
+      "user": "LizKReimer",
+      "created_at": "Wed Oct 22 15:50:26 +0000 2014",
+      "text": "@chrissyteigen I'm Canadian. I understood. America is desensitized to these events. To us, it happens so infrequently that it is devastating",
+      "stance": "support",
+      "in_reply_to_status_id": "524947716393414656",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524993051668652032",
+      "user": "HeadOColettuce",
+      "created_at": "Wed Oct 22 18:37:52 +0000 2014",
+      "text": "@chrissyteigen Its so bad, we have a 4+ casualty shooting EVERY SINGLE DAY here. Proof: http://t.co/VxyVaqP4IT",
+      "stance": "support",
+      "in_reply_to_status_id": "524947716393414656",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "525096928372338689",
+      "user": "zara915",
+      "created_at": "Thu Oct 23 01:30:38 +0000 2014",
+      "text": "@MsJettexas @chrissyteigen reality check: you can purchase an assault rifle in this country by simply walking into a gun show--no ID, cash.",
+      "stance": "support",
+      "in_reply_to_status_id": "525092271252070400",
+      "in_reply_to_user": "MsJettexas"
+    },
+    {
+      "id": "525097298288984064",
+      "user": "zara915",
+      "created_at": "Thu Oct 23 01:32:06 +0000 2014",
+      "text": "@MsJettexas @chrissyteigen also, out of mass shootings in this country since '82, more than 3/4s were obtained legally. that is NOT ok.",
+      "stance": "support",
+      "in_reply_to_status_id": "525096928372338689",
+      "in_reply_to_user": "zara915"
+    },
+    {
+      "id": "525097539230769152",
+      "user": "zara915",
+      "created_at": "Thu Oct 23 01:33:03 +0000 2014",
+      "text": "@MsJettexas @chrissyteigen the point is, our so called \"aggressive\" background checks are NOT aggressive enough. we have a gun PROBLEM.",
+      "stance": "support",
+      "in_reply_to_status_id": "525097298288984064",
+      "in_reply_to_user": "zara915"
+    },
+    {
+      "id": "525099872798916608",
+      "user": "zara915",
+      "created_at": "Thu Oct 23 01:42:20 +0000 2014",
+      "text": "@MsJettexas @chrissyteigen I agree--that's why no person should have a gun in my opinion. But as long as the case is that guns are here to",
+      "stance": "support",
+      "in_reply_to_status_id": "525099607517564928",
+      "in_reply_to_user": "MsJettexas"
+    },
+    {
+      "id": "525101932395118593",
+      "user": "zara915",
+      "created_at": "Thu Oct 23 01:50:31 +0000 2014",
+      "text": "@MsJettexas we should only count on our police/military to have guns to protect us. canada's stats on death by guns is DRAMATICALLY lower.",
+      "stance": "support",
+      "in_reply_to_status_id": "525101170420088833",
+      "in_reply_to_user": "MsJettexas"
+    },
+    {
+      "id": "525115482228002816",
+      "user": "imdianee",
+      "created_at": "Thu Oct 23 02:44:21 +0000 2014",
+      "text": "@TeddyFarrow @chrissyteigen depends on how it is legislated etc. it is very effective in australia",
+      "stance": "support",
+      "in_reply_to_status_id": "524948622027542528",
+      "in_reply_to_user": "TeddyFarrow"
+    },
+    {
+      "id": "525505251978133505",
+      "user": "imdianee",
+      "created_at": "Fri Oct 24 04:33:10 +0000 2014",
+      "text": "@TeddyFarrow you need to realise that you cant just look at murder statistics etc and say oh gun control does not work. its much more",
+      "stance": "support",
+      "in_reply_to_status_id": "525288538351620097",
+      "in_reply_to_user": "TeddyFarrow"
+    },
+    {
+      "id": "525505905001910272",
+      "user": "imdianee",
+      "created_at": "Fri Oct 24 04:35:45 +0000 2014",
+      "text": "@TeddyFarrow complicated than that. gun control is different and effective in places such as australia, japan and even Hawaii.",
+      "stance": "support",
+      "in_reply_to_status_id": "525288538351620097",
+      "in_reply_to_user": "TeddyFarrow"
+    },
+    {
+      "id": "525706701807579138",
+      "user": "RobynBuell",
+      "created_at": "Fri Oct 24 17:53:39 +0000 2014",
+      "text": "@Collinsdw @MsJettexas @chrissyteigen No law will be followed 100%. To suggest a law is bad \"cuz the bad guys r bad\" is pure stupidity.",
+      "stance": "support",
+      "in_reply_to_status_id": "525049168113696768",
+      "in_reply_to_user": "Collinsdw"
+    },
+    {
+      "id": "525707506946150401",
+      "user": "RobynBuell",
+      "created_at": "Fri Oct 24 17:56:51 +0000 2014",
+      "text": "@Collinsdw @MsJettexas @chrissyteigen Personal responsibility is important. Gun dealers &amp; manufacturers are not exempt. #BackgroundChecks",
+      "stance": "support",
+      "in_reply_to_status_id": "525049168113696768",
+      "in_reply_to_user": "Collinsdw"
+    },
+    {
+      "id": "525724329255129091",
+      "user": "RobynBuell",
+      "created_at": "Fri Oct 24 19:03:42 +0000 2014",
+      "text": "@Collinsdw @MsJettexas @chrissyteigen To start, add BackgroundChecks @gunshows, limit #guns bought at shows &amp; #bullets n magazines.",
+      "stance": "support",
+      "in_reply_to_status_id": "525711305039421441",
+      "in_reply_to_user": "Collinsdw"
+    },
+    {
+      "id": "525739379135090688",
+      "user": "RobynBuell",
+      "created_at": "Fri Oct 24 20:03:30 +0000 2014",
+      "text": "@MsJettexas @Collinsdw @chrissyteigen @Gunshows \"Guns don't kill...\".  Why not \"Booze don't kill-ppl drink/drive kill\" Why alcohol laws?",
+      "stance": "support",
+      "in_reply_to_status_id": "525725313305944064",
+      "in_reply_to_user": "MsJettexas"
+    },
+    {
+      "id": "524948244351438848",
+      "user": "RushBaby1980",
+      "created_at": "Wed Oct 22 15:39:49 +0000 2014",
+      "text": "@chrissyteigen banning guns won't do anything to solve crime. Look at chicago, illinois.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947716393414656",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524948622027542528",
+      "user": "TeddyFarrow",
+      "created_at": "Wed Oct 22 15:41:19 +0000 2014",
+      "text": "@chrissyteigen funny...gun control in NYC and Chicago and Detroit is working wonders :) more good guys with guns is needed",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947716393414656",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524948828789956608",
+      "user": "TeddyFarrow",
+      "created_at": "Wed Oct 22 15:42:08 +0000 2014",
+      "text": "@chrissyteigen I work in downtown ottawa and wish I had one of my guns on me right now...i would feel a whole lot better. #goodguywithagun",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947716393414656",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "524969540380557312",
+      "user": "Collinsdw",
+      "created_at": "Wed Oct 22 17:04:26 +0000 2014",
+      "text": "@chrissyteigen sorry darlin, America doesn't have issues with gun control, we have issues with criminals who don't follow current laws.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524947716393414656",
+      "in_reply_to_user": "chrissyteigen"
+    },
+    {
+      "id": "525036407429935104",
+      "user": "Collinsdw",
+      "created_at": "Wed Oct 22 21:30:08 +0000 2014",
+      "text": "@IAHemingway @chrissyteigen she implies we have a \"gun control issue\". I disagree. Pass all the  \"controls\" you want, criminals don't care.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525033052817608704",
+      "in_reply_to_user": "IAHemingway"
+    },
+    {
+      "id": "525045708823728128",
+      "user": "MsJettexas",
+      "created_at": "Wed Oct 22 22:07:06 +0000 2014",
+      "text": "@Collinsdw @chrissyteigen Exactly! Guns don't kill people, people kill people. Do u outlaw machetes cause their used to behead by those nuts",
+      "stance": "oppose",
+      "in_reply_to_status_id": "524969540380557312",
+      "in_reply_to_user": "Collinsdw"
+    },
+    {
+      "id": "525049168113696768",
+      "user": "Collinsdw",
+      "created_at": "Wed Oct 22 22:20:51 +0000 2014",
+      "text": "@MsJettexas @chrissyteigen agreed. classic clueless lib response. Refuses to assign responsibility to individual.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525045708823728128",
+      "in_reply_to_user": "MsJettexas"
+    },
+    {
+      "id": "525092271252070400",
+      "user": "MsJettexas",
+      "created_at": "Thu Oct 23 01:12:07 +0000 2014",
+      "text": "@zara915 @chrissyteigen ~ Hell no, he stole the gun! He would never pass the background check. Yes the US has a aggressive bg check system!!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525048175455784960",
+      "in_reply_to_user": "zara915"
+    },
+    {
+      "id": "525098250274365440",
+      "user": "MsJettexas",
+      "created_at": "Thu Oct 23 01:35:53 +0000 2014",
+      "text": "@zara915 @chrissyteigen ~ BS! Guns Don't Kill People. . . . People Kill People!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525096928372338689",
+      "in_reply_to_user": "zara915"
+    },
+    {
+      "id": "525098879172485120",
+      "user": "MsJettexas",
+      "created_at": "Thu Oct 23 01:38:23 +0000 2014",
+      "text": "@zara915 @chrissyteigen ~ Those guns are stolen. Why should citizens be sitting ducks to the illegal gun owners, if your idea is done.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525097539230769152",
+      "in_reply_to_user": "zara915"
+    },
+    {
+      "id": "525099607517564928",
+      "user": "MsJettexas",
+      "created_at": "Thu Oct 23 01:41:16 +0000 2014",
+      "text": "@zara915 @chrissyteigen ~ It's not the gun, it's the person! You must believe that a gun has a brain &amp; has been trained to jump up and shoot",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525097539230769152",
+      "in_reply_to_user": "zara915"
+    },
+    {
+      "id": "525100956833558528",
+      "user": "MsJettexas",
+      "created_at": "Thu Oct 23 01:46:38 +0000 2014",
+      "text": "@zara915 @chrissyteigen ~ It's a good thing the Sergeant At arms had a gun in a Anti Gun environment.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525100016281866240",
+      "in_reply_to_user": "zara915"
+    },
+    {
+      "id": "525101170420088833",
+      "user": "MsJettexas",
+      "created_at": "Thu Oct 23 01:47:29 +0000 2014",
+      "text": "@zara915 @chrissyteigen ~ If he had not had a gun, that radical nut case would've killed a whole lot more people. Thank God SAA had a gun.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525100016281866240",
+      "in_reply_to_user": "zara915"
+    },
+    {
+      "id": "525288428758634497",
+      "user": "TeddyFarrow",
+      "created_at": "Thu Oct 23 14:11:35 +0000 2014",
+      "text": "@imdianee @chrissyteigen no it is not..is that a joke. you punish law abiding people and your violent crime skyrocketed. same with UK.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525115482228002816",
+      "in_reply_to_user": "imdianee"
+    },
+    {
+      "id": "525715697427820544",
+      "user": "MsJettexas",
+      "created_at": "Fri Oct 24 18:29:24 +0000 2014",
+      "text": "@Collinsdw @RobynBuell @chrissyteigen Bad guys don't obey gun laws. Law abiding Americans do. . .why they need to be armed. #2ndAmmendment",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525711305039421441",
+      "in_reply_to_user": "Collinsdw"
+    }
+  ]
+}

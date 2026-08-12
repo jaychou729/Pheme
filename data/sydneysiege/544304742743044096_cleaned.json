@@ -1,0 +1,290 @@
+{
+  "thread_id": "544304742743044096",
+  "event": "sydneysiege",
+  "thread_path": "sydneysiege/rumours/544304742743044096",
+  "source": {
+    "id": "544304742743044096",
+    "user": "LibyaLiberty",
+    "created_at": "Mon Dec 15 01:35:38 +0000 2014",
+    "text": "Praying for the safety of all the hostages being held by some criminal in the cafe in Sydney. Preparing for the collective blame as well."
+  },
+  "selection_rule": "Kept 30 comments with explicit support or opposition to the source tweet praying for the Sydney hostages while anticipating collective blame against Muslims. Excluded location-only replies, shock-only comments, pure insults without a stance toward collective blame, and off-topic political exchanges when the stance was unclear. Opposition comments are fewer in the thread, so balance is approximate rather than exact.",
+  "note": "support = agrees with the source concern about Islamophobia, guilt-by-association, collective punishment, or rejects blaming all Muslims for one attacker; oppose = rejects the Islamophobia/collective-blame concern, argues Muslim communities bear responsibility for silence, or treats suspicion/blame of Muslims as justified.",
+  "counts": {
+    "support": 18,
+    "oppose": 12,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "544306876150607872",
+      "user": "FamousRob",
+      "created_at": "Mon Dec 15 01:44:06 +0000 2014",
+      "text": "@LibyaLiberty @_Atekka Literally can hear people reading Islamaphobic tweets and getting angry at them (the tweets) in my office",
+      "stance": "support",
+      "in_reply_to_status_id": "544304742743044096",
+      "in_reply_to_user": "LibyaLiberty"
+    },
+    {
+      "id": "544306957738184704",
+      "user": "gacrux_nz",
+      "created_at": "Mon Dec 15 01:44:26 +0000 2014",
+      "text": "@LibyaLiberty depressing how many people appear to believe in guilt-by-association + collective punishment in supposedly civilised societies",
+      "stance": "support",
+      "in_reply_to_status_id": "544304742743044096",
+      "in_reply_to_user": "LibyaLiberty"
+    },
+    {
+      "id": "544307940535336960",
+      "user": "JulieLvsPACKERS",
+      "created_at": "Mon Dec 15 01:48:20 +0000 2014",
+      "text": "@LibyaLiberty @Eagle_Vision it's not a phobia to be wary of a religious people that want to kill you because their religion tells them to.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544304742743044096",
+      "in_reply_to_user": "LibyaLiberty"
+    },
+    {
+      "id": "544308084676767744",
+      "user": "loudonCorkOne",
+      "created_at": "Mon Dec 15 01:48:54 +0000 2014",
+      "text": "@LibyaLiberty @Eagle_Vision There are plenty of us in the West that don't blame all Muslims for the acts of a few.",
+      "stance": "support",
+      "in_reply_to_status_id": "544304742743044096",
+      "in_reply_to_user": "LibyaLiberty"
+    },
+    {
+      "id": "544309520113999872",
+      "user": "dopsdingers",
+      "created_at": "Mon Dec 15 01:54:37 +0000 2014",
+      "text": "@LibyaLiberty Unfortunately inevitable &amp; I'm deeply fearful for what will come in Australia after this... What a nightmare.",
+      "stance": "support",
+      "in_reply_to_status_id": "544304742743044096",
+      "in_reply_to_user": "LibyaLiberty"
+    },
+    {
+      "id": "544309717510934528",
+      "user": "bigbellaluna",
+      "created_at": "Mon Dec 15 01:55:24 +0000 2014",
+      "text": "@LibyaLiberty Sick of base generalizations of all Muslims being one monolith. So are all Christians one too? I'm not Terry Jones's homegirl.",
+      "stance": "support",
+      "in_reply_to_status_id": "544304742743044096",
+      "in_reply_to_user": "LibyaLiberty"
+    },
+    {
+      "id": "544310350036750336",
+      "user": "RomeshNadir",
+      "created_at": "Mon Dec 15 01:57:54 +0000 2014",
+      "text": "@gacrux_nz 1/n)Beg to agree wid partly. How about collectiv silenc, no protest or voices raisd agaijst killings, etc? @atiyaz @LibyaLiberty",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544306957738184704",
+      "in_reply_to_user": "gacrux_nz"
+    },
+    {
+      "id": "544310895141089280",
+      "user": "RomeshNadir",
+      "created_at": "Mon Dec 15 02:00:04 +0000 2014",
+      "text": "@gacrux_nz 2/n) Does that no amount to an indirect collective support/association by dat part of d society/community? @atiyaz @LibyaLiberty",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544306957738184704",
+      "in_reply_to_user": "gacrux_nz"
+    },
+    {
+      "id": "544311511569559552",
+      "user": "atiyaz",
+      "created_at": "Mon Dec 15 02:02:31 +0000 2014",
+      "text": "@RomeshNadir If u choose to not blame collectivey read some TLs on Twitter, including mine. Posts onFB, interviews @gacrux_nz @LibyaLiberty",
+      "stance": "support",
+      "in_reply_to_status_id": "544310350036750336",
+      "in_reply_to_user": "RomeshNadir"
+    },
+    {
+      "id": "544312309925953536",
+      "user": "RomeshNadir",
+      "created_at": "Mon Dec 15 02:05:42 +0000 2014",
+      "text": "@atiyaz I do follow you regularly &amp; appreciat ur views. D problem starts wen we as a society adopt a stoic silence @gacrux_nz @LibyaLiberty",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544311511569559552",
+      "in_reply_to_user": "atiyaz"
+    },
+    {
+      "id": "544312881001418752",
+      "user": "RomeshNadir",
+      "created_at": "Mon Dec 15 02:07:58 +0000 2014",
+      "text": "@atiyaz And d forces indulging in ill deeds take d silence 4m d community as a Big Approval &amp; stay on d same path. @gacrux_nz @LibyaLiberty",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544311511569559552",
+      "in_reply_to_user": "atiyaz"
+    },
+    {
+      "id": "544313970593497089",
+      "user": "gacrux_nz",
+      "created_at": "Mon Dec 15 02:12:18 +0000 2014",
+      "text": ".@RomeshNadir @LibyaLiberty I often neglect to denounce violence committed by white people; just too much of it. Am I guilty of something?",
+      "stance": "support",
+      "in_reply_to_status_id": "544310350036750336",
+      "in_reply_to_user": "RomeshNadir"
+    },
+    {
+      "id": "544314299095609345",
+      "user": "atiyaz",
+      "created_at": "Mon Dec 15 02:13:36 +0000 2014",
+      "text": "@RomeshNadir Society is ppl. Read @LibyaLiberty javedakhtarjadu @Razarumi @irfhabib @husainhaqqani @marvisirmed @mehranzaidi all knwn voices",
+      "stance": "support",
+      "in_reply_to_status_id": "544312309925953536",
+      "in_reply_to_user": "RomeshNadir"
+    },
+    {
+      "id": "544315213697122304",
+      "user": "RomeshNadir",
+      "created_at": "Mon Dec 15 02:17:14 +0000 2014",
+      "text": "@gacrux_nz Surprised I am. Your aomission of not denouncin d violence by white people shows d values we hold close 2our chest @LibyaLiberty",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544313970593497089",
+      "in_reply_to_user": "gacrux_nz"
+    },
+    {
+      "id": "544315492211511296",
+      "user": "gacrux_nz",
+      "created_at": "Mon Dec 15 02:18:20 +0000 2014",
+      "text": ".@RomeshNadir @atiyaz @LibyaLiberty There you go with that guilt-by-association fallacy again. https://t.co/r1rmBmBbdG",
+      "stance": "support",
+      "in_reply_to_status_id": "544312881001418752",
+      "in_reply_to_user": "RomeshNadir"
+    },
+    {
+      "id": "544316400508997632",
+      "user": "gacrux_nz",
+      "created_at": "Mon Dec 15 02:21:57 +0000 2014",
+      "text": ".@RomeshNadir @LibyaLiberty it isn't anybody's responsibility to denounce every activity they haven't explicitly declared their support for.",
+      "stance": "support",
+      "in_reply_to_status_id": "544312881001418752",
+      "in_reply_to_user": "RomeshNadir"
+    },
+    {
+      "id": "544317636905930752",
+      "user": "gacrux_nz",
+      "created_at": "Mon Dec 15 02:26:52 +0000 2014",
+      "text": ".@RomeshNadir @LibyaLiberty Nah. Having something in common (country; religion; skin; hobby) doesn't make me responsible for others' actions",
+      "stance": "support",
+      "in_reply_to_status_id": "544315213697122304",
+      "in_reply_to_user": "RomeshNadir"
+    },
+    {
+      "id": "544319052567416832",
+      "user": "RomeshNadir",
+      "created_at": "Mon Dec 15 02:32:29 +0000 2014",
+      "text": "@gacrux_nz Strange you sound. Playing safe, no explicit denouncing. Right human nature? @LibyaLiberty",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544316400508997632",
+      "in_reply_to_user": "gacrux_nz"
+    },
+    {
+      "id": "544320869120483328",
+      "user": "gacrux_nz",
+      "created_at": "Mon Dec 15 02:39:42 +0000 2014",
+      "text": ".@RomeshNadir @LibyaLiberty maniac taking hostages is terrible.I don't need to express this view; I'm white, so people just assume I hold it",
+      "stance": "support",
+      "in_reply_to_status_id": "544319052567416832",
+      "in_reply_to_user": "RomeshNadir"
+    },
+    {
+      "id": "544321371195453442",
+      "user": "gacrux_nz",
+      "created_at": "Mon Dec 15 02:41:42 +0000 2014",
+      "text": ".@RomeshNadir @LibyaLiberty Quite lucky.Never been in a situation where people assume I support atrocities just b/c I fail to denounce them.",
+      "stance": "support",
+      "in_reply_to_status_id": "544319052567416832",
+      "in_reply_to_user": "RomeshNadir"
+    },
+    {
+      "id": "544321484018032640",
+      "user": "RomeshNadir",
+      "created_at": "Mon Dec 15 02:42:09 +0000 2014",
+      "text": "@gacrux_nz @LibyaLiberty Agreed, dat havin religion, skin, etc, in common doesn't make U responsibl 2oders' acts bt, U2 are impacted by it.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544317636905930752",
+      "in_reply_to_user": "gacrux_nz"
+    },
+    {
+      "id": "544322644112584704",
+      "user": "SandraHelena39",
+      "created_at": "Mon Dec 15 02:46:46 +0000 2014",
+      "text": "@JulieLvsPACKERS @LibyaLiberty @Eagle_Vision Muslims have lived in western societies for CENTURIES in peace",
+      "stance": "support",
+      "in_reply_to_status_id": "544307940535336960",
+      "in_reply_to_user": "JulieLvsPACKERS"
+    },
+    {
+      "id": "544322713394118656",
+      "user": "SandraHelena39",
+      "created_at": "Mon Dec 15 02:47:02 +0000 2014",
+      "text": "@JulieLvsPACKERS @LibyaLiberty @Eagle_Vision why don't bigots like you ask \"why is this stuff only happening NOW?",
+      "stance": "support",
+      "in_reply_to_status_id": "544307940535336960",
+      "in_reply_to_user": "JulieLvsPACKERS"
+    },
+    {
+      "id": "544322786861531136",
+      "user": "SandraHelena39",
+      "created_at": "Mon Dec 15 02:47:20 +0000 2014",
+      "text": "@JulieLvsPACKERS @LibyaLiberty @Eagle_Vision instead of hating on a billion people like they're all the same &amp; all out to kill you?",
+      "stance": "support",
+      "in_reply_to_status_id": "544307940535336960",
+      "in_reply_to_user": "JulieLvsPACKERS"
+    },
+    {
+      "id": "544322998778744832",
+      "user": "Eagle_Vision",
+      "created_at": "Mon Dec 15 02:48:10 +0000 2014",
+      "text": "Why don't you explain it to us \"bigots?\" @SandraHelena39 http://t.co/7oXYtyiRSE",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544322713394118656",
+      "in_reply_to_user": "SandraHelena39"
+    },
+    {
+      "id": "544323173295357954",
+      "user": "SandraHelena39",
+      "created_at": "Mon Dec 15 02:48:52 +0000 2014",
+      "text": "@Eagle_Vision why should I bother since you ignorant bigots have NO interest in even TRYING to have a open mind",
+      "stance": "support",
+      "in_reply_to_status_id": "544322998778744832",
+      "in_reply_to_user": "Eagle_Vision"
+    },
+    {
+      "id": "544323543023243264",
+      "user": "SandraHelena39",
+      "created_at": "Mon Dec 15 02:50:20 +0000 2014",
+      "text": "@Eagle_Vision the US bombs &amp; incinerates civilians for YRS but that's perfectly ok to moral hypocrites like you",
+      "stance": "support",
+      "in_reply_to_status_id": "544322998778744832",
+      "in_reply_to_user": "Eagle_Vision"
+    },
+    {
+      "id": "544323838549303296",
+      "user": "APracy",
+      "created_at": "Mon Dec 15 02:51:30 +0000 2014",
+      "text": "@SandraHelena39 @Eagle_Vision That was a very loose Assumption you made there ! You don't know how \"open \"our micds are ,Hows about fuck off",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544323173295357954",
+      "in_reply_to_user": "SandraHelena39"
+    },
+    {
+      "id": "544326983388524544",
+      "user": "NUFCinnocent",
+      "created_at": "Mon Dec 15 03:04:00 +0000 2014",
+      "text": "@SandraHelena39 @Eagle_Vision - you're one sick woman - I'm sure the @FBI are aware of your sympathies with #Islamist terrorists",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544324070532481024",
+      "in_reply_to_user": "SandraHelena39"
+    },
+    {
+      "id": "544347680286461952",
+      "user": "rtbpack",
+      "created_at": "Mon Dec 15 04:26:15 +0000 2014",
+      "text": "@SandraHelena39 @Eagle_Vision That's 0bamas drone program.No prisoners,no hearings,no Gitmo detainees.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544323543023243264",
+      "in_reply_to_user": "SandraHelena39"
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "thread_id": "544329935943237632",
+  "event": "sydneysiege",
+  "thread_path": "sydneysiege/rumours/544329935943237632",
+  "source": {
+    "id": "544329935943237632",
+    "user": "Uber_Sydney",
+    "created_at": "Mon Dec 15 03:15:44 +0000 2014",
+    "text": "Uber Sydney trips from CBD will be free for riders. Higher rates are still in place to encourage drivers to get into the CBD."
+  },
+  "selection_rule": "Kept 30 comments with explicit support or opposition to the source tweet explaining that Uber Sydney rides from the CBD would be free for riders while higher driver rates stayed in place to attract drivers. Excluded neutral clarification questions, source-authored customer-service replies, logistics-only boundary/wait-time questions, and off-topic taxi/public-transport debates; balanced 15 support and 15 oppose.",
+  "note": "support = accepts Uber explanation as a useful correction, good gesture, or reasonable driver incentive while riders pay nothing; oppose = treats the policy or messaging as crisis surge pricing, price gouging, poor communication, or a backtrack after backlash.",
+  "counts": {
+    "support": 15,
+    "oppose": 15,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "544330406397374465",
+      "user": "nicholasderoose",
+      "created_at": "Mon Dec 15 03:17:36 +0000 2014",
+      "text": "@Uber_Sydney hikes prices during the #sydneysiege. How is that helping? Giving away free rides would help.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544329935943237632",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544330529529548801",
+      "user": "NicoleWill100",
+      "created_at": "Mon Dec 15 03:18:06 +0000 2014",
+      "text": "@Uber_Sydney thank you for fixing this situation.",
+      "stance": "support",
+      "in_reply_to_status_id": "544329935943237632",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544330709918183425",
+      "user": "universe93",
+      "created_at": "Mon Dec 15 03:18:49 +0000 2014",
+      "text": "@Uber_Sydney you really gotta stop the swarm model or at least have someone actually look at WHY an area is swarming.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544329935943237632",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544330751991230465",
+      "user": "Mr_Odin",
+      "created_at": "Mon Dec 15 03:18:59 +0000 2014",
+      "text": "@Uber_Sydney how about paying your drivers extra to go into the cbd instead of forcing others to pay extra to travel into potential danger?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544329935943237632",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544330807964217345",
+      "user": "universe93",
+      "created_at": "Mon Dec 15 03:19:12 +0000 2014",
+      "text": "@Uber_Sydney swarming because of a concert or event? Fine. Swarming during a hostage crisis? NOT COOL.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544329935943237632",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544331338317565953",
+      "user": "alfinitum",
+      "created_at": "Mon Dec 15 03:21:18 +0000 2014",
+      "text": "that's better RT @Uber_Sydney: Uber Sydney trips from CBD will be free for riders. Higher rates still in place to encourage drivers",
+      "stance": "support",
+      "in_reply_to_status_id": "544329935943237632",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544331421494423552",
+      "user": "universe93",
+      "created_at": "Mon Dec 15 03:21:38 +0000 2014",
+      "text": "@EnglishEmma it's still raising prices when people are trying to leave the CBD in a crisis. At least they've made rides free now",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544331153994297344",
+      "in_reply_to_user": "EnglishEmma"
+    },
+    {
+      "id": "544331663241908225",
+      "user": "GRQconsultants",
+      "created_at": "Mon Dec 15 03:22:36 +0000 2014",
+      "text": "@Uber_Sydney reports around the world flooding in of your 400% fare increase in response to a siege situation, smart.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544329935943237632",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544331790253428738",
+      "user": "DrYobbo",
+      "created_at": "Mon Dec 15 03:23:06 +0000 2014",
+      "text": "@alfinitum @Uber_Sydney Yeah I think so. They're getting $100+, riders aren't wearing diff. Good gesture. Poor message transmission",
+      "stance": "support",
+      "in_reply_to_status_id": "544331632086224898",
+      "in_reply_to_user": "alfinitum"
+    },
+    {
+      "id": "544331906469203968",
+      "user": "universe93",
+      "created_at": "Mon Dec 15 03:23:34 +0000 2014",
+      "text": "@EnglishEmma nope. I respect them for making the rides free, I can also see how they wanted to get more drivers in",
+      "stance": "support",
+      "in_reply_to_status_id": "544331611081162753",
+      "in_reply_to_user": "EnglishEmma"
+    },
+    {
+      "id": "544332086937546752",
+      "user": "alfinitum",
+      "created_at": "Mon Dec 15 03:24:17 +0000 2014",
+      "text": "@DrYobbo initial message did imply that riders can cop hike. Much better. @Uber_Sydney",
+      "stance": "support",
+      "in_reply_to_status_id": "544331790253428738",
+      "in_reply_to_user": "DrYobbo"
+    },
+    {
+      "id": "544333969970302977",
+      "user": "MWhalan",
+      "created_at": "Mon Dec 15 03:31:46 +0000 2014",
+      "text": ".@iGottaTravel @Uber_Sydney @mtats Seems. A global marketing disaster Uber is trying to fix.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544330821365014529",
+      "in_reply_to_user": "iGottaTravel"
+    },
+    {
+      "id": "544334052526784512",
+      "user": "ccpopculture",
+      "created_at": "Mon Dec 15 03:32:06 +0000 2014",
+      "text": "@nicholasderoose @Uber_Sydney you're aware that this tweet ...is giving away free rides, right?",
+      "stance": "support",
+      "in_reply_to_status_id": "544330406397374465",
+      "in_reply_to_user": "nicholasderoose"
+    },
+    {
+      "id": "544336306437128192",
+      "user": "bmac_ottawa",
+      "created_at": "Mon Dec 15 03:41:03 +0000 2014",
+      "text": "@andrewv @Uber_Sydney the surge rates are to draw the drivers there (uber will pay the cost). No fee to passengers.",
+      "stance": "support",
+      "in_reply_to_status_id": "544331615812345856",
+      "in_reply_to_user": "andrewv"
+    },
+    {
+      "id": "544336896256512000",
+      "user": "andrewv",
+      "created_at": "Mon Dec 15 03:43:24 +0000 2014",
+      "text": "@bmac_ottawa @Uber_Sydney Ah that makes sense then thanks",
+      "stance": "support",
+      "in_reply_to_status_id": "544336306437128192",
+      "in_reply_to_user": "bmac_ottawa"
+    },
+    {
+      "id": "544339277749182464",
+      "user": "ehammonds",
+      "created_at": "Mon Dec 15 03:52:51 +0000 2014",
+      "text": ".@harrytuckerr No, you refused to pay for them to be at the phones. Enjoy your walk. @Uber_Sydney",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544330596198019073",
+      "in_reply_to_user": "harrytuckerr"
+    },
+    {
+      "id": "544339866050248704",
+      "user": "bluemonq",
+      "created_at": "Mon Dec 15 03:55:12 +0000 2014",
+      "text": "@beck_sullivan The rides are free. @Uber_Sydney will be paying the drivers the increased rate out of their own pocket.",
+      "stance": "support",
+      "in_reply_to_status_id": "544330922288373760",
+      "in_reply_to_user": "beck_sullivan"
+    },
+    {
+      "id": "544340392712208384",
+      "user": "ivovic",
+      "created_at": "Mon Dec 15 03:57:17 +0000 2014",
+      "text": "@Umair_Bilal @Uber_Sydney I'm baffled by how few of its customers actually know how Uber works.",
+      "stance": "support",
+      "in_reply_to_status_id": "544330593228840961",
+      "in_reply_to_user": "Umair_Bilal"
+    },
+    {
+      "id": "544341043764686849",
+      "user": "Mr_Odin",
+      "created_at": "Mon Dec 15 03:59:52 +0000 2014",
+      "text": "@JonnyPut @Uber_Sydney for the transport service I don't run? Excellent point sir. If they wanted to save money, they should've kept quiet.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544333288249118720",
+      "in_reply_to_user": "JonnyPut"
+    },
+    {
+      "id": "544342839111327744",
+      "user": "JonnyPut",
+      "created_at": "Mon Dec 15 04:07:00 +0000 2014",
+      "text": "@Mr_Odin @Uber_Sydney That is the point, dummy. Lots of drivers signing up for Uber. They are smarter than you. So help out and shut it",
+      "stance": "support",
+      "in_reply_to_status_id": "544341043764686849",
+      "in_reply_to_user": "Mr_Odin"
+    },
+    {
+      "id": "544343890086469632",
+      "user": "Mr_Odin",
+      "created_at": "Mon Dec 15 04:11:11 +0000 2014",
+      "text": "@JonnyPut @Uber_Sydney wow, what an asinine remark. They went for a PR scoop and fucked it, now they're scrambling to fix it. Seems smart",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544342839111327744",
+      "in_reply_to_user": "JonnyPut"
+    },
+    {
+      "id": "544344866285576193",
+      "user": "JonnyPut",
+      "created_at": "Mon Dec 15 04:15:04 +0000 2014",
+      "text": "@Mr_Odin @Uber_Sydney Listen up dum-dum.  They ARE paying the drivers more. Reading is a skill.",
+      "stance": "support",
+      "in_reply_to_status_id": "544343890086469632",
+      "in_reply_to_user": "Mr_Odin"
+    },
+    {
+      "id": "544345414670249985",
+      "user": "ehammonds",
+      "created_at": "Mon Dec 15 04:17:14 +0000 2014",
+      "text": ".@Mr_Odin No, they presumed their customers weren't economic illiterates. They presumed wrong. @JonnyPut @Uber_Sydney @AndrewCrow",
+      "stance": "support",
+      "in_reply_to_status_id": "544343890086469632",
+      "in_reply_to_user": "Mr_Odin"
+    },
+    {
+      "id": "544347461976727552",
+      "user": "Mr_Odin",
+      "created_at": "Mon Dec 15 04:25:23 +0000 2014",
+      "text": "@ehammonds @Uber_Sydney still looks like a PR issue to me, look at the backlash. Never assume the customer has same knowledge you do .",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544345414670249985",
+      "in_reply_to_user": "ehammonds"
+    },
+    {
+      "id": "544348100165263360",
+      "user": "COMINT_AU",
+      "created_at": "Mon Dec 15 04:27:55 +0000 2014",
+      "text": "@Uber_Sydney @DrYobbo @alfinitum Faster backflip than Tony Abbott!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544347846363738112",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544348196793630720",
+      "user": "Mr_Odin",
+      "created_at": "Mon Dec 15 04:28:18 +0000 2014",
+      "text": "@Uber_Sydney brilliant, thanks for the reply. I'll share the link",
+      "stance": "support",
+      "in_reply_to_status_id": "544346998975897600",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544349254706155520",
+      "user": "JonnyPut",
+      "created_at": "Mon Dec 15 04:32:30 +0000 2014",
+      "text": "@Uber_Sydney @Mr_Odin Yeah, I got that. Thank you for your great service.",
+      "stance": "support",
+      "in_reply_to_status_id": "544348986484613120",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544351211403505666",
+      "user": "life19082492084",
+      "created_at": "Mon Dec 15 04:40:17 +0000 2014",
+      "text": "@Uber_Sydney @EnglishEmma @universe93 Only after #worldwide backlash. Kinda like getting your hand caught in the cookie jar. #amirite ?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544350806300848129",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544364547574726656",
+      "user": "CameronAtfield",
+      "created_at": "Mon Dec 15 05:33:16 +0000 2014",
+      "text": "@Uber_Sydney @DrYobbo @COMINT_AU @alfinitum Well that's not true. First, you tweeted an explanation about why you were gouging customers.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544364150319611904",
+      "in_reply_to_user": "Uber_Sydney"
+    },
+    {
+      "id": "544372250430803969",
+      "user": "RunnaLittle",
+      "created_at": "Mon Dec 15 06:03:53 +0000 2014",
+      "text": "@Uber_Sydney @COMINT_AU when you first became aware of the situation you tweeted that prices will increase.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544364150319611904",
+      "in_reply_to_user": "Uber_Sydney"
+    }
+  ]
+}

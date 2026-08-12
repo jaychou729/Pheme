@@ -1,0 +1,290 @@
+{
+  "thread_id": "544349042952916993",
+  "event": "sydneysiege",
+  "thread_path": "sydneysiege/rumours/544349042952916993",
+  "source": {
+    "id": "544349042952916993",
+    "user": "AmyMek",
+    "created_at": "Mon Dec 15 04:31:40 +0000 2014",
+    "text": "#Religion Of COWARDS-&gt;Hostages Forced Display Islamic Flag, Women Used AsShields http://t.co/VTKaSgZXv1 #sydneysiege http://t.co/Pn6268vCwd"
+  },
+  "selection_rule": "Kept 30 comments with explicit support or opposition to the source tweet framing the Sydney siege through an anti-Islam/religion-wide blame claim. Excluded pure jokes, logistics-only replies, thanks/social replies, bare links without recoverable stance, and comments whose stance toward the source framing was unclear.",
+  "note": "support = endorses the source framing that Islam/Muslims as a religion or group are responsible/cowardly/terrorist-like, or reinforces the Islamic-flag/women-as-shields point as characteristic of Islam; oppose = rejects blaming a whole religion for individual extremists, compares similar problems across religions, or argues Islam is being singled out unfairly.",
+  "counts": {
+    "support": 16,
+    "oppose": 14,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "544352484764827649",
+      "user": "kwbr1960",
+      "created_at": "Mon Dec 15 04:45:20 +0000 2014",
+      "text": "@AmyMek  The PM of Australia is saying they don't know if it's political. Oh well. Maybe they're  the militant wing of the Salvation Army.",
+      "stance": "support",
+      "in_reply_to_status_id": "544349042952916993",
+      "in_reply_to_user": "AmyMek"
+    },
+    {
+      "id": "544356915619176448",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 05:02:57 +0000 2014",
+      "text": "@AmyMek @Lengsanity1 what the heck just cus those ppl are fucked up doesn't mean the whole religion is. Be mad but also be fair.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544349042952916993",
+      "in_reply_to_user": "AmyMek"
+    },
+    {
+      "id": "544357696083091457",
+      "user": "ugottabekidn",
+      "created_at": "Mon Dec 15 05:06:03 +0000 2014",
+      "text": "@AmyMek @KatyinIndy\nWait.\nHe's using women as shields?!?!?\nMuslims NEVER do that!\n&lt;sarc off&gt;\n#pffft\n#Hamas\n#IslamReligionOfPeace\n#MyAss",
+      "stance": "support",
+      "in_reply_to_status_id": "544349042952916993",
+      "in_reply_to_user": "AmyMek"
+    },
+    {
+      "id": "544359169571053568",
+      "user": "PetefromHayNSW",
+      "created_at": "Mon Dec 15 05:11:54 +0000 2014",
+      "text": "@AmyMek Spot on Amy @AlwaysACowboy",
+      "stance": "support",
+      "in_reply_to_status_id": "544349042952916993",
+      "in_reply_to_user": "AmyMek"
+    },
+    {
+      "id": "544359927548878848",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 05:14:55 +0000 2014",
+      "text": "@ugottabekidn please use that logic as if people really fully represent the religion they claim to be a part of",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544357696083091457",
+      "in_reply_to_user": "ugottabekidn"
+    },
+    {
+      "id": "544360792024694785",
+      "user": "ugottabekidn",
+      "created_at": "Mon Dec 15 05:18:21 +0000 2014",
+      "text": ".@KohTaKiev The actions of the Muslims that terrorize and kill perfectly match with the teachings in the Qur'an and Hadith.\n#TheMoreYouKnow",
+      "stance": "support",
+      "in_reply_to_status_id": "544359927548878848",
+      "in_reply_to_user": "JustNathaIy"
+    },
+    {
+      "id": "544363787139448832",
+      "user": "Eye_on_events",
+      "created_at": "Mon Dec 15 05:30:15 +0000 2014",
+      "text": "@AmyMek savages",
+      "stance": "support",
+      "in_reply_to_status_id": "544349042952916993",
+      "in_reply_to_user": "AmyMek"
+    },
+    {
+      "id": "544364301541060609",
+      "user": "pearlpeche",
+      "created_at": "Mon Dec 15 05:32:17 +0000 2014",
+      "text": "@KohTaKiev @AmyMek @Lengsanity1 Not all Muslims are terrorist, but all terrorist are Muslim!",
+      "stance": "support",
+      "in_reply_to_status_id": "544356915619176448",
+      "in_reply_to_user": "JustNathaIy"
+    },
+    {
+      "id": "544366578922303488",
+      "user": "NinaMaechik",
+      "created_at": "Mon Dec 15 05:41:20 +0000 2014",
+      "text": "@AmyMek 'women used as shields'. Sound familiar?  Hint:  Hamas.",
+      "stance": "support",
+      "in_reply_to_status_id": "544349042952916993",
+      "in_reply_to_user": "AmyMek"
+    },
+    {
+      "id": "544370970392555521",
+      "user": "earthbound_soul",
+      "created_at": "Mon Dec 15 05:58:47 +0000 2014",
+      "text": "@ugottabekidn @KohTaKiev I read a bit of the Koran recently &amp; Radical Islam is the teachings of the Koran taken to extremes &amp; literally.",
+      "stance": "support",
+      "in_reply_to_status_id": "544360792024694785",
+      "in_reply_to_user": "ugottabekidn"
+    },
+    {
+      "id": "544371138542194688",
+      "user": "earthbound_soul",
+      "created_at": "Mon Dec 15 05:59:28 +0000 2014",
+      "text": "@ugottabekidn @KohTaKiev Then I gave up reading it and used the heavy-duty office shredder to mulch it.",
+      "stance": "support",
+      "in_reply_to_status_id": "544360792024694785",
+      "in_reply_to_user": "ugottabekidn"
+    },
+    {
+      "id": "544375457672478720",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 06:16:37 +0000 2014",
+      "text": "@pearlpeche @AmyMek @Lengsanity1 go say that to the Hindus in my parents country that were bombing the Buddhists &amp; Muslims.\nu know nothing",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544364301541060609",
+      "in_reply_to_user": "pearlpeche"
+    },
+    {
+      "id": "544376074277093377",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 06:19:04 +0000 2014",
+      "text": "@ugottabekidn you can do that with even the Bible can you not? Are you getting your Quran interpretations from some Islam hating websites :b",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544360792024694785",
+      "in_reply_to_user": "ugottabekidn"
+    },
+    {
+      "id": "544381572468592641",
+      "user": "Latvija27",
+      "created_at": "Mon Dec 15 06:40:55 +0000 2014",
+      "text": "@AmyMek @jewelsparkle3 I demand Mosques to be burned to the ground.",
+      "stance": "support",
+      "in_reply_to_status_id": "544349042952916993",
+      "in_reply_to_user": "AmyMek"
+    },
+    {
+      "id": "544381940569100288",
+      "user": "jewelsparkle3",
+      "created_at": "Mon Dec 15 06:42:23 +0000 2014",
+      "text": "@Latvija27 @AmyMek Should never be built.",
+      "stance": "support",
+      "in_reply_to_status_id": "544381572468592641",
+      "in_reply_to_user": "Latvija27"
+    },
+    {
+      "id": "544382348016381953",
+      "user": "Latvija27",
+      "created_at": "Mon Dec 15 06:44:00 +0000 2014",
+      "text": "@jewelsparkle3 @AmyMek Islam and democracy cannot coexist.",
+      "stance": "support",
+      "in_reply_to_status_id": "544381940569100288",
+      "in_reply_to_user": "jewelsparkle3"
+    },
+    {
+      "id": "544393594916728832",
+      "user": "lashingbar",
+      "created_at": "Mon Dec 15 07:28:42 +0000 2014",
+      "text": "@kwbr1960 @AmyMek let's Rock , Paper, Scissor and take a guess! He's  Terrorist , Duhh",
+      "stance": "support",
+      "in_reply_to_status_id": "544352484764827649",
+      "in_reply_to_user": "kwbr1960"
+    },
+    {
+      "id": "544479493436354560",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 13:10:01 +0000 2014",
+      "text": "@ugottabekidn show me what verses but tbh I'm not a fan of any abrahamic religion. They are all evil to me.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544456004445159424",
+      "in_reply_to_user": "ugottabekidn"
+    },
+    {
+      "id": "544541083926265856",
+      "user": "earthbound_soul",
+      "created_at": "Mon Dec 15 17:14:46 +0000 2014",
+      "text": "@JustNathaIy @ugottabekidn You're a Muslim, I assume, JustNat? Read Koran? It's very Us v Them and Them cannot live.",
+      "stance": "support",
+      "in_reply_to_status_id": "544376202002038785",
+      "in_reply_to_user": "JustNathaIy"
+    },
+    {
+      "id": "544543744762970112",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 17:25:20 +0000 2014",
+      "text": "@earthbound_soul @ugottabekidn why would you assume I'm Muslim? I'm Buddhist. And no I haven't but I don't see why ppl attack Islam like",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544541083926265856",
+      "in_reply_to_user": "earthbound_soul"
+    },
+    {
+      "id": "544543904603709440",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 17:25:58 +0000 2014",
+      "text": "@earthbound_soul @ugottabekidn it's any worse than their religions. I've have a Bible &amp; Quran and even though I haven't finished them or",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544541083926265856",
+      "in_reply_to_user": "earthbound_soul"
+    },
+    {
+      "id": "544544076100431872",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 17:26:39 +0000 2014",
+      "text": "@earthbound_soul @ugottabekidn plan to finish them. I have seen verses in both that are disturbing. They both are just as bad. So bash both.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544541083926265856",
+      "in_reply_to_user": "earthbound_soul"
+    },
+    {
+      "id": "544545412741595136",
+      "user": "ugottabekidn",
+      "created_at": "Mon Dec 15 17:31:58 +0000 2014",
+      "text": "@JustNathaIy @earthbound_soul ...to punish or even kill those who don't believe.\nAllah proves that he is not the same God as many profess...",
+      "stance": "support",
+      "in_reply_to_status_id": "544544076100431872",
+      "in_reply_to_user": "JustNathaIy"
+    },
+    {
+      "id": "544546289971503104",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 17:35:27 +0000 2014",
+      "text": "@ugottabekidn @earthbound_soul but theres also verses in the Quran that tell u if u kill one person it's as if you killed all of humanity",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544545412741595136",
+      "in_reply_to_user": "ugottabekidn"
+    },
+    {
+      "id": "544546418963128320",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 17:35:58 +0000 2014",
+      "text": "@ugottabekidn @earthbound_soul idk it's just a very contradicted religion to me. It's all a bunch of nonsense to me. I just don't like how",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544545412741595136",
+      "in_reply_to_user": "ugottabekidn"
+    },
+    {
+      "id": "544546592217260032",
+      "user": "JustNathaIy",
+      "created_at": "Mon Dec 15 17:36:39 +0000 2014",
+      "text": "@ugottabekidn @earthbound_soul one religion of nonsense gets bashed more than the other.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544545412741595136",
+      "in_reply_to_user": "ugottabekidn"
+    },
+    {
+      "id": "544547206389596160",
+      "user": "ugottabekidn",
+      "created_at": "Mon Dec 15 17:39:05 +0000 2014",
+      "text": "@JustNathaIy @earthbound_soul Allah is capricious. He can't be trusted. He changes his mind to fit his narrative.  Muhammad did the same.",
+      "stance": "support",
+      "in_reply_to_status_id": "544546418963128320",
+      "in_reply_to_user": "JustNathaIy"
+    },
+    {
+      "id": "544589133734481922",
+      "user": "earthbound_soul",
+      "created_at": "Mon Dec 15 20:25:42 +0000 2014",
+      "text": "@ugottabekidn @JustNathaIy I am no religion. Everyone has a right to their own beliefs. But don't force beliefs on society. &amp; no beheadings!",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544550111981092864",
+      "in_reply_to_user": "ugottabekidn"
+    },
+    {
+      "id": "544590466415853568",
+      "user": "earthbound_soul",
+      "created_at": "Mon Dec 15 20:30:59 +0000 2014",
+      "text": "@JustNathaIy @ugottabekidn Problem arises w/blindly following anything/anyone. Question, examine, reconcile it w/ pers beliefs.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544546289971503104",
+      "in_reply_to_user": "JustNathaIy"
+    },
+    {
+      "id": "544590554223632385",
+      "user": "earthbound_soul",
+      "created_at": "Mon Dec 15 20:31:20 +0000 2014",
+      "text": "@JustNathaIy @ugottabekidn Dogma is the greatest form of ignorance.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544546289971503104",
+      "in_reply_to_user": "JustNathaIy"
+    }
+  ]
+}

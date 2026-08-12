@@ -1,0 +1,290 @@
+{
+  "thread_id": "525051210349289472",
+  "event": "ottawashooting",
+  "thread_path": "ottawashooting/rumours/525051210349289472",
+  "source": {
+    "id": "525051210349289472",
+    "user": "FoxNews",
+    "created_at": "Wed Oct 22 22:28:58 +0000 2014",
+    "text": "Breaking News: U.S. agencies have been advised that #Ottawa shooter was believed to be a #Canadian convert to #Islam, #FoxNews confirms."
+  },
+  "selection_rule": "Strict explicit stance only. Support means the comment accepts the source framing that Islam/convert identity is relevant, predictable, or tied to radical Islamist motive. Oppose means the comment rejects that framing as media bias, Islamophobia, overgeneralization, or an unfair linkage between Islam and violence.",
+  "note": "Selected 30 explicit comments with balanced stances. Link-only, insult-only without clear stance, joke-only, and heavily ambiguous comments were excluded.",
+  "counts": {
+    "support": 15,
+    "oppose": 15,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "525051515715993600",
+      "user": "02C5",
+      "created_at": "Wed Oct 22 22:30:10 +0000 2014",
+      "text": "@FoxNews A Religion of Peace &amp; Love...👎",
+      "stance": "support",
+      "in_reply_to_status_id": "525051210349289472",
+      "in_reply_to_user": "FoxNews"
+    },
+    {
+      "id": "525051786239807488",
+      "user": "SarahVail1",
+      "created_at": "Wed Oct 22 22:31:15 +0000 2014",
+      "text": "@FoxNews No kidding. All you have to do is think violence....yep, muslim.",
+      "stance": "support",
+      "in_reply_to_status_id": "525051210349289472",
+      "in_reply_to_user": "FoxNews"
+    },
+    {
+      "id": "525052710761283584",
+      "user": "Doc_68W_",
+      "created_at": "Wed Oct 22 22:34:55 +0000 2014",
+      "text": "FIFY \"@FoxNews: EXPECTED news: #Ottawa shooter was believed to be a #Canadian convert to #Islam, #FoxNews confirms.”",
+      "stance": "support",
+      "in_reply_to_status_id": "525051210349289472",
+      "in_reply_to_user": "FoxNews"
+    },
+    {
+      "id": "525053823065141249",
+      "user": "cjjeme",
+      "created_at": "Wed Oct 22 22:39:21 +0000 2014",
+      "text": "@FoxNews  This is only a surprise if you are a Democrat or a fool",
+      "stance": "support",
+      "in_reply_to_status_id": "525051210349289472",
+      "in_reply_to_user": "FoxNews"
+    },
+    {
+      "id": "525055055624679425",
+      "user": "thepierman",
+      "created_at": "Wed Oct 22 22:44:14 +0000 2014",
+      "text": "@MrWillBill @FoxNews  Because Islam isn't a religion. It's Jim Jones on a global scale!",
+      "stance": "support",
+      "in_reply_to_status_id": "525052004612444160",
+      "in_reply_to_user": "MrWillBill"
+    },
+    {
+      "id": "525057361711759360",
+      "user": "C_Anderson2142",
+      "created_at": "Wed Oct 22 22:53:24 +0000 2014",
+      "text": "@abdoulieswazzy @FoxNews\rThey aren't saying every killer is a Muslim terrorist. Just that another Muslim terrorist has killed again.",
+      "stance": "support",
+      "in_reply_to_status_id": "525054043644002304",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525059868055834624",
+      "user": "C_Anderson2142",
+      "created_at": "Wed Oct 22 23:03:22 +0000 2014",
+      "text": "@abdoulieswazzy @FoxNews considering what ISIS has been telling Muslims to do to their home countries, it fits their agenda and terror plans",
+      "stance": "support",
+      "in_reply_to_status_id": "525058737133072384",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525060714994880512",
+      "user": "C_Anderson2142",
+      "created_at": "Wed Oct 22 23:06:44 +0000 2014",
+      "text": "@abdoulieswazzy @FoxNews their religion is also their motivator. So their religion plays a part whether you like it or not. Remember 9/11???",
+      "stance": "support",
+      "in_reply_to_status_id": "525058737133072384",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525061443948118016",
+      "user": "MattyBriggs96",
+      "created_at": "Wed Oct 22 23:09:38 +0000 2014",
+      "text": "@C_Anderson2142 @abdoulieswazzy @FoxNews ISIS claims they represent true Islam haha technically they hold true to the real Islamic belief",
+      "stance": "support",
+      "in_reply_to_status_id": "525060714994880512",
+      "in_reply_to_user": "C_Anderson2142"
+    },
+    {
+      "id": "525061711519571969",
+      "user": "MattyBriggs96",
+      "created_at": "Wed Oct 22 23:10:41 +0000 2014",
+      "text": "@C_Anderson2142 @abdoulieswazzy @FoxNews because their religion usually doesn't tell them to murder people who don't believe",
+      "stance": "support",
+      "in_reply_to_status_id": "525060714994880512",
+      "in_reply_to_user": "C_Anderson2142"
+    },
+    {
+      "id": "525062573700698112",
+      "user": "C_Anderson2142",
+      "created_at": "Wed Oct 22 23:14:07 +0000 2014",
+      "text": "@MattyBriggs96 @abdoulieswazzy @FoxNews the end is violent. To deal with these contradictions they are to obey the latter. Which is violent",
+      "stance": "support",
+      "in_reply_to_status_id": "525061711519571969",
+      "in_reply_to_user": "MattyBriggs96"
+    },
+    {
+      "id": "525062926592659456",
+      "user": "C_Anderson2142",
+      "created_at": "Wed Oct 22 23:15:31 +0000 2014",
+      "text": "@abdoulieswazzy @FoxNews that Islamist terrorists flew two commercial airlines into our towers and killed 6,000 people. Also hijacked a 3rd",
+      "stance": "support",
+      "in_reply_to_status_id": "525062500111646720",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525068937969795073",
+      "user": "C_Anderson2142",
+      "created_at": "Wed Oct 22 23:39:24 +0000 2014",
+      "text": "@abdoulieswazzy @MattyBriggs96 @FoxNews  you can't negate why they do it. terrorists do it for their religion usually. End of story.",
+      "stance": "support",
+      "in_reply_to_status_id": "525067516771860481",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525069461792231424",
+      "user": "C_Anderson2142",
+      "created_at": "Wed Oct 22 23:41:29 +0000 2014",
+      "text": "@abdoulieswazzy @MattyBriggs96 @FoxNews reality of it. To clarify I'm talking bout the extreme ones. NOT all Muslims.",
+      "stance": "support",
+      "in_reply_to_status_id": "525067516771860481",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525071381634252800",
+      "user": "C_Anderson2142",
+      "created_at": "Wed Oct 22 23:49:07 +0000 2014",
+      "text": "@abdoulieswazzy @MattyBriggs96 @FoxNews no amount of discussions will change the fact that these extremists are killing in the name of Allah",
+      "stance": "support",
+      "in_reply_to_status_id": "525070066178879488",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525054043644002304",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 22:40:13 +0000 2014",
+      "text": "@FoxNews so anyone who shoot and kills or bombs is a Muslim this is too low even for @FoxNews",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525051210349289472",
+      "in_reply_to_user": "FoxNews"
+    },
+    {
+      "id": "525055319144419328",
+      "user": "nikkeykat",
+      "created_at": "Wed Oct 22 22:45:17 +0000 2014",
+      "text": "@abdoulieswazzy @FoxNews couldn't just be a crazy who happens to claim to be Muslim",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525054043644002304",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525058737133072384",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 22:58:52 +0000 2014",
+      "text": "@C_Anderson2142 @FoxNews people shoot each other everyday why bring religion into it do they even know the motive behind it???",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525057361711759360",
+      "in_reply_to_user": "C_Anderson2142"
+    },
+    {
+      "id": "525059607144964097",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 23:02:20 +0000 2014",
+      "text": "@nikkeykat @FoxNews absolutely you can't blame what one man or a group of fifty does on a billion people that's just hilarious.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525057884418478081",
+      "in_reply_to_user": "nikkeykat"
+    },
+    {
+      "id": "525060140995973120",
+      "user": "nikkeykat",
+      "created_at": "Wed Oct 22 23:04:27 +0000 2014",
+      "text": "@abdoulieswazzy @FoxNews funny how it doesn't work the other way nobody mentions religion in crime unless religion is Islam &gt;fear spreading",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525059607144964097",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525060746724773889",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 23:06:51 +0000 2014",
+      "text": "@C_Anderson2142 @FoxNews Isis don't represent Islam maybe the united states govt ask @FoxNews",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525059868055834624",
+      "in_reply_to_user": "C_Anderson2142"
+    },
+    {
+      "id": "525062226286489600",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 23:12:44 +0000 2014",
+      "text": "@nikkeykat @FoxNews its crazy and the funny thing is people are starting to realize the role media is playing, trying to make Islam look bad",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525060140995973120",
+      "in_reply_to_user": "nikkeykat"
+    },
+    {
+      "id": "525063529255407616",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 23:17:55 +0000 2014",
+      "text": "@MattyBriggs96 @C_Anderson2142 @FoxNews what about the guy who loaded a pickup full of c4 explosives and headed for a mosque in the U S?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525061582079143937",
+      "in_reply_to_user": "MattyBriggs96"
+    },
+    {
+      "id": "525064010648256513",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 23:19:50 +0000 2014",
+      "text": "@MattyBriggs96 @C_Anderson2142 @FoxNews can you tell me where it says kill someone who does not believe in Islam?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525061711519571969",
+      "in_reply_to_user": "MattyBriggs96"
+    },
+    {
+      "id": "525066121234616322",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 23:28:13 +0000 2014",
+      "text": "@C_Anderson2142 @MattyBriggs96 @FoxNews what about student who walks into a school with an automatic rifle and starts shooting at his mates?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525064081037090816",
+      "in_reply_to_user": "C_Anderson2142"
+    },
+    {
+      "id": "525067295698477057",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 23:32:53 +0000 2014",
+      "text": "@nikkeykat @nicpradhan @FoxNews start thinking for yourselves don't let the media do it for u",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525065486531575809",
+      "in_reply_to_user": "nikkeykat"
+    },
+    {
+      "id": "525057884418478081",
+      "user": "nikkeykat",
+      "created_at": "Wed Oct 22 22:55:29 +0000 2014",
+      "text": "@abdoulieswazzy @FoxNews for world domination and yet most don't. Religion of peace yes but like all walks has it's crazies",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525056911121862656",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525073524629983233",
+      "user": "abdoulieswazzy",
+      "created_at": "Wed Oct 22 23:57:38 +0000 2014",
+      "text": "@C_Anderson2142 @FoxNews you think Islam is the threat think twice",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525072814710489088",
+      "in_reply_to_user": "C_Anderson2142"
+    },
+    {
+      "id": "525771201755762688",
+      "user": "iTwerk4Rauhl",
+      "created_at": "Fri Oct 24 22:09:57 +0000 2014",
+      "text": "@abdoulieswazzy @C_Anderson2142 @FoxNews oh and I forgot to mention the mosque that was vandalized today in Alberta.. Should I go on?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525769819875209217",
+      "in_reply_to_user": "abdoulieswazzy"
+    },
+    {
+      "id": "525771331145846784",
+      "user": "iTwerk4Rauhl",
+      "created_at": "Fri Oct 24 22:10:28 +0000 2014",
+      "text": "@abdoulieswazzy @C_Anderson2142 @FoxNews because they're racist ignorant pieces of shit that believe anything thats told to them",
+      "stance": "oppose",
+      "in_reply_to_status_id": "525769819875209217",
+      "in_reply_to_user": "abdoulieswazzy"
+    }
+  ]
+}

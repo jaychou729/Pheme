@@ -1,0 +1,290 @@
+{
+  "thread_id": "544445364322197504",
+  "event": "sydneysiege",
+  "thread_path": "sydneysiege/rumours/544445364322197504",
+  "source": {
+    "id": "544445364322197504",
+    "user": "BBCWorld",
+    "created_at": "Mon Dec 15 10:54:24 +0000 2014",
+    "text": "What does the black flag at #SydneySiege stand for? http://t.co/3shTK9yYOh http://t.co/UkVFUgetLd"
+  },
+  "selection_rule": "Kept 30 comments with explicit support or opposition to the source tweet asking/explaining what the black flag at the Sydney siege stood for. Excluded pure links, hostage-safety wishes, jokes, off-topic insults, and comments where the stance toward the flag/Islam/terrorism framing was unclear; balanced 15 support and 15 oppose.",
+  "note": "support = treats the flag explanation as useful clarification, distinguishes the flag from ISIS or Muslims generally, or rejects broad anti-Islam interpretations; oppose = argues the flag/BBC framing still points to Islam, jihad, or Muslims generally, or criticizes attempts to soften/separate the symbol from Islamist violence.",
+  "counts": {
+    "support": 15,
+    "oppose": 15,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "544445756615032833",
+      "user": "Scorpydog",
+      "created_at": "Mon Dec 15 10:55:58 +0000 2014",
+      "text": "@BBCWorld It is an innocuous religious thing, something about there being one god, and muhummad being the prophet...",
+      "stance": "support",
+      "in_reply_to_status_id": "544445364322197504",
+      "in_reply_to_user": "BBCWorld"
+    },
+    {
+      "id": "544445936336764929",
+      "user": "havanadump",
+      "created_at": "Mon Dec 15 10:56:41 +0000 2014",
+      "text": "@BBCWorld So it's just Muslims in general we should be concerned about, nothing to do with identified terrorist groups.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544445364322197504",
+      "in_reply_to_user": "BBCWorld"
+    },
+    {
+      "id": "544446141237309440",
+      "user": "rbp77",
+      "created_at": "Mon Dec 15 10:57:30 +0000 2014",
+      "text": "@BBCWorld important point: similar but different to ISIS folks. Not the same thing, probably just a single disconnected nutbag.",
+      "stance": "support",
+      "in_reply_to_status_id": "544445364322197504",
+      "in_reply_to_user": "BBCWorld"
+    },
+    {
+      "id": "544446257222414337",
+      "user": "rbp77",
+      "created_at": "Mon Dec 15 10:57:57 +0000 2014",
+      "text": "@havanadump @BBCWorld no. Dipstick, it's nothing to do with muslims in general.",
+      "stance": "support",
+      "in_reply_to_status_id": "544445936336764929",
+      "in_reply_to_user": "havanadump"
+    },
+    {
+      "id": "544446439733362688",
+      "user": "CRAIGPARSONS2",
+      "created_at": "Mon Dec 15 10:58:41 +0000 2014",
+      "text": "@Greebobek @BBCWorld Perverted Vision? They follow the book. Fact is, it's not a very nice book. Hate Speech",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544446009867505664",
+      "in_reply_to_user": "Greebobek"
+    },
+    {
+      "id": "544446543898476544",
+      "user": "havanadump",
+      "created_at": "Mon Dec 15 10:59:06 +0000 2014",
+      "text": "@rbp77 @BBCWorld It has everything to do with Muslims in general. Are you another communist? You lot are out in force today.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544446257222414337",
+      "in_reply_to_user": "rbp77"
+    },
+    {
+      "id": "544446651327610880",
+      "user": "Greebobek",
+      "created_at": "Mon Dec 15 10:59:31 +0000 2014",
+      "text": "@CRAIGPARSONS2 @BBCWorld About as nice as the Bible.",
+      "stance": "support",
+      "in_reply_to_status_id": "544446439733362688",
+      "in_reply_to_user": "CRAIGPARSONS2"
+    },
+    {
+      "id": "544446793338351616",
+      "user": "JonBenja",
+      "created_at": "Mon Dec 15 11:00:05 +0000 2014",
+      "text": "@Scorpydog @BBCWorld Clearly not so innocuous as far as the perpetrators here are concerned.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544445756615032833",
+      "in_reply_to_user": "Scorpydog"
+    },
+    {
+      "id": "544447073576562688",
+      "user": "MwattinLeebi",
+      "created_at": "Mon Dec 15 11:01:12 +0000 2014",
+      "text": "@BBCWorld IDIOTS! What they are doing opposes the very banner they are putting up! Did Allah or Prophet Muhammad SAW tell u 2 do that? !",
+      "stance": "support",
+      "in_reply_to_status_id": "544445364322197504",
+      "in_reply_to_user": "BBCWorld"
+    },
+    {
+      "id": "544447166954364928",
+      "user": "CRAIGPARSONS2",
+      "created_at": "Mon Dec 15 11:01:34 +0000 2014",
+      "text": "@Greebobek @BBCWorld No not really. But then we've grown up and dumped it. About time they did the same",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544446651327610880",
+      "in_reply_to_user": "Greebobek"
+    },
+    {
+      "id": "544447243965587456",
+      "user": "Scorpydog",
+      "created_at": "Mon Dec 15 11:01:52 +0000 2014",
+      "text": "@JonBenja @BBCWorld I mean innocuous in so far as the flag is actually just like a muslim prayer cloth. Its use here is awful.",
+      "stance": "support",
+      "in_reply_to_status_id": "544446793338351616",
+      "in_reply_to_user": "JonBenja"
+    },
+    {
+      "id": "544447720073986048",
+      "user": "CRAIGPARSONS2",
+      "created_at": "Mon Dec 15 11:03:46 +0000 2014",
+      "text": "@o0alchemist0o @Greebobek @BBCWorld A book promoted by a known, War Lord &amp; Rapist. Nice start to a religion",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544446883499098112",
+      "in_reply_to_user": "o0alchemist0o"
+    },
+    {
+      "id": "544447995761410049",
+      "user": "o0alchemist0o",
+      "created_at": "Mon Dec 15 11:04:52 +0000 2014",
+      "text": "@CRAIGPARSONS2 @Greebobek @BBCWorld okay so who was raped and warlord? You've been reading to much out of context material #ignorent",
+      "stance": "support",
+      "in_reply_to_status_id": "544447720073986048",
+      "in_reply_to_user": "CRAIGPARSONS2"
+    },
+    {
+      "id": "544448741047296000",
+      "user": "CRAIGPARSONS2",
+      "created_at": "Mon Dec 15 11:07:49 +0000 2014",
+      "text": "@o0alchemist0o @Greebobek @BBCWorld You tell me. Are there rules when it's okay &amp; not okay to rape women, in THAT book?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544447995761410049",
+      "in_reply_to_user": "o0alchemist0o"
+    },
+    {
+      "id": "544449082610450432",
+      "user": "o0alchemist0o",
+      "created_at": "Mon Dec 15 11:09:11 +0000 2014",
+      "text": "@CRAIGPARSONS2 @Greebobek @BBCWorld well the qu'ran I read does not condone rape, adultery and abuse of women, the most U can do is...",
+      "stance": "support",
+      "in_reply_to_status_id": "544448741047296000",
+      "in_reply_to_user": "CRAIGPARSONS2"
+    },
+    {
+      "id": "544449828240248833",
+      "user": "o0alchemist0o",
+      "created_at": "Mon Dec 15 11:12:09 +0000 2014",
+      "text": "@CRAIGPARSONS2 @BBCWorld I don't need too tbh, it seems your account for knowledge is skewed. I think u need to find better reading material",
+      "stance": "support",
+      "in_reply_to_status_id": "544448318815076352",
+      "in_reply_to_user": "CRAIGPARSONS2"
+    },
+    {
+      "id": "544450383045992448",
+      "user": "CRAIGPARSONS2",
+      "created_at": "Mon Dec 15 11:14:21 +0000 2014",
+      "text": "@o0alchemist0o @BBCWorld Hadith 4.24. By the way Ignorant is not spelt with an 'e'",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544449828240248833",
+      "in_reply_to_user": "o0alchemist0o"
+    },
+    {
+      "id": "544451406942720000",
+      "user": "CRAIGPARSONS2",
+      "created_at": "Mon Dec 15 11:18:25 +0000 2014",
+      "text": "@o0alchemist0o Even this conversation is disturbing in itself. That the ambiguity over rape &amp; Islam even exists, is so sad",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544450564441243648",
+      "in_reply_to_user": "o0alchemist0o"
+    },
+    {
+      "id": "544452594760810496",
+      "user": "Scorpydog",
+      "created_at": "Mon Dec 15 11:23:08 +0000 2014",
+      "text": "@DaveyBudden @JonBenja @BBCWorld because they are misinformed. Muslim woman came on tv HOURS ago and explained that it was NOT the ISIS flag",
+      "stance": "support",
+      "in_reply_to_status_id": "544452109274734592",
+      "in_reply_to_user": "DaveyBudden"
+    },
+    {
+      "id": "544459914945789953",
+      "user": "live4footy",
+      "created_at": "Mon Dec 15 11:52:13 +0000 2014",
+      "text": "@Scorpydog @DaveyBudden @JonBenja @BBCWorld The BBC also say that. They say similar but not the same.",
+      "stance": "support",
+      "in_reply_to_status_id": "544452594760810496",
+      "in_reply_to_user": "Scorpydog"
+    },
+    {
+      "id": "544462171737190400",
+      "user": "bathsaltsniall",
+      "created_at": "Mon Dec 15 12:01:12 +0000 2014",
+      "text": "@CRAIGPARSONS2 last time I checked that wasn't in the Quran, women are highly respected. +",
+      "stance": "support",
+      "in_reply_to_status_id": "544451406942720000",
+      "in_reply_to_user": "CRAIGPARSONS2"
+    },
+    {
+      "id": "544462500289581057",
+      "user": "o0alchemist0o",
+      "created_at": "Mon Dec 15 12:02:30 +0000 2014",
+      "text": "@CRAIGPARSONS2 Islam will never condone rape or any other abuse, like I said, opinions of twisted schoolers and unauthentic hadiths can't",
+      "stance": "support",
+      "in_reply_to_status_id": "544451406942720000",
+      "in_reply_to_user": "CRAIGPARSONS2"
+    },
+    {
+      "id": "544469299717746688",
+      "user": "_Maleven",
+      "created_at": "Mon Dec 15 12:29:31 +0000 2014",
+      "text": "@MwattinLeebi @BBCWorld Muhammad and the early Muslims presided over a great deal of massacres, rape and slavery actually.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544447073576562688",
+      "in_reply_to_user": "MwattinLeebi"
+    },
+    {
+      "id": "544469486594969600",
+      "user": "_Maleven",
+      "created_at": "Mon Dec 15 12:30:16 +0000 2014",
+      "text": "@Scorpydog @DaveyBudden @JonBenja @BBCWorld Not being the IS flag does not means it's not a banner for Jihad. Jihad is pretty central to",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544452594760810496",
+      "in_reply_to_user": "Scorpydog"
+    },
+    {
+      "id": "544469587245686784",
+      "user": "_Maleven",
+      "created_at": "Mon Dec 15 12:30:40 +0000 2014",
+      "text": "@Scorpydog @DaveyBudden @JonBenja @BBCWorld Islam. That's the unpalatable truth the right-on brigade continue to skirt round.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544452594760810496",
+      "in_reply_to_user": "Scorpydog"
+    },
+    {
+      "id": "544470103262523392",
+      "user": "_Maleven",
+      "created_at": "Mon Dec 15 12:32:43 +0000 2014",
+      "text": "@o0alchemist0o @CRAIGPARSONS2 @Greebobek @BBCWorld Maybe the rape and sexual enslavement justified here: http://t.co/8hAesn5Cai",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544449480565993472",
+      "in_reply_to_user": "o0alchemist0o"
+    },
+    {
+      "id": "544493148706463744",
+      "user": "_Maleven",
+      "created_at": "Mon Dec 15 14:04:17 +0000 2014",
+      "text": "@o0alchemist0o @CRAIGPARSONS2 @Greebobek @BBCWorld Bullshit. Stop being such a fucking cop out. Jihad is Jihad.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544491467734274048",
+      "in_reply_to_user": "o0alchemist0o"
+    },
+    {
+      "id": "544509030450724864",
+      "user": "Scorpydog",
+      "created_at": "Mon Dec 15 15:07:24 +0000 2014",
+      "text": "@JonBenja @_Maleven @DaveyBudden it is just important to get facts right, misinformation is dangerous",
+      "stance": "support",
+      "in_reply_to_status_id": "544508755145400321",
+      "in_reply_to_user": "JonBenja"
+    },
+    {
+      "id": "544510623174766593",
+      "user": "Scorpydog",
+      "created_at": "Mon Dec 15 15:13:43 +0000 2014",
+      "text": "@DaveyBudden @JonBenja @_Maleven I just dont think we should judge others based on religion, race, sexual orientation or political views",
+      "stance": "support",
+      "in_reply_to_status_id": "544510215706918912",
+      "in_reply_to_user": "DaveyBudden"
+    },
+    {
+      "id": "544511407493234689",
+      "user": "_Maleven",
+      "created_at": "Mon Dec 15 15:16:50 +0000 2014",
+      "text": "@Scorpydog @DaveyBudden @JonBenja Get your head out of your arse. I WILL judge people if Islam or any other ideology makes them disgusting",
+      "stance": "oppose",
+      "in_reply_to_status_id": "544510623174766593",
+      "in_reply_to_user": "Scorpydog"
+    }
+  ]
+}

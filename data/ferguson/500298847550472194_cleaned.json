@@ -1,0 +1,290 @@
+{
+  "thread_id": "500298847550472194",
+  "event": "ferguson",
+  "thread_path": "ferguson/rumours/500298847550472194",
+  "source": {
+    "id": "500298847550472194",
+    "user": "LisaBloom",
+    "created_at": "Fri Aug 15 15:11:55 +0000 2014",
+    "text": "If #MikeBrown is indeed the robber, where’s the red ball cap? Sandals? Stolen cigars? #ferguson"
+  },
+  "selection_rule": "Kept 30 comments with explicit support or opposition to the source tweet questioning whether Mike Brown was the robber based on missing/unclear identifying evidence; excluded source duplicate, requests for context, off-topic arguments, personal insults, and ambiguous procedural comments; balanced 15 support and 15 oppose.",
+  "note": "support = agrees with the evidence/identity doubt, treats the robbery story as distraction or fabrication, or argues the released robbery material does not address the shooting; oppose = answers the evidence questions by pointing to hat/sandals/photos/cigarillo admissions, or argues the robbery material is relevant to officer contact/context.",
+  "counts": {
+    "support": 15,
+    "oppose": 15,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "500299666916114433",
+      "user": "barb_hill",
+      "created_at": "Fri Aug 15 15:15:10 +0000 2014",
+      "text": "@LisaBloom @goldietaylor the +40 lbs??",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500299762319777792",
+      "user": "fwdcrocblu",
+      "created_at": "Fri Aug 15 15:15:33 +0000 2014",
+      "text": "@LisaBloom I saw pix of red cap somewhere in footage and pix of scenes...was away from body",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500300296023977984",
+      "user": "fwdcrocblu",
+      "created_at": "Fri Aug 15 15:17:40 +0000 2014",
+      "text": "@LisaBloom didn't Dorian say he was wearing sandals+couldn't run from police",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500300601579012097",
+      "user": "Voodooempress1",
+      "created_at": "Fri Aug 15 15:18:53 +0000 2014",
+      "text": "@LisaBloom @goldietaylor ~ if he took cigarillos or not DOES NOT change the fact MikeBrown was executed in Street #DontBDistracted",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500301248206495744",
+      "user": "Till_You",
+      "created_at": "Fri Aug 15 15:21:27 +0000 2014",
+      "text": "@LisaBloom does that really have anything to do with it???They didn't say it was him. The  officers were on a heighten alert though",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500302030284795904",
+      "user": "aicilamai",
+      "created_at": "Fri Aug 15 15:24:33 +0000 2014",
+      "text": "bitch there ain't one gtfo RT “@LisaBloom: If #MikeBrown is indeed the robber, where’s the red ball cap? Sandals? Stolen cigars? #ferguson”",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500302203232731136",
+      "user": "LisaWinslow",
+      "created_at": "Fri Aug 15 15:25:15 +0000 2014",
+      "text": ".@LisaBloom If #MikeBrown was the robber, my guess is he wouldnt be casually walking down the middle of the street. Seems too convenient.",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500303003086512128",
+      "user": "paniq",
+      "created_at": "Fri Aug 15 15:28:25 +0000 2014",
+      "text": "@LisaBloom @PHIL_FISH where's the witness calling 911?",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500303471632203776",
+      "user": "Asetisis",
+      "created_at": "Fri Aug 15 15:30:17 +0000 2014",
+      "text": "@LisaBloom @AntonioFrench and the loss of at least 20 pounds in less than 10 minutes",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500303557719887872",
+      "user": "wfederman",
+      "created_at": "Fri Aug 15 15:30:38 +0000 2014",
+      "text": "@LisaBloom @AntonioFrench He's clearing wearing the sandals in the photos circulating of him in the pavement. It's him.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500303978195079169",
+      "user": "androoshaw",
+      "created_at": "Fri Aug 15 15:32:18 +0000 2014",
+      "text": "@Till_You @LisaBloom Yes, alert for an unarmed kid with cigars. Doesn't really explain why a gun came into the situation, repeatedly.",
+      "stance": "support",
+      "in_reply_to_status_id": "500301248206495744",
+      "in_reply_to_user": "Till_You"
+    },
+    {
+      "id": "500303988554596352",
+      "user": "BoxxJETSon",
+      "created_at": "Fri Aug 15 15:32:20 +0000 2014",
+      "text": "THANK YOU “@LisaBloom: If #MikeBrown is indeed the robber, where’s the red ball cap? Sandals? Stolen cigars? #ferguson”",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500304054065446914",
+      "user": "magic_uno",
+      "created_at": "Fri Aug 15 15:32:36 +0000 2014",
+      "text": "@LisaBloom Shhh! Shut up, Lisa! You're cramping our style! Signed, Ferguson PD @AntonioFrench",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500304262967361537",
+      "user": "pink_berry26",
+      "created_at": "Fri Aug 15 15:33:26 +0000 2014",
+      "text": "@BoxxJETSon @LisaBloom red ball cap was in the street. Sandals probably came off. Check out the socks.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500303988554596352",
+      "in_reply_to_user": "BoxxJETSon"
+    },
+    {
+      "id": "500304342797533185",
+      "user": "MissChloethePug",
+      "created_at": "Fri Aug 15 15:33:45 +0000 2014",
+      "text": "@LisaBloom @AntonioFrench tragic that authorities stoop to such depths-shameful.",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500304342172180480",
+      "user": "jstriebel22",
+      "created_at": "Fri Aug 15 15:33:45 +0000 2014",
+      "text": "@LisaBloom @mikeywehling http://t.co/kkYpgP3vMc (Note: none of this justifies the shooting or killing, just answering the question.)",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500305229871456257",
+      "user": "authenticreel",
+      "created_at": "Fri Aug 15 15:37:16 +0000 2014",
+      "text": "@Voodooempress1 @LisaBloom @goldietaylor  Thank u. Now, #Ferguson cops have given themselves time to build a story! Teen w/hands up SHOT?!!",
+      "stance": "support",
+      "in_reply_to_status_id": "500300601579012097",
+      "in_reply_to_user": "Voodooempress1"
+    },
+    {
+      "id": "500305420385148929",
+      "user": "jasonstl",
+      "created_at": "Fri Aug 15 15:38:02 +0000 2014",
+      "text": "@LisaBloom Its the same sandals, his hat is on the ground.  His friend is a liar.  Your wrong sorry, look at more photos and videos.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500305715844882432",
+      "user": "Octavia_J83",
+      "created_at": "Fri Aug 15 15:39:12 +0000 2014",
+      "text": "@thomasrye @LisaBloom @esblima are YOU saying officer was dumb enough 2 approach robbery suspects by saying \"get the fuck on the sidewalk\"?",
+      "stance": "support",
+      "in_reply_to_status_id": "500305069938843648",
+      "in_reply_to_user": "thomasrye"
+    },
+    {
+      "id": "500305932421963776",
+      "user": "pink_berry26",
+      "created_at": "Fri Aug 15 15:40:04 +0000 2014",
+      "text": "@BoxxJETSon @LisaBloom they showed it lying in the street on the news",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500305558792982529",
+      "in_reply_to_user": "BoxxJETSon"
+    },
+    {
+      "id": "500306291605393408",
+      "user": "pink_berry26",
+      "created_at": "Fri Aug 15 15:41:29 +0000 2014",
+      "text": "@BoxxJETSon @LisaBloom http://t.co/OgE2P6oxxN",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500305558792982529",
+      "in_reply_to_user": "BoxxJETSon"
+    },
+    {
+      "id": "500306351567159296",
+      "user": "Octavia_J83",
+      "created_at": "Fri Aug 15 15:41:44 +0000 2014",
+      "text": "@thomasrye @LisaBloom @esblima the PD are making this story up as they go along, but they have a few major problems:  eye witnesses",
+      "stance": "support",
+      "in_reply_to_status_id": "500305715844882432",
+      "in_reply_to_user": "Octavia_J83"
+    },
+    {
+      "id": "500307301232672768",
+      "user": "marthavalenta",
+      "created_at": "Fri Aug 15 15:45:30 +0000 2014",
+      "text": "@LisaBloom @AntonioFrench ...and \"if\", then why hasn't Dorian been arrested?",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500308933794627585",
+      "user": "Till_You",
+      "created_at": "Fri Aug 15 15:51:59 +0000 2014",
+      "text": "@androoshaw @LisaBloom Picts were released to help explain a situation. Some want the off name I and most others want facts / proof",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500303978195079169",
+      "in_reply_to_user": "androoshaw"
+    },
+    {
+      "id": "500308985363189761",
+      "user": "SloaneBigmouth",
+      "created_at": "Fri Aug 15 15:52:12 +0000 2014",
+      "text": "@LisaBloom @Anon2earth Lawyer says that Brown's friend confirms that he did take the cigarillos (via. MSNBC)",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    },
+    {
+      "id": "500312449111707649",
+      "user": "SloaneBigmouth",
+      "created_at": "Fri Aug 15 16:05:57 +0000 2014",
+      "text": "@Anon2earth  not justifying shooting. informing that Brown's lawyer is already fucking up the case. This lawyer let Zimmerman walk free.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500310656445612032",
+      "in_reply_to_user": "Anon2earth"
+    },
+    {
+      "id": "500313135824510976",
+      "user": "Till_You",
+      "created_at": "Fri Aug 15 16:08:41 +0000 2014",
+      "text": "@androoshaw @LisaBloom back to my initial tweet... What does that have to do with it",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500312063198363650",
+      "in_reply_to_user": "androoshaw"
+    },
+    {
+      "id": "500313571046490112",
+      "user": "Till_You",
+      "created_at": "Fri Aug 15 16:10:25 +0000 2014",
+      "text": "@androoshaw @LisaBloom no it's not useless. It explains what had been put officers mind. May have been why he attempted to make contact",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500312731246161920",
+      "in_reply_to_user": "androoshaw"
+    },
+    {
+      "id": "500313985217232896",
+      "user": "Till_You",
+      "created_at": "Fri Aug 15 16:12:04 +0000 2014",
+      "text": "@androoshaw @LisaBloom with Brown in the first place. \"May have\" with everything reg this it's all assumption. What happens when u assume",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500312731246161920",
+      "in_reply_to_user": "androoshaw"
+    },
+    {
+      "id": "500316525614469121",
+      "user": "cmagicj14",
+      "created_at": "Fri Aug 15 16:22:09 +0000 2014",
+      "text": "@LisaBloom @imBINGnotGOOGLE they panicked because of the witnesses so they forgot to plant the evidence or couldn't plant it.",
+      "stance": "support",
+      "in_reply_to_status_id": "500298847550472194",
+      "in_reply_to_user": "LisaBloom"
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "thread_id": "500307001629745152",
+  "event": "ferguson",
+  "thread_path": "ferguson/rumours/500307001629745152",
+  "source": {
+    "id": "500307001629745152",
+    "user": "flavius217",
+    "created_at": "Fri Aug 15 15:44:19 +0000 2014",
+    "text": "It appears that #Ferguson PD are trying to assassinate Mike Brown's character after literally assassinating Mike Brown."
+  },
+  "selection_rule": "Kept 30 comments with explicit support or opposition to the source tweet accusing Ferguson PD of assassinating Mike Brown character after killing him; excluded source-authored follow-ups, quote-only reposts, jokes, off-topic replies, and ambiguous calls for more information; balanced 15 support and 15 oppose.",
+  "note": "support = agrees that Ferguson PD released irrelevant/selective information to smear Brown, taint the jury pool, or deflect from the shooting; oppose = argues the information was requested/relevant, that police could not yet release shooting details, or that people should wait for facts before calling it character assassination or execution.",
+  "counts": {
+    "support": 15,
+    "oppose": 15,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "500310256598011904",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 15:57:15 +0000 2014",
+      "text": "@flavius217 @rui_xu How? They are giving info that the media asked for.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500307001629745152",
+      "in_reply_to_user": "flavius217"
+    },
+    {
+      "id": "500310883684208640",
+      "user": "rui_xu",
+      "created_at": "Fri Aug 15 15:59:44 +0000 2014",
+      "text": "@jlpauk @flavius217 They are releasing irrelevant info that doesn't affect the case of Michael Brown's shooting",
+      "stance": "support",
+      "in_reply_to_status_id": "500310256598011904",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500311506676756480",
+      "user": "spants",
+      "created_at": "Fri Aug 15 16:02:13 +0000 2014",
+      "text": "@rui_xu @jlpauk @flavius217 What case? It's totally cool to shoot unarmed people suspected of a crime!",
+      "stance": "support",
+      "in_reply_to_status_id": "500310883684208640",
+      "in_reply_to_user": "rui_xu"
+    },
+    {
+      "id": "500313720145207297",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 16:11:00 +0000 2014",
+      "text": "@rui_xu @flavius217 They can't release shooting info cause they are still interviewing witnesses. Media wanted this info.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500310883684208640",
+      "in_reply_to_user": "rui_xu"
+    },
+    {
+      "id": "500313920301588480",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 16:11:48 +0000 2014",
+      "text": "@rui_xu @flavius217 They can't tie the two together cause they are separate issues. Releasing at different times puts distance between them.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500310883684208640",
+      "in_reply_to_user": "rui_xu"
+    },
+    {
+      "id": "500314894063767553",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 16:15:40 +0000 2014",
+      "text": "@flavius217 @rui_xu Are you saying they start at the end and don't explain why he was approached by cops?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500311158138884096",
+      "in_reply_to_user": "flavius217"
+    },
+    {
+      "id": "500315190529773570",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 16:16:51 +0000 2014",
+      "text": "@Tom_sveb @spants @rui_xu @flavius217 For you to declare he was executed without any facts is also as absurd.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500312144421089281",
+      "in_reply_to_user": "Tom_sveb"
+    },
+    {
+      "id": "500316587333652480",
+      "user": "Tom_sveb",
+      "created_at": "Fri Aug 15 16:22:24 +0000 2014",
+      "text": "@jlpauk @spants @rui_xu @flavius217 and not releasing any facts is a real good way to make sure people pass judgment on the facts they have",
+      "stance": "support",
+      "in_reply_to_status_id": "500315190529773570",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500318794862960640",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 16:31:10 +0000 2014",
+      "text": "@Tom_sveb @spants @rui_xu @flavius217 Not releasing facts about that shooting is also a way to make sure they get good info from witnesses.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500316587333652480",
+      "in_reply_to_user": "Tom_sveb"
+    },
+    {
+      "id": "500319011955949569",
+      "user": "spants",
+      "created_at": "Fri Aug 15 16:32:02 +0000 2014",
+      "text": "@jlpauk @Tom_sveb @rui_xu @flavius217 What they did today was also a good way to taint the jury pool.",
+      "stance": "support",
+      "in_reply_to_status_id": "500318794862960640",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500320401369870336",
+      "user": "Tom_sveb",
+      "created_at": "Fri Aug 15 16:37:33 +0000 2014",
+      "text": "@jlpauk @spants @rui_xu @flavius217 they've systematically only released information that makes them look good, even info that might taint",
+      "stance": "support",
+      "in_reply_to_status_id": "500318794862960640",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500320501475332096",
+      "user": "Tom_sveb",
+      "created_at": "Fri Aug 15 16:37:57 +0000 2014",
+      "text": "@jlpauk @spants @rui_xu @flavius217 the investigation (e.g., that officer had a facial injury).",
+      "stance": "support",
+      "in_reply_to_status_id": "500318794862960640",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500320630156189697",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 16:38:28 +0000 2014",
+      "text": "@flavius217 @spants @Tom_sveb @rui_xu I don't understand the double standard of wanting all the info about the cop but Brown's past is safe.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500319116776198144",
+      "in_reply_to_user": "flavius217"
+    },
+    {
+      "id": "500321014816210944",
+      "user": "Tom_sveb",
+      "created_at": "Fri Aug 15 16:40:00 +0000 2014",
+      "text": "@jlpauk @spants @rui_xu @flavius217 and that suppressing or selectively releasing info led to people deciding for themselves.",
+      "stance": "support",
+      "in_reply_to_status_id": "500320131239518209",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500321053197864961",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 16:40:09 +0000 2014",
+      "text": "@Tom_sveb @spants @rui_xu @flavius217 What other info do they have ready to release? All they have said is this is why we approached him.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500320401369870336",
+      "in_reply_to_user": "Tom_sveb"
+    },
+    {
+      "id": "500321227597021184",
+      "user": "spants",
+      "created_at": "Fri Aug 15 16:40:50 +0000 2014",
+      "text": "@jlpauk @Tom_sveb @rui_xu @flavius217 Why wasn't Dorian Johnson arrested if he was suspected of a robbery?",
+      "stance": "support",
+      "in_reply_to_status_id": "500321053197864961",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500378492488253440",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 20:28:23 +0000 2014",
+      "text": "@spants @Tom_sveb @rui_xu @flavius217 What they also did was chose to not ignore facts that call in to question the witness' credibility.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500319011955949569",
+      "in_reply_to_user": "spants"
+    },
+    {
+      "id": "500379159965618178",
+      "user": "spants",
+      "created_at": "Fri Aug 15 20:31:02 +0000 2014",
+      "text": "@jlpauk @Tom_sveb @rui_xu @flavius217 He admitted they stole cigars to DOJ &amp; StL County PD. He wasn't charged b/c he didn't commit a crime.",
+      "stance": "support",
+      "in_reply_to_status_id": "500378492488253440",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500379294284001282",
+      "user": "spants",
+      "created_at": "Fri Aug 15 20:31:35 +0000 2014",
+      "text": "@jlpauk @Tom_sveb @rui_xu @flavius217 There are several witnesses. They don't all know each other and they're all saying the same things.",
+      "stance": "support",
+      "in_reply_to_status_id": "500378492488253440",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500379521900503040",
+      "user": "spants",
+      "created_at": "Fri Aug 15 20:32:29 +0000 2014",
+      "text": "@jlpauk @Tom_sveb @rui_xu @flavius217 You don't want to see what's happening? Fine. Keep being naive. Good day.",
+      "stance": "support",
+      "in_reply_to_status_id": "500378492488253440",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500380753272635392",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 20:37:22 +0000 2014",
+      "text": "@spants @Tom_sveb @rui_xu @flavius217 I see a lot of people making assumptions with limited facts. We haven't even seen an autopsy report.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500379521900503040",
+      "in_reply_to_user": "spants"
+    },
+    {
+      "id": "500381784425512960",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 20:41:28 +0000 2014",
+      "text": "@spants @Tom_sveb @rui_xu @flavius217 and you want to make a decision without any hard facts.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500379294284001282",
+      "in_reply_to_user": "spants"
+    },
+    {
+      "id": "500383364084686849",
+      "user": "Tom_sveb",
+      "created_at": "Fri Aug 15 20:47:45 +0000 2014",
+      "text": "@jlpauk @spants @rui_xu @flavius217 why don't you check out the racial profiling statistics of the Ferguson PD? some real, hard facts.",
+      "stance": "support",
+      "in_reply_to_status_id": "500381689399369730",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500383616283975680",
+      "user": "Tom_sveb",
+      "created_at": "Fri Aug 15 20:48:45 +0000 2014",
+      "text": "@jlpauk @spants @rui_xu @flavius217 then tell me the people of Ferguson haven't EARNED some distrust.",
+      "stance": "support",
+      "in_reply_to_status_id": "500381689399369730",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500384522840453120",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 20:52:21 +0000 2014",
+      "text": "@Tom_sveb @spants @rui_xu @flavius217 That right there tells me you are going into this with an agenda.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500383364084686849",
+      "in_reply_to_user": "Tom_sveb"
+    },
+    {
+      "id": "500385933523304448",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 20:57:57 +0000 2014",
+      "text": "@Tom_sveb @spants @rui_xu @flavius217 No that you see this as a racial situation before you know anything.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500384718496747520",
+      "in_reply_to_user": "Tom_sveb"
+    },
+    {
+      "id": "500387313050845184",
+      "user": "spants",
+      "created_at": "Fri Aug 15 21:03:26 +0000 2014",
+      "text": "@jlpauk @Tom_sveb @rui_xu @flavius217 What? No it isn't. There is definitely no justification for deadly force once he was running.",
+      "stance": "support",
+      "in_reply_to_status_id": "500386143943139332",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500401666454065154",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 22:00:28 +0000 2014",
+      "text": "@spants @Tom_sveb @rui_xu @flavius217 You're making an assumption about something based on other peoples actions, that's my point.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500400629739573250",
+      "in_reply_to_user": "spants"
+    },
+    {
+      "id": "500402352919445504",
+      "user": "Tom_sveb",
+      "created_at": "Fri Aug 15 22:03:12 +0000 2014",
+      "text": "@jlpauk @spants @rui_xu @flavius217 confused how an unarmed person, charging, retreating, or standing still, is a threat to a cop 30' away",
+      "stance": "support",
+      "in_reply_to_status_id": "500399589417963521",
+      "in_reply_to_user": "jlpauk"
+    },
+    {
+      "id": "500405947253006339",
+      "user": "jlpauk",
+      "created_at": "Fri Aug 15 22:17:29 +0000 2014",
+      "text": "@flavius217 @Tom_sveb @spants @rui_xu I do, but do you have a basic understanding of the judicial system? Let's hear both sides then decide.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500405250755690496",
+      "in_reply_to_user": "flavius217"
+    }
+  ]
+}

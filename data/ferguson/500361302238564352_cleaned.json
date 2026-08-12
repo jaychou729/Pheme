@@ -1,0 +1,290 @@
+{
+  "thread_id": "500361302238564352",
+  "event": "ferguson",
+  "thread_path": "ferguson/rumours/500361302238564352",
+  "source": {
+    "id": "500361302238564352",
+    "user": "tjholmes",
+    "created_at": "Fri Aug 15 19:20:05 +0000 2014",
+    "text": "Key point: Officer Wilson was not aware that #MikeBrown was a robbery suspect. It will be key in establishing his state of mind. #Ferguson"
+  },
+  "selection_rule": "Strict explicit stance only where possible. Support means the comment accepts the source's point that Wilson not knowing about the robbery makes the robbery narrative irrelevant or weak for justifying the shooting. Oppose means the comment argues Brown's own knowledge/state of mind, the robbery call, or robbery-related facts remain relevant despite Wilson's alleged lack of awareness.",
+  "note": "Selected 30 comments with balanced stances. This thread has fewer direct oppose comments; oppose comments were selected only when they still explicitly push back through Brown's state of mind, robbery-call relevance, or robbery-related context.",
+  "counts": {
+    "support": 15,
+    "oppose": 15,
+    "total": 30
+  },
+  "comments": [
+    {
+      "id": "500361413643091968",
+      "user": "BabyKeingsMomma",
+      "created_at": "Fri Aug 15 19:20:31 +0000 2014",
+      "text": "@tjholmes 👏👏👏👏 #WeNeedThatVerdict",
+      "stance": "support",
+      "in_reply_to_status_id": "500361302238564352",
+      "in_reply_to_user": "tjholmes"
+    },
+    {
+      "id": "500361672339763202",
+      "user": "nug1",
+      "created_at": "Fri Aug 15 19:21:33 +0000 2014",
+      "text": "@tjholmes So why did he stop him?",
+      "stance": "support",
+      "in_reply_to_status_id": "500361302238564352",
+      "in_reply_to_user": "tjholmes"
+    },
+    {
+      "id": "500364723305472000",
+      "user": "JagerMouth",
+      "created_at": "Fri Aug 15 19:33:41 +0000 2014",
+      "text": "Then why did that officer have contact @tjholmes",
+      "stance": "support",
+      "in_reply_to_status_id": "500361302238564352",
+      "in_reply_to_user": "tjholmes"
+    },
+    {
+      "id": "500395265627389952",
+      "user": "MikeKrupka",
+      "created_at": "Fri Aug 15 21:35:02 +0000 2014",
+      "text": "@Animaleyz from what I gather, he was walking down street, kneeled down with hands in air before being shot. No struggle.",
+      "stance": "support",
+      "in_reply_to_status_id": "500394578831081472",
+      "in_reply_to_user": "Animaleyz"
+    },
+    {
+      "id": "500397195091132416",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 21:42:42 +0000 2014",
+      "text": "@MikeKrupka @agentlinton only thing I dispute is that the police were called, and were looking for him. But Wilson didnt know about that.",
+      "stance": "support",
+      "in_reply_to_status_id": "500396879666888707",
+      "in_reply_to_user": "MikeKrupka"
+    },
+    {
+      "id": "500398348822523904",
+      "user": "agentlinton",
+      "created_at": "Fri Aug 15 21:47:17 +0000 2014",
+      "text": "@Animaleyz @MikeKrupka cop shot while in car. Got out. Mr. Brown then went to knees, shot again",
+      "stance": "support",
+      "in_reply_to_status_id": "500397441217085440",
+      "in_reply_to_user": "Animaleyz"
+    },
+    {
+      "id": "500398963606831105",
+      "user": "MikeKrupka",
+      "created_at": "Fri Aug 15 21:49:44 +0000 2014",
+      "text": "@Animaleyz @agentlinton That's some messed up shit man. Walking down street. Cop goes in reverse. Shoots on way out of car. Then murders kid",
+      "stance": "support",
+      "in_reply_to_status_id": "500398480011952130",
+      "in_reply_to_user": "Animaleyz"
+    },
+    {
+      "id": "500399572716240899",
+      "user": "agentlinton",
+      "created_at": "Fri Aug 15 21:52:09 +0000 2014",
+      "text": "@Animaleyz @MikeKrupka he's not speaking, and won't speak. Police department and lawyers made sure of that",
+      "stance": "support",
+      "in_reply_to_status_id": "500399289445523457",
+      "in_reply_to_user": "Animaleyz"
+    },
+    {
+      "id": "500399710612361219",
+      "user": "agentlinton",
+      "created_at": "Fri Aug 15 21:52:42 +0000 2014",
+      "text": "@Animaleyz @MikeKrupka they said today He didn't even write incident report. Which was weird in itself. Everyone should be fired",
+      "stance": "support",
+      "in_reply_to_status_id": "500399289445523457",
+      "in_reply_to_user": "Animaleyz"
+    },
+    {
+      "id": "500400814288928769",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 21:57:05 +0000 2014",
+      "text": "@agentlinton @MikeKrupka by the shirt and shoved him, clerk was trying to stop him. But that doesnt justify death by any means.",
+      "stance": "support",
+      "in_reply_to_status_id": "500399710612361219",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500402545047531520",
+      "user": "MikeKrupka",
+      "created_at": "Fri Aug 15 22:03:58 +0000 2014",
+      "text": "@agentlinton @Animaleyz It could just be \"smoke\" / lame attempt to shift focus from murder to robbery.",
+      "stance": "support",
+      "in_reply_to_status_id": "500401882972434432",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500402907808686081",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:05:24 +0000 2014",
+      "text": "@MikeKrupka @agentlinton yea Police chief admitted Wilson didnt know about the robbery.",
+      "stance": "support",
+      "in_reply_to_status_id": "500402545047531520",
+      "in_reply_to_user": "MikeKrupka"
+    },
+    {
+      "id": "500404515447656448",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:11:48 +0000 2014",
+      "text": "@agentlinton @MikeKrupka well either way it had nothing to do with the shooting, so it's irrelevant",
+      "stance": "support",
+      "in_reply_to_status_id": "500404088681406465",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500407822337576960",
+      "user": "agentlinton",
+      "created_at": "Fri Aug 15 22:24:56 +0000 2014",
+      "text": "@Animaleyz @MikeKrupka but again, stealing cigars imo, arguing with a cop, etc. Hitting a cop, once hands went up, incident over",
+      "stance": "support",
+      "in_reply_to_status_id": "500405867611561984",
+      "in_reply_to_user": "Animaleyz"
+    },
+    {
+      "id": "500410369236402176",
+      "user": "MikeKrupka",
+      "created_at": "Fri Aug 15 22:35:03 +0000 2014",
+      "text": "@agentlinton @Animaleyz goes back to stealing cigars shouldn't equal being shot dead, especially since officer had no idea about that...",
+      "stance": "support",
+      "in_reply_to_status_id": "500409911348445185",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500362336410947584",
+      "user": "Cheri1Teacher",
+      "created_at": "Fri Aug 15 19:24:11 +0000 2014",
+      "text": "@tjholmes #MichaelBrown new that he had just committed a serious crime.  That is key in establishing #MichaelBrowns state of mind.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500361302238564352",
+      "in_reply_to_user": "tjholmes"
+    },
+    {
+      "id": "500392918914310145",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 21:25:43 +0000 2014",
+      "text": "@tjholmes @MikeKrupka could go to Brown's state of mind though? He maybe thought that's why he was being stopped?",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500361302238564352",
+      "in_reply_to_user": "tjholmes"
+    },
+    {
+      "id": "500394578831081472",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 21:32:19 +0000 2014",
+      "text": "@MikeKrupka I'm wondering if that maybe contributed to the struggle starting? Of course we'll never know the answer for sure.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500393507605848064",
+      "in_reply_to_user": "MikeKrupka"
+    },
+    {
+      "id": "500395550374506497",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 21:36:10 +0000 2014",
+      "text": "@MikeKrupka one video of a guy said he was eyewitness, said they fought in the car, a shot rang, he knelt and was then shot in the head.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500395265627389952",
+      "in_reply_to_user": "MikeKrupka"
+    },
+    {
+      "id": "500400702749814785",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 21:56:39 +0000 2014",
+      "text": "@agentlinton @MikeKrupka one thing I disagree with that guy in that video about is Brown didnt look like he did nothing. Grabbed clerk...",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500399710612361219",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500402163768504320",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:02:27 +0000 2014",
+      "text": "@agentlinton @MikeKrupka his friend in the video admitted he was in the store getting cigars, but disputes Brown was stealing them.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500401882972434432",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500403050591174656",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:05:58 +0000 2014",
+      "text": "@agentlinton @MikeKrupka witness from the video admitted Brown was there. That much I didnt misunderstand lol",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500402279048953857",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500405867611561984",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:17:10 +0000 2014",
+      "text": "@agentlinton @MikeKrupka police report says clerk indicated the suspect left and walked TOWARDS quick trip. http://t.co/WcLbN4SARH",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500405011784814592",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500406698234761216",
+      "user": "TexasSecede",
+      "created_at": "Fri Aug 15 22:20:28 +0000 2014",
+      "text": "@tjholmes He left an illness call to take a robbery call in the area, according to the Police Chief. Wrong robbery, wrong robber? Just sayin",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500361302238564352",
+      "in_reply_to_user": "tjholmes"
+    },
+    {
+      "id": "500408453278355456",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:27:27 +0000 2014",
+      "text": "@agentlinton @MikeKrupka it just sounds like his friend in the video has bad info of where the robbery happened. Cop went looking for the...",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500407822337576960",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500408620110991360",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:28:06 +0000 2014",
+      "text": "@agentlinton @MikeKrupka robbery suspect at the Quik Trip, but that isnt where it happened. Clerk said suspect left store and went that way.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500407822337576960",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500410261056933888",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:34:38 +0000 2014",
+      "text": "@agentlinton IDK officers responding to the theft say they never found suspect until he was dead, identified him as Brown and his friend...",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500409911348445185",
+      "in_reply_to_user": "agentlinton"
+    },
+    {
+      "id": "500410599394660352",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:35:58 +0000 2014",
+      "text": "@MikeKrupka @agentlinton of course not, we've reiterated that. But a Quik Trip was burned down because of this, hope it wasnt a franchise.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500410369236402176",
+      "in_reply_to_user": "MikeKrupka"
+    },
+    {
+      "id": "500411695534051328",
+      "user": "Animaleyz",
+      "created_at": "Fri Aug 15 22:40:20 +0000 2014",
+      "text": "@MikeKrupka @agentlinton it's a bad situation in many ways. Other innocents affected.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500411406924005376",
+      "in_reply_to_user": "MikeKrupka"
+    },
+    {
+      "id": "500704266869547009",
+      "user": "Animaleyz",
+      "created_at": "Sat Aug 16 18:02:54 +0000 2014",
+      "text": "@MikeKrupka @Mikeywonteatit @agentlinton on the other hand, the FBI has a long history of being used as a political tool. Pick your poison.",
+      "stance": "oppose",
+      "in_reply_to_status_id": "500696063196413953",
+      "in_reply_to_user": "MikeKrupka"
+    }
+  ]
+}
