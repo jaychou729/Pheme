@@ -53,25 +53,18 @@ THINKING_CONTROL_MODELS = {
     "deepseek-v3.1",
 }
 
-# 1=deny rumor, 5=support rumor
 OPINION_LABELS = {
-    1: "Strongly Deny",
-    2: "Deny",
-    3: "Question or Neutral",
-    4: "Support",
-    5: "Strongly Support",
+    "support": "Support",
+    "oppose": "Oppose",
 }
 
-STANCE_SCORE_GUIDE = """1 = strongly denies, rejects, or opposes the source post
-2 = denies, rejects, opposes, or disagrees with the source post
-3 = questions, doubts, neutral, unclear, uncertain, unrelated, or only asks for information
-4 = supports, accepts, or agrees with the source post
-5 = strongly supports or explicitly confirms the source post"""
+STANCE_SCORE_GUIDE = """support = accepts, agrees with, or supports the source post's main claim or framing
+oppose = rejects, disagrees with, pushes back against, or opposes the source post's main claim or framing"""
 
 GRAPH: Dict[int, List[int]] = {}
 AGENT_NAMES: Dict[int, str] = {}
 AGENT_TEXTS: Dict[int, str] = {}
-INITIAL_OPINIONS: Dict[int, int] = {}
+INITIAL_OPINIONS: Dict[int, str] = {}
 TOPIC: str = ""
 CURRENT_THREAD_ID: str = ""
 
@@ -127,7 +120,7 @@ def set_experiment_data(
     graph: Dict[int, List[int]],
     agent_names: Dict[int, str],
     agent_texts: Dict[int, str],
-    initial_opinions: Dict[int, int],
+    initial_opinions: Dict[int, str],
     topic: str,
 ) -> None:
     """Store one loaded PHEME thread in the module runtime state."""
@@ -165,6 +158,61 @@ def _selected_thread_cache_key(selected_thread: Path) -> str:
     if path.suffix.lower() == ".json":
         return path.stem
     return path.name
+
+
+def normalize_stance(value: Any) -> Optional[str]:
+    """Normalize legacy scores and text labels to support/oppose."""
+    if value is None:
+        return None
+
+    text = str(value).strip().lower()
+    if not text:
+        return None
+
+    if text in {"support", "supports", "supported", "agree", "agrees", "for"}:
+        return "support"
+    if text in {
+        "oppose",
+        "opposes",
+        "opposed",
+        "deny",
+        "denies",
+        "disagree",
+        "disagrees",
+        "against",
+    }:
+        return "oppose"
+
+    if text in {"4", "5"}:
+        return "support"
+    if text in {"1", "2"}:
+        return "oppose"
+
+    return None
+
+
+def stance_label(value: Any) -> str:
+    stance = normalize_stance(value)
+    if stance is None:
+        return "Unknown"
+    return OPINION_LABELS[stance]
+
+
+def stance_changed(old_stance: Any, new_stance: Any) -> Optional[bool]:
+    old_norm = normalize_stance(old_stance)
+    new_norm = normalize_stance(new_stance)
+
+    if old_norm is None or new_norm is None:
+        return None
+    return old_norm != new_norm
+
+
+def stance_change_value(old_stance: Any, new_stance: Any) -> Optional[int]:
+    changed = stance_changed(old_stance, new_stance)
+
+    if changed is None:
+        return None
+    return int(changed)
 
 
 # build_stance_file_path 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
@@ -239,8 +287,9 @@ def save_initial_opinions(
         "topic": topic,
         "config": config or {},
         "initial_opinions": {
-            str(agent_id): int(score)
-            for agent_id, score in sorted(initial_opinions.items())
+            str(agent_id): normalize_stance(stance)
+            for agent_id, stance in sorted(initial_opinions.items())
+            if normalize_stance(stance) is not None
         },
         "agent_names": {
             str(agent_id): name
@@ -267,18 +316,19 @@ def save_initial_opinions(
 # load_initial_opinions 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def load_initial_opinions(
     input_path: Path,
-) -> Dict[int, int]:
-    """Load initialized stance scores from a stance-cache JSON file."""
+) -> Dict[int, str]:
+    """Load initialized stances from a stance-cache JSON file."""
     input_path = Path(input_path)
 
     with input_path.open("r", encoding="utf-8-sig") as f:
         payload = json.load(f)
 
     raw_opinions = payload.get("initial_opinions", payload)
-    opinions = {
-        int(agent_id): int(score)
-        for agent_id, score in raw_opinions.items()
-    }
+    opinions = {}
+    for agent_id, raw_stance in raw_opinions.items():
+        stance = normalize_stance(raw_stance)
+        if stance is not None:
+            opinions[int(agent_id)] = stance
 
     print(f"[Stance Cache] Loaded initial stances: {input_path}")
     return opinions
@@ -294,7 +344,7 @@ def load_and_set_pheme_thread(
     use_llm_init: bool = True,
     stance_dir: Optional[Path] = None,
     force_recompute_stance: bool = False,
-) -> Tuple[Path, Dict[int, List[int]], Dict[int, str], Dict[int, str], Dict[int, int], str]:
+) -> Tuple[Path, Dict[int, List[int]], Dict[int, str], Dict[int, str], Dict[int, str], str]:
     """Select, load, register, and optionally cache PHEME initial stances."""
     global CURRENT_THREAD_ID
 
@@ -306,7 +356,7 @@ def load_and_set_pheme_thread(
     CURRENT_THREAD_ID = get_selected_thread_id(selected_thread)
 
     stance_path: Optional[Path] = None
-    cached_opinions: Optional[Dict[int, int]] = None
+    cached_opinions: Optional[Dict[int, str]] = None
 
     if stance_dir is not None:
         canonical_stance_path = build_stance_file_path(
@@ -652,42 +702,46 @@ def llm_call(
 
 
 # parse_opinion 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
-def parse_opinion(text: str) -> Optional[int]:
-    """Extract a stance score from model output."""
+def parse_opinion(text: str) -> Optional[str]:
+    """Extract a binary support/oppose stance from model output."""
     if not text:
         return None
 
-    text = text.strip()
+    text = str(text).strip()
+    first_line = text.splitlines()[0].strip()
 
-    # Prefer the expected formats: "4", "4 - Support", or "Score: 4".
-    match = re.match(
-        r"^\s*(?:score\s*[:=-]\s*)?([1-5])\s*(?:$|[-:]\s*(?:strongly\s+)?(?:support|deny|neutral|question|oppose)\b.*)",
-        text,
+    normalized = normalize_stance(first_line)
+    if normalized is not None:
+        return normalized
+
+    match = re.search(
+        r"\b(support|supports|oppose|opposes|deny|denies|disagree|disagrees)\b",
+        first_line,
         flags=re.IGNORECASE,
     )
     if match:
-        return int(match.group(1))
+        return normalize_stance(match.group(1))
 
-    # If the model returned a short sentence but only one stance number appears,
-    # accept it. If multiple numbers appear, fail instead of silently taking the
-    # wrong one from an explanation.
+    # Backward-compatible parsing for old 1-5 outputs.
+    match = re.match(
+        r"^\s*(?:score\s*[:=-]\s*)?([1-5])\b",
+        first_line,
+        flags=re.IGNORECASE,
+    )
+    if match:
+        return normalize_stance(match.group(1))
+
     matches = re.findall(r"\b[1-5]\b", text)
     if len(matches) == 1:
-        return int(matches[0])
+        return normalize_stance(matches[0])
     if len(matches) > 1:
         return None
 
     lower = re.sub(r"\s+", " ", text.lower()).strip(" .:-")
-    if lower == "strongly support":
-        return 5
-    if lower in {"strongly deny", "strongly oppose"}:
-        return 1
-    if lower == "support":
-        return 4
-    if lower in {"deny", "oppose"}:
-        return 2
-    if lower in {"question", "neutral", "uncertain"}:
-        return 3
+    if "support" in lower:
+        return "support"
+    if "oppose" in lower or "deny" in lower or "disagree" in lower:
+        return "oppose"
 
     return None
 
@@ -772,18 +826,8 @@ def build_edges_from_reply_metadata(
     return edges
 
 
-def _cleaned_stance_to_score(stance: Any) -> Optional[int]:
-    text = str(stance or "").strip().lower()
-
-    if text in {"1", "2", "3", "4", "5"}:
-        return int(text)
-    if text in {"support", "supports", "agree", "agrees"}:
-        return 4
-    if text in {"oppose", "opposes", "deny", "denies", "disagree", "disagrees"}:
-        return 2
-    if text in {"neutral", "question", "questions", "unclear"}:
-        return 3
-    return None
+def _cleaned_stance_to_score(stance: Any) -> Optional[str]:
+    return normalize_stance(stance)
 
 
 def _build_pheme_graph_from_tweets(
@@ -793,8 +837,8 @@ def _build_pheme_graph_from_tweets(
     edges: List[Tuple[str, str]],
     max_agents: int,
     use_llm_init: bool,
-    initial_opinions_override: Optional[Dict[int, int]] = None,
-    cleaned_stance_scores: Optional[Dict[str, int]] = None,
+    initial_opinions_override: Optional[Dict[int, str]] = None,
+    cleaned_stance_scores: Optional[Dict[str, str]] = None,
 ):
     reaction_ids = [tid for tid in tweets if tid != source_id]
     reaction_ids.sort(key=lambda tid: get_created_at(tweets[tid]) or datetime.max)
@@ -815,7 +859,7 @@ def _build_pheme_graph_from_tweets(
 
     agent_names: Dict[int, str] = {}
     agent_texts: Dict[int, str] = {}
-    initial_opinions: Dict[int, int] = {}
+    initial_opinions: Dict[int, str] = {}
     source_idx = id_map[source_id]
 
     source_tweet = tweets[source_id]
@@ -842,21 +886,21 @@ def _build_pheme_graph_from_tweets(
             initial_opinions_override is not None
             and i in initial_opinions_override
         ):
-            initial_opinions[i] = int(
+            initial_opinions[i] = normalize_stance(
                 initial_opinions_override[i]
-            )
+            ) or "oppose"
             print(
                 "[Init Opinion] LLM not called | "
                 "reason=stance_cache | "
-                f"score={initial_opinions[i]} | "
+                f"stance={initial_opinions[i]} | "
                 f"agent={i}"
             )
         elif tid in cleaned_stance_scores:
-            initial_opinions[i] = int(cleaned_stance_scores[tid])
+            initial_opinions[i] = cleaned_stance_scores[tid]
             print(
                 "[Init Opinion] LLM not called | "
                 "reason=cleaned_stance | "
-                f"score={initial_opinions[i]} | "
+                f"stance={initial_opinions[i]} | "
                 f"agent={i}"
             )
         else:
@@ -937,7 +981,7 @@ def load_cleaned_pheme_thread(
     thread_path: Path,
     max_agents: int = 30,
     use_llm_init: bool = True,
-    initial_opinions_override: Optional[Dict[int, int]] = None,
+    initial_opinions_override: Optional[Dict[int, str]] = None,
 ):
     """Convert event/thread_id_cleaned.json into the standard experiment graph."""
     thread_path = Path(thread_path)
@@ -950,7 +994,7 @@ def load_cleaned_pheme_thread(
     source_tweet.setdefault("id", source_id)
 
     tweets: Dict[str, Dict[str, Any]] = {source_id: source_tweet}
-    cleaned_stance_scores: Dict[str, int] = {source_id: 4}
+    cleaned_stance_scores: Dict[str, str] = {source_id: "support"}
 
     for row in payload.get("comments", []) or []:
         tw = dict(row or {})
@@ -960,9 +1004,9 @@ def load_cleaned_pheme_thread(
         tw.setdefault("id", tid)
         tweets[tid] = tw
 
-        score = _cleaned_stance_to_score(tw.get("stance"))
-        if score is not None:
-            cleaned_stance_scores[tid] = score
+        stance = _cleaned_stance_to_score(tw.get("stance"))
+        if stance is not None:
+            cleaned_stance_scores[tid] = stance
 
     edges = build_edges_from_reply_metadata(tweets, source_id)
     print(f"[PHEME] Loaded cleaned JSON: {thread_path}")
@@ -980,10 +1024,10 @@ def load_cleaned_pheme_thread(
 
 
 # heuristic_initial_opinion 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
-def heuristic_initial_opinion(text: str, is_source: bool = False) -> int:
+def heuristic_initial_opinion(text: str, is_source: bool = False) -> str:
     """Fallback stance initializer."""
     if is_source:
-        return 4
+        return "support"
 
     lower = text.lower()
     strong_deny_words = ["fake", "hoax", "completely false", "totally false", "definitely false"]
@@ -997,16 +1041,14 @@ def heuristic_initial_opinion(text: str, is_source: bool = False) -> int:
     question_words = ["?", "source", "really", "is this true", "confirmed?", "any proof", "evidence"]
 
     if any(w in lower for w in strong_deny_words):
-        return 1
+        return "oppose"
     if any(w in lower for w in strong_support_words):
-        return 5
+        return "support"
     if any(w in lower for w in deny_words):
-        return 2
+        return "oppose"
     if any(w in lower for w in support_words):
-        return 4
-    if any(w in lower for w in question_words):
-        return 3
-    return 3
+        return "support"
+    return "oppose"
 
 
 # build_stance_classification_prompt 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
@@ -1298,10 +1340,10 @@ Determine the stance expressed by the TARGET COMMENT on the discussion about
 Classify only the TARGET COMMENT. The source post and any context comments are
 background only.
 
-Stance scores:
+Binary stance labels:
 {STANCE_SCORE_GUIDE}
 
-IMPORTANT - what each score means for THIS thread:
+IMPORTANT - how support/oppose map for THIS thread:
 {prompt_spec["important"]}
 
 CRITICAL disambiguation rules:
@@ -1313,10 +1355,12 @@ Other rules:
 - Do not classify the source post itself.
 - Do not let the stance of mentioned users or context comments override the
   stance expressed by the TARGET COMMENT.
-- Classify as 4 or 5 only when {prompt_spec["support_rule"]}
-- Return only one integer from 1 to 5.
+- Classify as support only when {prompt_spec["support_rule"]}
+- Otherwise classify as oppose, including unclear, neutral, questioning, or
+  unrelated comments.
+- Return only support or oppose.
 - Do not provide an explanation.
-- If the relationship is unclear, return 3.
+- If the relationship is unclear, return oppose.
 
 Source post:
 {clean_source}
@@ -1325,7 +1369,7 @@ TARGET COMMENT:
 {clean_comment}
 {context_block}
 
-Return only one integer from 1 to 5.
+Return only support or oppose.
 """
 
 
@@ -1464,9 +1508,9 @@ def llm_initial_opinion(
         print(
             "[Init Opinion] LLM not called | "
             "reason=source_tweet | "
-            f"score=4 | source={source_preview!r}"
+            f"stance=support | source={source_preview!r}"
         )
-        return 4
+        return "support"
 
     # 缓存必须同时考虑 source tweet 和评论原文。
     key = (
@@ -1477,12 +1521,12 @@ def llm_initial_opinion(
     )
 
     if key in _INITIAL_CACHE:
-        cached_score = _INITIAL_CACHE[key]
+        cached_score = normalize_stance(_INITIAL_CACHE[key]) or "oppose"
 
         print(
             "[Init Opinion] LLM not called | "
             "reason=cache_hit | "
-            f"score={cached_score} | "
+            f"stance={cached_score} | "
             f"comment={comment_preview!r}"
         )
 
@@ -1499,7 +1543,7 @@ def llm_initial_opinion(
         print(
             "[Init Opinion] LLM not called | "
             "reason=use_llm_false | "
-            f"heuristic_score={score} | "
+            f"heuristic_stance={score} | "
             f"comment={comment_preview!r}"
         )
 
@@ -1516,7 +1560,7 @@ def llm_initial_opinion(
         print(
             "[Init Opinion] LLM not called | "
             "reason=missing_api_key | "
-            f"heuristic_score={score} | "
+            f"heuristic_stance={score} | "
             f"comment={comment_preview!r}"
         )
 
@@ -1562,19 +1606,19 @@ def llm_initial_opinion(
         print(
             "[Init Opinion] LLM output parse failed | "
             f"fallback=heuristic | "
-            f"score={score}"
+            f"stance={score}"
         )
     else:
         print(
-            "[Init Opinion] LLM score accepted | "
-            f"score={score}"
+            "[Init Opinion] LLM stance accepted | "
+            f"stance={score}"
         )
 
     _INITIAL_CACHE[key] = score
 
     print(
-        "[Init Opinion] Final score | "
-        f"score={score} | "
+        "[Init Opinion] Final stance | "
+        f"stance={score} | "
         f"comment={comment_preview!r}"
     )
 
@@ -1682,132 +1726,15 @@ def load_pheme_thread(
         edges = build_edges_from_reply_metadata(tweets, source_id)
         print(f"[PHEME] structure.json not found. Built edges from reply metadata: {len(edges)}")
 
-    reaction_ids = [tid for tid in tweets if tid != source_id]
-    reaction_ids.sort(key=lambda tid: get_created_at(tweets[tid]) or datetime.max)
-
-    keep_ids = [source_id] + reaction_ids[: max_agents - 1]
-    keep_set = set(keep_ids)
-    id_map = {tid: i for i, tid in enumerate(keep_ids)}
-
-    graph: Dict[int, List[int]] = {id_map[tid]: [] for tid in keep_ids}
-    for u, v in edges:
-        u, v = str(u), str(v)
-        if u in keep_set and v in keep_set:
-            ui, vi = id_map[u], id_map[v]
-            if vi not in graph[ui]:
-                graph[ui].append(vi)
-            if ui not in graph[vi]:
-                graph[vi].append(ui)
-
-    agent_names: Dict[int, str] = {}
-    agent_texts: Dict[int, str] = {}
-    initial_opinions: Dict[int, int] = {}
-    source_idx = id_map[source_id]
-
-    # 在初始化所有评论立场之前，先获得 source tweet 原文。
-    topic = (
-        get_tweet_text(source_tweet)
-        or f"PHEME source tweet {source_id}"
+    return _build_pheme_graph_from_tweets(
+        tweets=tweets,
+        source_id=source_id,
+        edges=edges,
+        max_agents=max_agents,
+        use_llm_init=use_llm_init,
+        initial_opinions_override=initial_opinions_override,
     )
 
-    for idx, tid in enumerate(keep_ids, start=1):
-        print(f"[Init] Agent {idx}/{len(keep_ids)}")
-
-        i = id_map[tid]
-        tw = tweets[tid]
-
-        agent_names[i] = get_screen_name(
-            tw,
-            tid,
-        )
-
-        agent_texts[i] = get_tweet_text(tw)
-
-        if (
-            initial_opinions_override is not None
-            and i in initial_opinions_override
-        ):
-            initial_opinions[i] = int(
-                initial_opinions_override[i]
-            )
-            print(
-                "[Init Opinion] LLM not called | "
-                "reason=stance_cache | "
-                f"score={initial_opinions[i]} | "
-                f"agent={i}"
-            )
-        else:
-            reply_context, mentioned_users = (
-                build_mentioned_prior_comments_context(
-                    comment_text=agent_texts[i],
-                    current_created_at=get_created_at(tw),
-                    tweets=tweets,
-                )
-                if tid != source_id
-                else ("", [])
-            )
-
-            initial_opinions[i] = llm_initial_opinion(
-                text=agent_texts[i],
-                source_text=topic,
-                reply_context=reply_context,
-                mentioned_users=mentioned_users,
-                is_source=(tid == source_id),
-                use_llm=use_llm_init,
-            )
-
-    name_to_agent_ids: Dict[str, List[int]] = {}
-    for agent_id, name in agent_names.items():
-        if agent_id == source_idx:
-            continue
-        if not agent_texts.get(agent_id, "").strip():
-            continue
-        name_to_agent_ids.setdefault(
-            name.lower(),
-            [],
-        ).append(agent_id)
-
-    mention_edge_count = 0
-    for agent_id, text in agent_texts.items():
-        if agent_id == source_idx:
-            continue
-
-        for mentioned_name in extract_mentioned_screen_names(text):
-            mentioned_agent_ids = name_to_agent_ids.get(
-                mentioned_name.lower(),
-                [],
-            )
-
-            for mentioned_agent_id in mentioned_agent_ids:
-                if mentioned_agent_id == agent_id:
-                    continue
-
-                if mentioned_agent_id not in graph[agent_id]:
-                    graph[agent_id].append(mentioned_agent_id)
-                    mention_edge_count += 1
-
-                if agent_id not in graph[mentioned_agent_id]:
-                    graph[mentioned_agent_id].append(agent_id)
-
-    if mention_edge_count:
-        print(
-            "[PHEME] Added mention edges between comments: "
-            f"{mention_edge_count}"
-        )
-
-    for tid in keep_ids:
-        i = id_map[tid]
-        if i == source_idx:
-            continue
-        if len(graph[i]) == 0:
-            graph[i].append(source_idx)
-            if i not in graph[source_idx]:
-                graph[source_idx].append(i)
-
-    for i in graph:
-        graph[i] = sorted(graph[i])
-
-    return graph, agent_names, agent_texts, initial_opinions, topic
 
 # get_undirected_edges 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def get_undirected_edges(graph: Dict[int, List[int]]) -> List[Tuple[int, int]]:
@@ -1861,15 +1788,15 @@ def make_controlled_neighbor_lines(
 ) -> List[str]:
     """Create synthetic but fixed neighbor posts for controlled experiments."""
     supports = [
-        f'  - @support_user_{i}: Support (score 4/5). Post: "I agree with this claim. It seems correct and convincing."'
+        f'  - @support_user_{i}: Support. Post: "I agree with this claim. It seems correct and convincing."'
         for i in range(1, n_support + 1)
     ]
     denies = [
-        f'  - @deny_user_{i}: Deny (score 2/5). Post: "I doubt this claim. It seems unconfirmed and questionable."'
+        f'  - @oppose_user_{i}: Oppose. Post: "I doubt this claim. It seems unconfirmed and questionable."'
         for i in range(1, n_deny + 1)
     ]
     neutrals = [
-        f'  - @neutral_user_{i}: Question or Neutral (score 3/5). Post: "I am not sure yet. I need more evidence."'
+        f'  - @oppose_user_extra_{i}: Oppose. Post: "I am not sure this claim is justified. I need more evidence."'
         for i in range(1, n_neutral + 1)
     ]
 
@@ -1898,11 +1825,11 @@ def fmt_real_neighbor_opinions(neighbors: List[int], opinions: Dict[int, int]) -
 
     lines = []
     for n in neighbors[:MAX_NEIGHBORS_IN_PROMPT]:
-        score = opinions[n]
-        label = OPINION_LABELS[score]
+        stance = normalize_stance(opinions[n]) or "oppose"
+        label = stance_label(stance)
         name = AGENT_NAMES.get(n, f"agent_{n}")
         text = safe_text(AGENT_TEXTS.get(n, ""), 180)
-        lines.append(f'  - @{name}: {label} (score {score}/5). Post: "{text}"')
+        lines.append(f'  - @{name}: {label}. Post: "{text}"')
     return "\n".join(lines)
 
 
@@ -1916,8 +1843,8 @@ def build_prompt_controlled(
     variant: str = "A",
 ) -> str:
     name = AGENT_NAMES.get(agent_id, f"agent_{agent_id}")
-    my_score = opinions[agent_id]
-    my_label = OPINION_LABELS[my_score]
+    my_stance = normalize_stance(opinions[agent_id]) or "oppose"
+    my_label = stance_label(my_stance)
     my_text = safe_text(AGENT_TEXTS.get(agent_id, ""), 240)
     role_str = f"You are known as a {role_label} in this conversation network.\n" if role_label else ""
     neighbor_str = "\n".join(neighbor_lines) if neighbor_lines else "(You have no visible replies or connected posts in this conversation.)"
@@ -1926,38 +1853,38 @@ def build_prompt_controlled(
         return f"""You are @{name}, browsing a live social media rumor thread.
 {role_str}The source post says: "{safe_text(topic, 500)}"
 
-Your current reaction: {my_label} (score {my_score}/5)
+Your current reaction: {my_label}
 Your own post: "{my_text}"
 
 Here is what appears around you in the thread:
 {neighbor_str}
 
 After reading the thread context, what is your stance now?
-Reply with ONLY your final opinion in this format: <number 1-5> - <label>"""
+Reply with ONLY your final stance: support or oppose."""
 
     if variant == "C":
         return f"""You are @{name}. Decide whether your stance should change.
 {role_str}Source claim: "{safe_text(topic, 500)}"
 
-Current stance: {my_score}/5, {my_label}
+Current stance: {my_label}
 Your post: "{my_text}"
 
 Nearby conversation signals:
 {neighbor_str}
 
-Return only the final stance as <number 1-5> - <label>."""
+Return only the final stance as support or oppose."""
 
     return f"""You are @{name}, a participant in a rumor discussion.
 {role_str}Rumor/source post being discussed: "{safe_text(topic, 500)}"
 
-Your current stance toward the rumor: {my_label} (score {my_score}/5)
+Your current stance toward the rumor: {my_label}
 Your own post: "{my_text}"
 
 Other connected posts in the conversation have the following stances:
 {neighbor_str}
 
 Based on these connected posts, what is your final stance toward the rumor?
-Reply with ONLY your final opinion in this format: <number 1-5> - <label>"""
+Reply with ONLY your final stance: support or oppose."""
 
 
 # build_prompt_real_graph 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
@@ -1990,22 +1917,18 @@ def get_opposite_candidate_ids(
     opinions: Dict[int, int],
 ) -> List[int]:
     """Return agents whose stance is opposite to the target agent."""
-    old_score = opinions[agent_id]
-
-    if old_score in {1, 2}:
-        opposite_scores = {4, 5}
-    elif old_score in {4, 5}:
-        opposite_scores = {1, 2}
-    else:
-        opposite_scores = {1, 2, 4, 5}
+    old_stance = normalize_stance(opinions[agent_id])
+    if old_stance is None:
+        return []
 
     return [
         other_id
-        for other_id, score in opinions.items()
+        for other_id, stance in opinions.items()
         if (
             other_id != agent_id
             and other_id != 0
-            and score in opposite_scores
+            and normalize_stance(stance) is not None
+            and normalize_stance(stance) != old_stance
         )
     ]
 
@@ -2016,22 +1939,17 @@ def get_support_candidate_ids(
     opinions: Dict[int, int],
 ) -> List[int]:
     """Return agents whose stance supports the target agent's current stance."""
-    old_score = opinions[agent_id]
-
-    if old_score in {1, 2}:
-        support_scores = {1, 2}
-    elif old_score in {4, 5}:
-        support_scores = {4, 5}
-    else:
-        support_scores = {3}
+    old_stance = normalize_stance(opinions[agent_id])
+    if old_stance is None:
+        return []
 
     return [
         other_id
-        for other_id, score in opinions.items()
+        for other_id, stance in opinions.items()
         if (
             other_id != agent_id
             and other_id != 0
-            and score in support_scores
+            and normalize_stance(stance) == old_stance
         )
     ]
 
@@ -2069,20 +1987,6 @@ def build_threshold_neighbor_rankings(
 
     dropped_agents: List[int] = []
 
-    def _ids_with_scores(
-        agent_id: int,
-        scores: set,
-    ) -> set:
-        return {
-            other_id
-            for other_id, score in opinions.items()
-            if (
-                other_id != agent_id
-                and other_id != 0
-                and score in scores
-            )
-        }
-
     def _real_neighbor_count(
         agent_id: int,
         eligible_ids: set,
@@ -2094,51 +1998,6 @@ def build_threshold_neighbor_rankings(
                 [],
             )
         )
-
-    def _neutral_opposite_ids(
-        agent_id: int,
-    ) -> set:
-        low_side_ids = _ids_with_scores(
-            agent_id,
-            {1, 2},
-        )
-        high_side_ids = _ids_with_scores(
-            agent_id,
-            {4, 5},
-        )
-
-        options = [
-            ("low", low_side_ids),
-            ("high", high_side_ids),
-        ]
-        viable_options = [
-            option
-            for option in options
-            if len(option[1]) >= required_count
-        ]
-
-        candidate_options = (
-            viable_options
-            if viable_options
-            else options
-        )
-
-        rng = random.Random(
-            f"{seed}:{agent_id}:neutral_opposite_side"
-        )
-        rng.shuffle(candidate_options)
-        candidate_options.sort(
-            key=lambda option: (
-                _real_neighbor_count(
-                    agent_id,
-                    option[1],
-                ),
-                len(option[1]),
-            ),
-            reverse=True,
-        )
-
-        return candidate_options[0][1]
 
     # _rank_candidates 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
     def _rank_candidates(
@@ -2197,17 +2056,16 @@ def build_threshold_neighbor_rankings(
         if agent_id not in opinions:
             continue
 
-        if opinions[agent_id] == 3:
-            opposite_ids = _neutral_opposite_ids(
-                agent_id
+        if normalize_stance(opinions[agent_id]) is None:
+            dropped_agents.append(agent_id)
+            continue
+
+        opposite_ids = set(
+            get_opposite_candidate_ids(
+                agent_id,
+                opinions,
             )
-        else:
-            opposite_ids = set(
-                get_opposite_candidate_ids(
-                    agent_id,
-                    opinions,
-                )
-            )
+        )
 
         support_ids = set(
             get_support_candidate_ids(
@@ -2462,11 +2320,7 @@ def run_comment_threshold_condition(
             ),
             "old_score": old_score,
             "new_score": new_score,
-            "change": (
-                new_score - old_score
-                if new_score is not None
-                else None
-            ),
+            "change": stance_change_value(old_score, new_score),
             "generated_comment": generated_comment,
             "classification_response": classification_content,
             "raw_response": classification_content,
@@ -2619,15 +2473,7 @@ def analyze_user_threshold_condition(
     name: str,
     results: List[Dict[str, Any]],
 ) -> Dict[str, Any]:
-    """
-    分析用户图阈值实验。
-
-    对有明确极性的 Agent：
-    - 原立场 1/2，分数上升表示向反方移动。
-    - 原立场 4/5，分数下降表示向反方移动。
-
-    对原立场为 3 的 Agent，只统计是否发生改变。
-    """
+    """Analyze threshold results for binary support/oppose stances."""
     analysis = analyze_condition(
         name,
         results,
@@ -2639,81 +2485,36 @@ def analyze_user_threshold_condition(
         if result.get("new_score") is not None
     ]
 
-    polarized_results = [
+    binary_results = [
         result
         for result in valid
-        if result["old_score"] != 3
+        if (
+            normalize_stance(result.get("old_score")) is not None
+            and normalize_stance(result.get("new_score")) is not None
+        )
     ]
 
-    # Count only true cross-side shifts. Same-side softening such as 1->2 or
-    # 5->4 is not treated as movement to the opposite side.
     opposite_shift_count = sum(
-        (
-            result["old_score"] in {1, 2}
-            and result["new_score"] in {4, 5}
-        )
-        or (
-            result["old_score"] in {4, 5}
-            and result["new_score"] in {1, 2}
-        )
-        for result in polarized_results
+        bool(stance_changed(result.get("old_score"), result.get("new_score")))
+        for result in binary_results
     )
-
-    # Kept for backward-compatible reporting; this is now the same strict
-    # cross-side criterion as opposite_shift_count.
-    opposite_final_count = sum(
-        (
-            result["old_score"] in {1, 2}
-            and result["new_score"] in {4, 5}
-        )
-        or (
-            result["old_score"] in {4, 5}
-            and result["new_score"] in {1, 2}
-        )
-        for result in polarized_results
-    )
-
-    neutral_results = [
-        result
-        for result in valid
-        if result["old_score"] == 3
-    ]
 
     analysis.update({
-        "polarized_n": len(
-            polarized_results
-        ),
-        "opposite_shift_count": (
-            opposite_shift_count
-        ),
+        "polarized_n": len(binary_results),
+        "opposite_shift_count": opposite_shift_count,
         "opposite_shift_rate": (
-            opposite_shift_count
-            / len(polarized_results)
-            if polarized_results
+            opposite_shift_count / len(binary_results)
+            if binary_results
             else 0.0
         ),
-        "opposite_final_count": (
-            opposite_final_count
-        ),
+        "opposite_final_count": opposite_shift_count,
         "opposite_final_rate": (
-            opposite_final_count
-            / len(polarized_results)
-            if polarized_results
+            opposite_shift_count / len(binary_results)
+            if binary_results
             else 0.0
         ),
-        "neutral_agent_n": len(
-            neutral_results
-        ),
-        "neutral_agent_changed_rate": (
-            sum(
-                result["new_score"]
-                != result["old_score"]
-                for result in neutral_results
-            )
-            / len(neutral_results)
-            if neutral_results
-            else 0.0
-        ),
+        "neutral_agent_n": 0,
+        "neutral_agent_changed_rate": 0.0,
         "avg_real_neighbor_count": (
             sum(
                 result.get(
@@ -2800,7 +2601,7 @@ def run_controlled_condition(
             "name": AGENT_NAMES.get(agent_id, f"agent_{agent_id}"),
             "old_score": old_score,
             "new_score": new_score,
-            "change": (new_score - old_score) if new_score is not None else None,
+            "change": stance_change_value(old_score, new_score),
             "raw_response": content,
             "rep": rep,
             "tokens": usage.get("total_tokens", 0),
@@ -2909,11 +2710,7 @@ def run_comment_anchor_condition(
             ),
             "old_score": old_score,
             "new_score": new_score,
-            "change": (
-                new_score - old_score
-                if new_score is not None
-                else None
-            ),
+            "change": stance_change_value(old_score, new_score),
             "generated_comment": generated_comment,
             "classification_response": classification_content,
             "raw_response": classification_content,
@@ -3083,7 +2880,7 @@ def run_real_graph_condition(
             "name": AGENT_NAMES.get(agent_id, f"agent_{agent_id}"),
             "old_score": old_score,
             "new_score": new_score,
-            "change": (new_score - old_score) if new_score is not None else None,
+            "change": stance_change_value(old_score, new_score),
             "raw_response": content,
             "rep": rep,
             "tokens": usage.get("total_tokens", 0),
@@ -3112,38 +2909,48 @@ def run_real_graph_condition(
 
 # analyze_condition 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def analyze_condition(name: str, results: List[Dict[str, Any]], direction: Optional[str] = None) -> Dict[str, Any]:
-    valid = [r for r in results if r.get("new_score") is not None]
-    scores = [r["new_score"] for r in valid]
-    changes = [r["change"] for r in valid]
+    valid = [
+        r
+        for r in results
+        if normalize_stance(r.get("new_score")) is not None
+    ]
+
+    for r in valid:
+        r["old_score"] = normalize_stance(r.get("old_score")) or r.get("old_score")
+        r["new_score"] = normalize_stance(r.get("new_score"))
+        r["change"] = stance_change_value(r.get("old_score"), r.get("new_score"))
+
+    stances = [r["new_score"] for r in valid]
+    changes = [r["change"] for r in valid if r.get("change") is not None]
 
     n = len(valid)
     n_changed = sum(1 for c in changes if c != 0)
     avg_abs_change = sum(abs(c) for c in changes) / n if n else 0
-    avg_signed_change = sum(changes) / n if n else 0
-    avg_final_score = sum(scores) / n if n else 0
+    avg_signed_change = avg_abs_change
     keep_rate = sum(1 for c in changes if c == 0) / n if n else 0
-    neutral_rate = sum(1 for r in valid if r["new_score"] == 3) / n if n else 0
-    support_rate = sum(1 for r in valid if r["new_score"] >= 4) / n if n else 0
-    deny_rate = sum(1 for r in valid if r["new_score"] <= 2) / n if n else 0
+    support_rate = sum(1 for r in valid if r["new_score"] == "support") / n if n else 0
+    oppose_rate = sum(1 for r in valid if r["new_score"] == "oppose") / n if n else 0
 
     if direction == "up":
-        directional_shift = sum(1 for r in valid if r["new_score"] > r["old_score"]) / n if n else 0
+        directional_shift = sum(
+            1
+            for r in valid
+            if r["old_score"] == "oppose" and r["new_score"] == "support"
+        ) / n if n else 0
         target_rate = support_rate
     elif direction == "down":
-        directional_shift = sum(1 for r in valid if r["new_score"] < r["old_score"]) / n if n else 0
-        target_rate = deny_rate
+        directional_shift = sum(
+            1
+            for r in valid
+            if r["old_score"] == "support" and r["new_score"] == "oppose"
+        ) / n if n else 0
+        target_rate = oppose_rate
     else:
         directional_shift = None
         target_rate = None
 
-    if scores:
-        mean_s = sum(scores) / len(scores)
-        variance = sum((s - mean_s) ** 2 for s in scores) / len(scores)
-    else:
-        variance = 0
-
-    call_change_by_initial_stance: Dict[int, Dict[str, Any]] = {}
-    agent_change_by_initial_stance: Dict[int, Dict[str, Any]] = {}
+    call_change_by_initial_stance: Dict[str, Dict[str, Any]] = {}
+    agent_change_by_initial_stance: Dict[str, Dict[str, Any]] = {}
 
     transition_counts = dict(
         sorted(
@@ -3156,43 +2963,20 @@ def analyze_condition(name: str, results: List[Dict[str, Any]], direction: Optio
             ).items()
         )
     )
+
     changed_results = [
         r
         for r in valid
         if r.get("change") != 0
     ]
-    adjacent_change_count = sum(
-        1
-        for r in changed_results
-        if abs(r["new_score"] - r["old_score"]) == 1
-    )
-    large_jump_count = sum(
-        1
-        for r in changed_results
-        if abs(r["new_score"] - r["old_score"]) >= 2
-    )
-    polarity_flip_count = sum(
-        (
-            r["old_score"] in {1, 2}
-            and r["new_score"] in {4, 5}
-        )
-        or (
-            r["old_score"] in {4, 5}
-            and r["new_score"] in {1, 2}
-        )
-        for r in changed_results
-    )
-    transition_examples: Dict[str, List[Dict[str, Any]]] = {}
 
+    transition_examples: Dict[str, List[Dict[str, Any]]] = {}
     for r in changed_results:
         key = f"{r['old_score']}->{r['new_score']}"
         if len(transition_examples.get(key, [])) >= 3:
             continue
 
-        transition_examples.setdefault(
-            key,
-            [],
-        ).append({
+        transition_examples.setdefault(key, []).append({
             "agent": r.get("agent"),
             "rep": r.get("rep"),
             "old_score": r["old_score"],
@@ -3205,28 +2989,20 @@ def analyze_condition(name: str, results: List[Dict[str, Any]], direction: Optio
     transition_diagnostics = {
         "transition_counts": transition_counts,
         "changed_calls": len(changed_results),
-        "adjacent_change_count": adjacent_change_count,
-        "adjacent_change_rate": (
-            adjacent_change_count / len(changed_results)
-            if changed_results
-            else 0.0
-        ),
-        "large_jump_count": large_jump_count,
-        "large_jump_rate": (
-            large_jump_count / len(changed_results)
-            if changed_results
-            else 0.0
-        ),
-        "polarity_flip_count": polarity_flip_count,
+        "adjacent_change_count": 0,
+        "adjacent_change_rate": 0.0,
+        "large_jump_count": len(changed_results),
+        "large_jump_rate": 1.0 if changed_results else 0.0,
+        "polarity_flip_count": len(changed_results),
         "polarity_flip_rate": (
-            polarity_flip_count / len(changed_results)
+            len(changed_results) / len(changed_results)
             if changed_results
             else 0.0
         ),
         "examples": transition_examples,
     }
 
-    for stance in range(1, 6):
+    for stance in ["support", "oppose"]:
         stance_results = [
             r
             for r in valid
@@ -3248,23 +3024,19 @@ def analyze_condition(name: str, results: List[Dict[str, Any]], direction: Optio
             ),
         }
 
-        agent_ids = sorted(
-            {
-                r["agent"]
-                for r in stance_results
-                if "agent" in r
-            }
-        )
-        changed_agent_ids = sorted(
-            {
-                r["agent"]
-                for r in stance_results
-                if (
-                    "agent" in r
-                    and r.get("change") != 0
-                )
-            }
-        )
+        agent_ids = sorted({
+            r["agent"]
+            for r in stance_results
+            if "agent" in r
+        })
+        changed_agent_ids = sorted({
+            r["agent"]
+            for r in stance_results
+            if (
+                "agent" in r
+                and r.get("change") != 0
+            )
+        })
 
         agent_change_by_initial_stance[stance] = {
             "agents": len(agent_ids),
@@ -3284,15 +3056,16 @@ def analyze_condition(name: str, results: List[Dict[str, Any]], direction: Optio
         "changed_rate": n_changed / n if n else 0,
         "avg_abs_change": avg_abs_change,
         "avg_signed_change": avg_signed_change,
-        "avg_final_score": avg_final_score,
-        "variance": variance,
+        "avg_final_score": 0.0,
+        "variance": 0.0,
         "keep_rate": keep_rate,
-        "neutral_rate": neutral_rate,
+        "neutral_rate": 0.0,
         "support_rate": support_rate,
-        "deny_rate": deny_rate,
+        "deny_rate": oppose_rate,
+        "oppose_rate": oppose_rate,
         "directional_shift_rate": directional_shift,
         "target_rate": target_rate,
-        "distribution": dict(sorted(Counter(scores).items())),
+        "distribution": dict(sorted(Counter(stances).items())),
         "transition_diagnostics": transition_diagnostics,
         "call_change_by_initial_stance": call_change_by_initial_stance,
         "agent_change_by_initial_stance": agent_change_by_initial_stance,
@@ -3309,8 +3082,12 @@ def compare_pairwise(name: str, left: List[Dict[str, Any]], right: List[Dict[str
     if not keys:
         return {"name": name, "n_pairs": 0}
 
-    diff_count = sum(1 for k in keys if lmap[k]["new_score"] != rmap[k]["new_score"])
-    avg_abs_delta = sum(abs(rmap[k]["new_score"] - lmap[k]["new_score"]) for k in keys) / len(keys)
+    diff_count = sum(
+        1
+        for k in keys
+        if normalize_stance(lmap[k]["new_score"]) != normalize_stance(rmap[k]["new_score"])
+    )
+    avg_abs_delta = diff_count / len(keys)
     right_more_change = sum(abs(rmap[k]["change"]) > abs(lmap[k]["change"]) for k in keys)
     left_more_change = sum(abs(lmap[k]["change"]) > abs(rmap[k]["change"]) for k in keys)
 
@@ -3332,33 +3109,17 @@ def print_analysis(a: Dict[str, Any]) -> None:
     print("=" * 72)
     print(f"  Valid calls:          {a['n']}")
     print(f"  Changed:              {a['changed']}/{a['n']} ({a['changed_rate']:.3f})")
-    print(f"  Avg |change|:         {a['avg_abs_change']:.3f}")
-    print(f"  Avg signed change:    {a['avg_signed_change']:.3f}")
-    print(f"  Avg final score:      {a['avg_final_score']:.3f}")
+    print(f"  Flip rate metric:     {a['avg_abs_change']:.3f}")
     print(f"  Keep current rate:    {a['keep_rate']:.3f}")
-    print(f"  Neutral final rate:   {a['neutral_rate']:.3f}")
     print(f"  Support final rate:   {a['support_rate']:.3f}")
-    print(f"  Deny final rate:      {a['deny_rate']:.3f}")
+    print(f"  Oppose final rate:    {a.get('oppose_rate', a.get('deny_rate', 0.0)):.3f}")
     if a.get("directional_shift_rate") is not None:
         print(f"  Directional shift:    {a['directional_shift_rate']:.3f}")
         print(f"  Target final rate:    {a['target_rate']:.3f}")
-    print(f"  Variance:             {a['variance']:.3f}")
     print(f"  Distribution:         {a['distribution']}")
     if "transition_diagnostics" in a:
         d = a["transition_diagnostics"]
         print("  Transition diagnostics:")
-        print(
-            f"    Adjacent changes:   "
-            f"{d['adjacent_change_count']}/"
-            f"{d['changed_calls']} "
-            f"({d['adjacent_change_rate']:.3f})"
-        )
-        print(
-            f"    Large jumps >=2:    "
-            f"{d['large_jump_count']}/"
-            f"{d['changed_calls']} "
-            f"({d['large_jump_rate']:.3f})"
-        )
         print(
             f"    Polarity flips:     "
             f"{d['polarity_flip_count']}/"
@@ -3379,7 +3140,7 @@ def print_analysis(a: Dict[str, Any]) -> None:
         print("  Changed agents by initial stance:")
         for stance, row in a["agent_change_by_initial_stance"].items():
             print(
-                f"    score {stance}: "
+                f"    {stance}: "
                 f"{row['changed_agents']}/{row['agents']} "
                 f"({row['changed_agent_rate']:.3f})"
             )
@@ -3387,7 +3148,7 @@ def print_analysis(a: Dict[str, Any]) -> None:
         print("  Changed calls by initial stance:")
         for stance, row in a["call_change_by_initial_stance"].items():
             print(
-                f"    score {stance}: "
+                f"    {stance}: "
                 f"{row['changed_calls']}/{row['valid_calls']} "
                 f"({row['changed_call_rate']:.3f})"
             )
@@ -3442,7 +3203,7 @@ def print_pairwise(c: Dict[str, Any]) -> None:
         return
     print(f"  Matched pairs:        {c['n_pairs']}")
     print(f"  Different outputs:    {c['diff_count']}/{c['n_pairs']} ({c['diff_rate']:.3f})")
-    print(f"  Avg final-score delta:{c['avg_abs_final_score_delta']:.3f}")
+    print(f"  Different stance rate:{c['avg_abs_final_score_delta']:.3f}")
     print(f"  Right more changed:   {c['right_more_change_count']}")
     print(f"  Left more changed:    {c['left_more_change_count']}")
 
