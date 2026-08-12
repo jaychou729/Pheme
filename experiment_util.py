@@ -40,7 +40,6 @@ import requests
 API_URL = "https://api.deepseek.com/chat/completions"
 API_KEY = os.getenv("DEEPSEEK_API_KEY", os.getenv("API_KEY", ""))
 MODEL = "deepseek-v4-pro"
-INIT_MODEL = "deepseek-v4-pro"
 
 MAX_WORKERS = 5
 SLEEP_BETWEEN = 0.2
@@ -87,14 +86,13 @@ def configure_runtime(
     api_url: Optional[str] = None,
     api_key: Optional[str] = None,
     model: Optional[str] = None,
-    init_model: Optional[str] = None,
     max_workers: Optional[int] = None,
     sleep_between: Optional[float] = None,
     max_neighbors_in_prompt: Optional[int] = None,
     reset_call_count: bool = True,
 ) -> None:
     """Configure module-level runtime state from a notebook or another script."""
-    global API_URL, API_KEY, MODEL, INIT_MODEL
+    global API_URL, API_KEY, MODEL
     global MAX_WORKERS, SLEEP_BETWEEN, MAX_NEIGHBORS_IN_PROMPT, call_count
 
     if api_url is not None:
@@ -103,8 +101,6 @@ def configure_runtime(
         API_KEY = str(api_key)
     if model is not None:
         MODEL = str(model)
-    if init_model is not None:
-        INIT_MODEL = str(init_model)
     if max_workers is not None:
         MAX_WORKERS = max(1, int(max_workers))
     if sleep_between is not None:
@@ -220,16 +216,12 @@ def build_stance_file_path(
     stance_dir: Path,
     *,
     selected_thread: Path,
-    init_model: str,
-    use_llm_init: bool,
 ) -> Path:
-    """Build the canonical stance-cache path from thread id and model only."""
-    model_key = init_model if use_llm_init else "heuristic"
+    """Build the canonical data-stance cache path from thread id."""
     thread_id = _safe_stance_filename_part(
         _selected_thread_cache_key(selected_thread)
     )
-    model_name = _safe_stance_filename_part(model_key)
-    filename = f"{thread_id}_{model_name}.json"
+    filename = f"{thread_id}_data_stances.json"
     return Path(stance_dir) / filename
 
 
@@ -238,33 +230,18 @@ def find_stance_file_path(
     stance_dir: Path,
     *,
     selected_thread: Path,
-    init_model: str,
-    use_llm_init: bool,
 ) -> Optional[Path]:
-    """Find a stance file by thread id and model, including legacy names."""
+    """Find the data-stance cache file for a selected thread."""
     stance_dir = Path(stance_dir)
     canonical_path = build_stance_file_path(
         stance_dir,
         selected_thread=selected_thread,
-        init_model=init_model,
-        use_llm_init=use_llm_init,
     )
 
     if canonical_path.exists():
         return canonical_path
 
-    model_key = init_model if use_llm_init else "heuristic"
-    thread_id = _safe_stance_filename_part(
-        _selected_thread_cache_key(selected_thread)
-    )
-    model_name = _safe_stance_filename_part(model_key)
-    legacy_candidates = sorted(
-        stance_dir.glob(f"{thread_id}_*{model_name}.json"),
-        key=lambda path: path.stat().st_mtime,
-        reverse=True,
-    )
-
-    return legacy_candidates[0] if legacy_candidates else None
+    return None
 
 
 # save_initial_opinions 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
@@ -341,11 +318,9 @@ def load_and_set_pheme_thread(
     thread_id: Optional[str] = None,
     min_reactions: int = 10,
     max_agents: int = 200,
-    use_llm_init: bool = True,
     stance_dir: Optional[Path] = None,
-    force_recompute_stance: bool = False,
 ) -> Tuple[Path, Dict[int, List[int]], Dict[int, str], Dict[int, str], Dict[int, str], str]:
-    """Select, load, register, and optionally cache PHEME initial stances."""
+    """Select, load, register, and optionally cache data-provided PHEME stances."""
     global CURRENT_THREAD_ID
 
     selected_thread = select_pheme_thread(
@@ -362,18 +337,14 @@ def load_and_set_pheme_thread(
         canonical_stance_path = build_stance_file_path(
             Path(stance_dir),
             selected_thread=selected_thread,
-            init_model=INIT_MODEL,
-            use_llm_init=use_llm_init,
         )
         matched_stance_path = find_stance_file_path(
             Path(stance_dir),
             selected_thread=selected_thread,
-            init_model=INIT_MODEL,
-            use_llm_init=use_llm_init,
         )
         stance_path = canonical_stance_path
 
-        if matched_stance_path is not None and not force_recompute_stance:
+        if matched_stance_path is not None:
             cached_opinions = load_initial_opinions(
                 matched_stance_path,
             )
@@ -382,18 +353,13 @@ def load_and_set_pheme_thread(
     graph, names, texts, opinions, topic = load_pheme_thread(
         selected_thread,
         max_agents=max_agents,
-        use_llm_init=use_llm_init,
         initial_opinions_override=cached_opinions,
     )
 
-    if stance_dir is not None and (
-        force_recompute_stance or cached_opinions is None
-    ):
+    if stance_dir is not None and cached_opinions is None:
         stance_path = build_stance_file_path(
             Path(stance_dir),
             selected_thread=selected_thread,
-            init_model=INIT_MODEL,
-            use_llm_init=use_llm_init,
         )
         save_initial_opinions(
             stance_path,
@@ -404,8 +370,7 @@ def load_and_set_pheme_thread(
             initial_opinions=opinions,
             config={
                 "max_agents": max_agents,
-                "use_llm_init": use_llm_init,
-                "init_model": INIT_MODEL if use_llm_init else "heuristic",
+                "stance_source": "data",
             },
         )
 
@@ -481,7 +446,6 @@ def save_llm_comment_score_outputs(
     model: str,
     results: Sequence[Dict[str, Any]],
     condition: Optional[str] = None,
-    init_model: Optional[str] = None,
     config: Optional[Dict[str, Any]] = None,
     timestamp: Optional[str] = None,
 ) -> Path:
@@ -538,7 +502,6 @@ def save_llm_comment_score_outputs(
         "thread_id": get_selected_thread_id(selected_thread),
         "topic": topic,
         "model": model,
-        "init_model": init_model,
         "condition": condition,
         "config": config or {},
         "records": records,
@@ -836,7 +799,6 @@ def _build_pheme_graph_from_tweets(
     source_id: str,
     edges: List[Tuple[str, str]],
     max_agents: int,
-    use_llm_init: bool,
     initial_opinions_override: Optional[Dict[int, str]] = None,
     cleaned_stance_scores: Optional[Dict[str, str]] = None,
 ):
@@ -904,23 +866,9 @@ def _build_pheme_graph_from_tweets(
                 f"agent={i}"
             )
         else:
-            reply_context, mentioned_users = (
-                build_mentioned_prior_comments_context(
-                    comment_text=agent_texts[i],
-                    current_created_at=get_created_at(tw),
-                    tweets=tweets,
-                )
-                if tid != source_id
-                else ("", [])
-            )
-
-            initial_opinions[i] = llm_initial_opinion(
-                text=agent_texts[i],
-                source_text=topic,
-                reply_context=reply_context,
-                mentioned_users=mentioned_users,
-                is_source=(tid == source_id),
-                use_llm=use_llm_init,
+            raise ValueError(
+                "Initial stance is missing from data for "
+                f"tweet {tid}. Add stance=support/oppose to the data file."
             )
 
     name_to_agent_ids: Dict[str, List[int]] = {}
@@ -980,7 +928,6 @@ def _build_pheme_graph_from_tweets(
 def load_cleaned_pheme_thread(
     thread_path: Path,
     max_agents: int = 30,
-    use_llm_init: bool = True,
     initial_opinions_override: Optional[Dict[int, str]] = None,
 ):
     """Convert event/thread_id_cleaned.json into the standard experiment graph."""
@@ -1017,38 +964,10 @@ def load_cleaned_pheme_thread(
         source_id=source_id,
         edges=edges,
         max_agents=max_agents,
-        use_llm_init=use_llm_init,
         initial_opinions_override=initial_opinions_override,
         cleaned_stance_scores=cleaned_stance_scores,
     )
 
-
-# heuristic_initial_opinion 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
-def heuristic_initial_opinion(text: str, is_source: bool = False) -> str:
-    """Fallback stance initializer."""
-    if is_source:
-        return "support"
-
-    lower = text.lower()
-    strong_deny_words = ["fake", "hoax", "completely false", "totally false", "definitely false"]
-    deny_words = [
-        "false", "not true", "incorrect", "debunk", "rumor", "rumour", "no evidence",
-        "unconfirmed", "didn't", "did not", "never happened", "not confirmed",
-        "can't confirm", "cannot confirm",
-    ]
-    strong_support_words = ["confirmed", "definitely true", "absolutely true"]
-    support_words = ["true", "agree", "yes", "exactly", "right", "correct", "this is true"]
-    question_words = ["?", "source", "really", "is this true", "confirmed?", "any proof", "evidence"]
-
-    if any(w in lower for w in strong_deny_words):
-        return "oppose"
-    if any(w in lower for w in strong_support_words):
-        return "support"
-    if any(w in lower for w in deny_words):
-        return "oppose"
-    if any(w in lower for w in support_words):
-        return "support"
-    return "oppose"
 
 
 # build_stance_classification_prompt 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
@@ -1466,164 +1385,6 @@ def build_mentioned_prior_comments_context(
     return "\n".join(lines), mentioned_users
 
 
-_INITIAL_CACHE: Dict[Tuple[str, str, str, bool], int] = {}
-
-
-# llm_initial_opinion 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
-def llm_initial_opinion(
-    text: str,
-    source_text: str = "",
-    reply_context: str = "",
-    mentioned_users: Optional[Sequence[str]] = None,
-    is_source: bool = False,
-    use_llm: bool = True,
-) -> int:
-    """
-    根据 source tweet 和当前评论，初始化评论 Agent 的立场。
-
-    分类依据：
-    - source_text：被讨论的 source tweet
-    - text：当前 Agent 发表的评论
-
-    source tweet 节点本身固定设为 4。
-    """
-    clean_text = str(text or "").strip()
-    clean_source = str(source_text or "").strip()
-    clean_reply_context = str(reply_context or "").strip()
-
-    comment_preview = (
-        clean_text
-        .replace("\n", " ")
-        [:120]
-    )
-
-    source_preview = (
-        clean_source
-        .replace("\n", " ")
-        [:120]
-    )
-
-    # source tweet 节点本身固定为支持立场。
-    if is_source:
-        print(
-            "[Init Opinion] LLM not called | "
-            "reason=source_tweet | "
-            f"stance=support | source={source_preview!r}"
-        )
-        return "support"
-
-    # 缓存必须同时考虑 source tweet 和评论原文。
-    key = (
-        clean_source,
-        clean_text,
-        clean_reply_context,
-        is_source,
-    )
-
-    if key in _INITIAL_CACHE:
-        cached_score = normalize_stance(_INITIAL_CACHE[key]) or "oppose"
-
-        print(
-            "[Init Opinion] LLM not called | "
-            "reason=cache_hit | "
-            f"stance={cached_score} | "
-            f"comment={comment_preview!r}"
-        )
-
-        return cached_score
-
-    if not use_llm:
-        score = heuristic_initial_opinion(
-            clean_text,
-            is_source=False,
-        )
-
-        _INITIAL_CACHE[key] = score
-
-        print(
-            "[Init Opinion] LLM not called | "
-            "reason=use_llm_false | "
-            f"heuristic_stance={score} | "
-            f"comment={comment_preview!r}"
-        )
-
-        return score
-
-    if not API_KEY:
-        score = heuristic_initial_opinion(
-            clean_text,
-            is_source=False,
-        )
-
-        _INITIAL_CACHE[key] = score
-
-        print(
-            "[Init Opinion] LLM not called | "
-            "reason=missing_api_key | "
-            f"heuristic_stance={score} | "
-            f"comment={comment_preview!r}"
-        )
-
-        return score
-
-    prompt = build_stance_classification_prompt(
-        clean_source,
-        clean_text,
-        reply_context=clean_reply_context,
-        mentioned_users=mentioned_users,
-    )
-
-    print(
-        "[Init Opinion] Calling LLM | "
-        f"model={INIT_MODEL} | "
-        f"source={source_preview!r} | "
-        f"comment={comment_preview!r} | "
-        f"mentioned_context={bool(clean_reply_context)}"
-    )
-
-    content, usage = llm_call(
-        SYSTEM_MSG,
-        prompt,
-        model=INIT_MODEL,
-        temperature=0.0,
-        max_tokens=16,
-    )
-
-    print(
-        "[Init Opinion] LLM returned | "
-        f"response={content!r} | "
-        f"tokens={usage.get('total_tokens', 0)}"
-    )
-
-    score = parse_opinion(content)
-
-    if score is None:
-        score = heuristic_initial_opinion(
-            clean_text,
-            is_source=False,
-        )
-
-        print(
-            "[Init Opinion] LLM output parse failed | "
-            f"fallback=heuristic | "
-            f"stance={score}"
-        )
-    else:
-        print(
-            "[Init Opinion] LLM stance accepted | "
-            f"stance={score}"
-        )
-
-    _INITIAL_CACHE[key] = score
-
-    print(
-        "[Init Opinion] Final stance | "
-        f"stance={score} | "
-        f"comment={comment_preview!r}"
-    )
-
-    return score
-
 
 # select_pheme_thread 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def select_pheme_thread(event_dir: Path, min_reactions: int = 10, thread_id: Optional[str] = None) -> Path:
@@ -1688,8 +1449,7 @@ def select_pheme_thread(event_dir: Path, min_reactions: int = 10, thread_id: Opt
 def load_pheme_thread(
     thread_dir: Path,
     max_agents: int = 30,
-    use_llm_init: bool = True,
-    initial_opinions_override: Optional[Dict[int, int]] = None,
+    initial_opinions_override: Optional[Dict[int, str]] = None,
 ):
     """Convert a PHEME thread into graph, names, texts, initial opinions, and topic."""
     thread_dir = Path(thread_dir)
@@ -1697,7 +1457,6 @@ def load_pheme_thread(
         return load_cleaned_pheme_thread(
             thread_dir,
             max_agents=max_agents,
-            use_llm_init=use_llm_init,
             initial_opinions_override=initial_opinions_override,
         )
 
@@ -1731,7 +1490,6 @@ def load_pheme_thread(
         source_id=source_id,
         edges=edges,
         max_agents=max_agents,
-        use_llm_init=use_llm_init,
         initial_opinions_override=initial_opinions_override,
     )
 
