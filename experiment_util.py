@@ -147,6 +147,26 @@ def _safe_stance_filename_part(value: Any) -> str:
     return text.strip("_") or "unknown"
 
 
+def get_selected_thread_id(selected_thread: Path) -> str:
+    """Return the original thread id for raw PHEME directories or cleaned JSON files."""
+    path = Path(selected_thread)
+    name = path.name
+
+    if name.endswith("_cleaned.json"):
+        return name[: -len("_cleaned.json")]
+    if path.suffix.lower() == ".json":
+        return path.stem
+    return name
+
+
+def _selected_thread_cache_key(selected_thread: Path) -> str:
+    path = Path(selected_thread)
+
+    if path.suffix.lower() == ".json":
+        return path.stem
+    return path.name
+
+
 # build_stance_file_path 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def build_stance_file_path(
     stance_dir: Path,
@@ -157,7 +177,9 @@ def build_stance_file_path(
 ) -> Path:
     """Build the canonical stance-cache path from thread id and model only."""
     model_key = init_model if use_llm_init else "heuristic"
-    thread_id = _safe_stance_filename_part(Path(selected_thread).name)
+    thread_id = _safe_stance_filename_part(
+        _selected_thread_cache_key(selected_thread)
+    )
     model_name = _safe_stance_filename_part(model_key)
     filename = f"{thread_id}_{model_name}.json"
     return Path(stance_dir) / filename
@@ -184,7 +206,9 @@ def find_stance_file_path(
         return canonical_path
 
     model_key = init_model if use_llm_init else "heuristic"
-    thread_id = _safe_stance_filename_part(Path(selected_thread).name)
+    thread_id = _safe_stance_filename_part(
+        _selected_thread_cache_key(selected_thread)
+    )
     model_name = _safe_stance_filename_part(model_key)
     legacy_candidates = sorted(
         stance_dir.glob(f"{thread_id}_*{model_name}.json"),
@@ -279,7 +303,7 @@ def load_and_set_pheme_thread(
         min_reactions=min_reactions,
         thread_id=thread_id,
     )
-    CURRENT_THREAD_ID = selected_thread.name
+    CURRENT_THREAD_ID = get_selected_thread_id(selected_thread)
 
     stance_path: Optional[Path] = None
     cached_opinions: Optional[Dict[int, int]] = None
@@ -384,7 +408,9 @@ def build_llm_output_file_path(
     condition: Optional[str] = None,
 ) -> Path:
     """Build a comment/score output path using the stance-cache naming style."""
-    thread_id = _safe_stance_filename_part(Path(selected_thread).name)
+    thread_id = _safe_stance_filename_part(
+        _selected_thread_cache_key(selected_thread)
+    )
     model_name = _safe_stance_filename_part(model)
     parts = [thread_id, model_name]
 
@@ -459,7 +485,7 @@ def save_llm_comment_score_outputs(
     payload = {
         "timestamp": timestamp,
         "selected_thread": str(selected_thread),
-        "thread_id": Path(selected_thread).name,
+        "thread_id": get_selected_thread_id(selected_thread),
         "topic": topic,
         "model": model,
         "init_model": init_model,
@@ -690,7 +716,10 @@ def get_tweet_text(tweet: Dict[str, Any]) -> str:
 # get_screen_name 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def get_screen_name(tweet: Dict[str, Any], tweet_id: str) -> str:
     user = tweet.get("user", {}) or {}
-    name = user.get("screen_name") or user.get("name")
+    if isinstance(user, str):
+        name = user
+    else:
+        name = user.get("screen_name") or user.get("name")
     if name:
         return str(name).replace("\n", " ").strip()
     return f"user_{tweet_id[-5:]}"
@@ -741,6 +770,213 @@ def build_edges_from_reply_metadata(
         else:
             edges.append((source_id, tid))
     return edges
+
+
+def _cleaned_stance_to_score(stance: Any) -> Optional[int]:
+    text = str(stance or "").strip().lower()
+
+    if text in {"1", "2", "3", "4", "5"}:
+        return int(text)
+    if text in {"support", "supports", "agree", "agrees"}:
+        return 4
+    if text in {"oppose", "opposes", "deny", "denies", "disagree", "disagrees"}:
+        return 2
+    if text in {"neutral", "question", "questions", "unclear"}:
+        return 3
+    return None
+
+
+def _build_pheme_graph_from_tweets(
+    *,
+    tweets: Dict[str, Dict[str, Any]],
+    source_id: str,
+    edges: List[Tuple[str, str]],
+    max_agents: int,
+    use_llm_init: bool,
+    initial_opinions_override: Optional[Dict[int, int]] = None,
+    cleaned_stance_scores: Optional[Dict[str, int]] = None,
+):
+    reaction_ids = [tid for tid in tweets if tid != source_id]
+    reaction_ids.sort(key=lambda tid: get_created_at(tweets[tid]) or datetime.max)
+
+    keep_ids = [source_id] + reaction_ids[: max_agents - 1]
+    keep_set = set(keep_ids)
+    id_map = {tid: i for i, tid in enumerate(keep_ids)}
+
+    graph: Dict[int, List[int]] = {id_map[tid]: [] for tid in keep_ids}
+    for u, v in edges:
+        u, v = str(u), str(v)
+        if u in keep_set and v in keep_set:
+            ui, vi = id_map[u], id_map[v]
+            if vi not in graph[ui]:
+                graph[ui].append(vi)
+            if ui not in graph[vi]:
+                graph[vi].append(ui)
+
+    agent_names: Dict[int, str] = {}
+    agent_texts: Dict[int, str] = {}
+    initial_opinions: Dict[int, int] = {}
+    source_idx = id_map[source_id]
+
+    source_tweet = tweets[source_id]
+    topic = (
+        get_tweet_text(source_tweet)
+        or f"PHEME source tweet {source_id}"
+    )
+    cleaned_stance_scores = cleaned_stance_scores or {}
+
+    for idx, tid in enumerate(keep_ids, start=1):
+        print(f"[Init] Agent {idx}/{len(keep_ids)}")
+
+        i = id_map[tid]
+        tw = tweets[tid]
+
+        agent_names[i] = get_screen_name(
+            tw,
+            tid,
+        )
+
+        agent_texts[i] = get_tweet_text(tw)
+
+        if (
+            initial_opinions_override is not None
+            and i in initial_opinions_override
+        ):
+            initial_opinions[i] = int(
+                initial_opinions_override[i]
+            )
+            print(
+                "[Init Opinion] LLM not called | "
+                "reason=stance_cache | "
+                f"score={initial_opinions[i]} | "
+                f"agent={i}"
+            )
+        elif tid in cleaned_stance_scores:
+            initial_opinions[i] = int(cleaned_stance_scores[tid])
+            print(
+                "[Init Opinion] LLM not called | "
+                "reason=cleaned_stance | "
+                f"score={initial_opinions[i]} | "
+                f"agent={i}"
+            )
+        else:
+            reply_context, mentioned_users = (
+                build_mentioned_prior_comments_context(
+                    comment_text=agent_texts[i],
+                    current_created_at=get_created_at(tw),
+                    tweets=tweets,
+                )
+                if tid != source_id
+                else ("", [])
+            )
+
+            initial_opinions[i] = llm_initial_opinion(
+                text=agent_texts[i],
+                source_text=topic,
+                reply_context=reply_context,
+                mentioned_users=mentioned_users,
+                is_source=(tid == source_id),
+                use_llm=use_llm_init,
+            )
+
+    name_to_agent_ids: Dict[str, List[int]] = {}
+    for agent_id, name in agent_names.items():
+        if agent_id == source_idx:
+            continue
+        if not agent_texts.get(agent_id, "").strip():
+            continue
+        name_to_agent_ids.setdefault(
+            name.lower(),
+            [],
+        ).append(agent_id)
+
+    mention_edge_count = 0
+    for agent_id, text in agent_texts.items():
+        if agent_id == source_idx:
+            continue
+
+        for mentioned_name in extract_mentioned_screen_names(text):
+            mentioned_agent_ids = name_to_agent_ids.get(
+                mentioned_name.lower(),
+                [],
+            )
+
+            for mentioned_agent_id in mentioned_agent_ids:
+                if mentioned_agent_id == agent_id:
+                    continue
+
+                if mentioned_agent_id not in graph[agent_id]:
+                    graph[agent_id].append(mentioned_agent_id)
+                    mention_edge_count += 1
+
+                if agent_id not in graph[mentioned_agent_id]:
+                    graph[mentioned_agent_id].append(agent_id)
+
+    if mention_edge_count:
+        print(
+            "[PHEME] Added mention edges between comments: "
+            f"{mention_edge_count}"
+        )
+
+    for tid in keep_ids:
+        i = id_map[tid]
+        if i == source_idx:
+            continue
+        if len(graph[i]) == 0:
+            graph[i].append(source_idx)
+            if i not in graph[source_idx]:
+                graph[source_idx].append(i)
+
+    for i in graph:
+        graph[i] = sorted(graph[i])
+
+    return graph, agent_names, agent_texts, initial_opinions, topic
+
+
+def load_cleaned_pheme_thread(
+    thread_path: Path,
+    max_agents: int = 30,
+    use_llm_init: bool = True,
+    initial_opinions_override: Optional[Dict[int, int]] = None,
+):
+    """Convert event/thread_id_cleaned.json into the standard experiment graph."""
+    thread_path = Path(thread_path)
+    payload = load_json(thread_path)
+    source_tweet = dict(payload.get("source", {}) or {})
+    source_id = get_tweet_id(
+        source_tweet,
+        str(payload.get("thread_id") or get_selected_thread_id(thread_path)),
+    )
+    source_tweet.setdefault("id", source_id)
+
+    tweets: Dict[str, Dict[str, Any]] = {source_id: source_tweet}
+    cleaned_stance_scores: Dict[str, int] = {source_id: 4}
+
+    for row in payload.get("comments", []) or []:
+        tw = dict(row or {})
+        tid = get_tweet_id(tw, "")
+        if not tid:
+            continue
+        tw.setdefault("id", tid)
+        tweets[tid] = tw
+
+        score = _cleaned_stance_to_score(tw.get("stance"))
+        if score is not None:
+            cleaned_stance_scores[tid] = score
+
+    edges = build_edges_from_reply_metadata(tweets, source_id)
+    print(f"[PHEME] Loaded cleaned JSON: {thread_path}")
+    print(f"[PHEME] Built edges from cleaned reply metadata: {len(edges)}")
+
+    return _build_pheme_graph_from_tweets(
+        tweets=tweets,
+        source_id=source_id,
+        edges=edges,
+        max_agents=max_agents,
+        use_llm_init=use_llm_init,
+        initial_opinions_override=initial_opinions_override,
+        cleaned_stance_scores=cleaned_stance_scores,
+    )
 
 
 # heuristic_initial_opinion 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
@@ -1351,7 +1587,23 @@ def select_pheme_thread(event_dir: Path, min_reactions: int = 10, thread_id: Opt
     if not event_dir.exists():
         raise FileNotFoundError(f"Event directory does not exist: {event_dir}")
 
+    if thread_id:
+        cleaned_path = event_dir / f"{thread_id}_cleaned.json"
+        if cleaned_path.exists():
+            payload = load_json(cleaned_path)
+            n_comments = len(payload.get("comments", []))
+            print(f"[PHEME] Selected cleaned thread: {cleaned_path}")
+            print(f"[PHEME] Event folder: {event_dir.name}")
+            print(f"[PHEME] Comments: {n_comments}")
+            return cleaned_path
+
     candidates: List[Tuple[int, str, Path]] = []
+    for cleaned_path in event_dir.glob("*_cleaned.json"):
+        payload = load_json(cleaned_path)
+        n_comments = len(payload.get("comments", []))
+        if n_comments >= min_reactions:
+            candidates.append((n_comments, "cleaned", cleaned_path))
+
     for label_dir in ["rumours", "non-rumours"]:
         base = event_dir / label_dir
         if not base.exists():
@@ -1379,8 +1631,12 @@ def select_pheme_thread(event_dir: Path, min_reactions: int = 10, thread_id: Opt
     candidates.sort(reverse=True, key=lambda x: x[0])
     n_reactions, label, td = candidates[0]
     print(f"[PHEME] Selected thread: {td}")
-    print(f"[PHEME] Label folder: {label}")
-    print(f"[PHEME] Reactions: {n_reactions}")
+    if label == "cleaned":
+        print(f"[PHEME] Event folder: {event_dir.name}")
+        print(f"[PHEME] Comments: {n_reactions}")
+    else:
+        print(f"[PHEME] Label folder: {label}")
+        print(f"[PHEME] Reactions: {n_reactions}")
     return td
 
 
@@ -1393,6 +1649,14 @@ def load_pheme_thread(
 ):
     """Convert a PHEME thread into graph, names, texts, initial opinions, and topic."""
     thread_dir = Path(thread_dir)
+    if thread_dir.is_file():
+        return load_cleaned_pheme_thread(
+            thread_dir,
+            max_agents=max_agents,
+            use_llm_init=use_llm_init,
+            initial_opinions_override=initial_opinions_override,
+        )
+
     source_dir = thread_dir / "source-tweet"
     reaction_dir = thread_dir / "reactions"
     structure_path = thread_dir / "structure.json"
