@@ -252,7 +252,7 @@ def save_initial_opinions(
     topic: str,
     agent_names: Dict[int, str],
     agent_texts: Dict[int, str],
-    initial_opinions: Dict[int, int],
+    initial_opinions: Dict[int, str],
     config: Optional[Dict[str, Any]] = None,
 ) -> Path:
     """Save initialized stance scores for deterministic reuse."""
@@ -469,7 +469,7 @@ def save_llm_comment_score_outputs(
     config: Optional[Dict[str, Any]] = None,
     timestamp: Optional[str] = None,
 ) -> Path:
-    """Save generated natural-language comments and classified scores."""
+    """Save direct stance-classification outputs."""
     timestamp = timestamp or datetime.now().strftime("%Y%m%d_%H%M%S")
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -497,8 +497,19 @@ def save_llm_comment_score_outputs(
                 "classification_response",
                 result.get("raw_response"),
             ),
+            "direct_stance_response": result.get(
+                "direct_stance_response",
+                result.get(
+                    "classification_response",
+                    result.get("raw_response"),
+                ),
+            ),
             "generation_prompt": result.get("generation_prompt"),
             "classification_prompt": result.get("classification_prompt"),
+            "decision_prompt": result.get(
+                "decision_prompt",
+                result.get("classification_prompt"),
+            ),
             "neighbor_count": result.get("neighbor_count"),
             "opposite_neighbor_count": result.get(
                 "opposite_neighbor_count"
@@ -1597,7 +1608,7 @@ def make_controlled_neighbor_lines(
 
 
 # fmt_real_neighbor_opinions 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
-def fmt_real_neighbor_opinions(neighbors: List[int], opinions: Dict[int, int]) -> str:
+def fmt_real_neighbor_opinions(neighbors: List[int], opinions: Dict[int, str]) -> str:
     if not neighbors:
         return "(You have no visible replies or connected posts in this conversation.)"
 
@@ -1614,7 +1625,7 @@ def fmt_real_neighbor_opinions(neighbors: List[int], opinions: Dict[int, int]) -
 # build_prompt_controlled 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def build_prompt_controlled(
     agent_id: int,
-    opinions: Dict[int, int],
+    opinions: Dict[int, str],
     topic: str,
     neighbor_lines: List[str],
     role_label: Optional[str] = None,
@@ -1668,7 +1679,7 @@ Reply with ONLY your final stance: support or oppose."""
 # build_prompt_real_graph 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def build_prompt_real_graph(
     agent_id: int,
-    opinions: Dict[int, int],
+    opinions: Dict[int, str],
     neighbors: List[int],
     topic: str,
     role_label: Optional[str] = None,
@@ -1692,7 +1703,7 @@ def build_prompt_real_graph(
 # get_opposite_candidate_ids 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def get_opposite_candidate_ids(
     agent_id: int,
-    opinions: Dict[int, int],
+    opinions: Dict[int, str],
 ) -> List[int]:
     """Return agents whose stance is opposite to the target agent."""
     old_stance = normalize_stance(opinions[agent_id])
@@ -1714,7 +1725,7 @@ def get_opposite_candidate_ids(
 # get_support_candidate_ids 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def get_support_candidate_ids(
     agent_id: int,
-    opinions: Dict[int, int],
+    opinions: Dict[int, str],
 ) -> List[int]:
     """Return agents whose stance supports the target agent's current stance."""
     old_stance = normalize_stance(opinions[agent_id])
@@ -1735,7 +1746,7 @@ def get_support_candidate_ids(
 # build_threshold_neighbor_rankings 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def build_threshold_neighbor_rankings(
     graph: Dict[int, List[int]],
-    opinions: Dict[int, int],
+    opinions: Dict[int, str],
     *,
     target_agent_ids: Optional[Sequence[int]] = None,
     required_count: int = 5,
@@ -1886,13 +1897,17 @@ def build_comment_threshold_prompt(
     *,
     agent_names: Dict[int, str],
     agent_texts: Dict[int, str],
+    opinions: Dict[int, str],
     topic: str,
 ) -> str:
-    """Build the threshold prompt that asks the agent to write a natural-language comment."""
+    """Build a prompt that directly asks for support/oppose classification."""
     agent_name = agent_names.get(
         agent_id,
         f"agent_{agent_id}",
     )
+    current_stance = normalize_stance(
+        opinions.get(agent_id)
+    ) or "oppose"
 
     raw_own_comment = str(
         agent_texts.get(agent_id, "")
@@ -1960,34 +1975,31 @@ Source post:
 Your previously posted comment:
 "{own_comment}"
 
+Your current stance is: {current_stance}
+
 The following original comments are currently visible to you:
 {neighbor_text}
 
-Write a natural-language follow-up comment that you would post now.
-Base the comment only on the source post, your previous comment, and the visible original comments.
-Your previously posted comment represents your current stance and speaking style.
-Write as the same person continuing from that stance.
+Decide your final stance after reading the source post, your previous comment,
+and the visible original comments.
 
 Important rules:
-- Do not change your stance merely to sound polite, balanced, conciliatory, or agreeable.
-- Only shift your stance if the visible comments give a concrete reason that would
-  plausibly change your mind.
-- If the visible comments conflict with each other, you may keep your prior stance,
-  express uncertainty, or push back rather than seeking artificial compromise.
-- If a visible comment uses the same display name as you, treat it as another
-  original comment in the thread unless it is explicitly shown as your previously
-  posted comment above.
-- Do not output a stance score.
-- Do not output a stance label such as Support, Deny, or Neutral.
-- Do not explain the rating process.
-- Write only the comment text.
-- Keep the comment concise, like a social media reply."""
+- Output only one label: support or oppose.
+- Do not write a natural-language reply.
+- Do not explain your reasoning.
+- Keep your current stance unless the visible comments give a concrete reason
+  that would plausibly change your mind.
+- If the visible comments conflict with each other, you may keep your current
+  stance rather than seeking artificial compromise.
+- If the evidence is unclear, keep your current stance.
+
+Return only support or oppose."""
 
 # run_comment_threshold_condition 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def run_comment_threshold_condition(
     condition_name: str,
     agent_ids: Sequence[int],
-    opinions: Dict[int, int],
+    opinions: Dict[int, str],
     topic: str,
     agent_names: Dict[int, str],
     agent_texts: Dict[int, str],
@@ -2049,30 +2061,14 @@ def run_comment_threshold_condition(
             neighbor_items=neighbor_items,
             agent_names=agent_names,
             agent_texts=agent_texts,
+            opinions=opinions,
             topic=topic,
-        )
-
-        generated_comment, generation_usage = llm_call(
-            (
-                "You are simulating a specific social media user writing a concise "
-                "natural-language reply. Continue from that user's prior stance and "
-                "style. Do not become more agreeable merely for politeness. Do not "
-                "output stance scores or stance labels."
-            ),
-            prompt,
-            temperature=temperature,
-            max_tokens=1024,
-        )
-
-        classification_prompt = build_stance_classification_prompt(
-            topic,
-            generated_comment,
         )
 
         classification_content, classification_usage = llm_call(
             SYSTEM_MSG,
-            classification_prompt,
-            temperature=0.0,
+            prompt,
+            temperature=temperature,
             max_tokens=16,
         )
 
@@ -2080,10 +2076,6 @@ def run_comment_threshold_condition(
             classification_content
         )
         old_score = opinions[agent_id]
-        generation_tokens = generation_usage.get(
-            "total_tokens",
-            0,
-        )
         classification_tokens = classification_usage.get(
             "total_tokens",
             0,
@@ -2099,14 +2091,16 @@ def run_comment_threshold_condition(
             "old_score": old_score,
             "new_score": new_score,
             "change": stance_change_value(old_score, new_score),
-            "generated_comment": generated_comment,
+            "generated_comment": None,
             "classification_response": classification_content,
+            "direct_stance_response": classification_content,
             "raw_response": classification_content,
             "rep": rep,
-            "tokens": generation_tokens + classification_tokens,
-            "generation_tokens": generation_tokens,
+            "tokens": classification_tokens,
+            "generation_tokens": 0,
             "classification_tokens": classification_tokens,
-            "classification_prompt": classification_prompt,
+            "classification_prompt": prompt,
+            "decision_prompt": prompt,
             "neighbor_count": len(
                 neighbor_items
             ),
@@ -2349,7 +2343,7 @@ def analyze_user_threshold_condition(
 def run_controlled_condition(
     condition_name: str,
     agent_ids: List[int],
-    opinions: Dict[int, int],
+    opinions: Dict[int, str],
     topic: str,
     neighbor_lines: List[str],
     prompt_variant: str = "A",
@@ -2405,7 +2399,7 @@ def run_controlled_condition(
 def run_comment_anchor_condition(
     condition_name: str,
     agent_ids: Sequence[int],
-    opinions: Dict[int, int],
+    opinions: Dict[int, str],
     topic: str,
     agent_names: Dict[int, str],
     agent_texts: Dict[int, str],
@@ -2414,7 +2408,7 @@ def run_comment_anchor_condition(
     repetitions: int = 1,
     temperature: float = 0.0,
 ) -> List[Dict[str, Any]]:
-    """Run anchoring with shared original comments, then classify generated comments."""
+    """Run anchoring with shared original comments and direct stance classification."""
     results: List[Dict[str, Any]] = []
     neighbor_items = list(
         neighbor_items
@@ -2439,30 +2433,14 @@ def run_comment_anchor_condition(
             neighbor_items=neighbor_items,
             agent_names=agent_names,
             agent_texts=agent_texts,
+            opinions=opinions,
             topic=topic,
-        )
-
-        generated_comment, generation_usage = llm_call(
-            (
-                "You are simulating a specific social media user writing a concise "
-                "natural-language reply. Continue from that user's prior stance and "
-                "style. Do not become more agreeable merely for politeness. Do not "
-                "output stance scores or stance labels."
-            ),
-            prompt,
-            temperature=temperature,
-            max_tokens=1024,
-        )
-
-        classification_prompt = build_stance_classification_prompt(
-            topic,
-            generated_comment,
         )
 
         classification_content, classification_usage = llm_call(
             SYSTEM_MSG,
-            classification_prompt,
-            temperature=0.0,
+            prompt,
+            temperature=temperature,
             max_tokens=16,
         )
 
@@ -2470,10 +2448,6 @@ def run_comment_anchor_condition(
             classification_content
         )
         old_score = opinions[agent_id]
-        generation_tokens = generation_usage.get(
-            "total_tokens",
-            0,
-        )
         classification_tokens = classification_usage.get(
             "total_tokens",
             0,
@@ -2489,14 +2463,16 @@ def run_comment_anchor_condition(
             "old_score": old_score,
             "new_score": new_score,
             "change": stance_change_value(old_score, new_score),
-            "generated_comment": generated_comment,
+            "generated_comment": None,
             "classification_response": classification_content,
+            "direct_stance_response": classification_content,
             "raw_response": classification_content,
             "rep": rep,
-            "tokens": generation_tokens + classification_tokens,
-            "generation_tokens": generation_tokens,
+            "tokens": classification_tokens,
+            "generation_tokens": 0,
             "classification_tokens": classification_tokens,
-            "classification_prompt": classification_prompt,
+            "classification_prompt": prompt,
+            "decision_prompt": prompt,
             "neighbor_count": len(
                 neighbor_items
             ),
@@ -2627,7 +2603,7 @@ def run_comment_anchor_condition(
 def run_real_graph_condition(
     condition_name: str,
     agent_ids: List[int],
-    opinions: Dict[int, int],
+    opinions: Dict[int, str],
     graph: Dict[int, List[int]],
     topic: str,
     prompt_variant: str = "A",
@@ -2939,25 +2915,25 @@ def print_generated_comment_samples(
     *,
     limit: int = 5,
 ) -> None:
-    """Print a small sample of generated natural-language comments."""
+    """Print a small sample of direct stance-classification outputs."""
     rows = [
         result
         for result in results
-        if result.get("generated_comment")
+        if result.get("raw_response") is not None
     ]
 
     if not rows:
-        print("  Generated comments:   none")
+        print("  Classification outputs: none")
         return
 
     print(
-        f"  Generated comment samples "
+        f"  Classification output samples "
         f"(showing {min(limit, len(rows))}/{len(rows)}):"
     )
 
     for result in rows[:limit]:
-        comment = (
-            str(result.get("generated_comment", ""))
+        response = (
+            str(result.get("raw_response", ""))
             .replace("\n", " ")
             .strip()
         )
@@ -2967,7 +2943,7 @@ def print_generated_comment_samples(
             f"agent={result.get('agent')} "
             f"rep={result.get('rep')} "
             f"{result.get('old_score')}->{result.get('new_score')} | "
-            f"{comment}"
+            f"{response}"
         )
 
 
