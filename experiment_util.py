@@ -437,6 +437,26 @@ def build_llm_output_file_path(
     return Path(output_dir) / f"{'_'.join(parts)}.json"
 
 
+def build_threshold_repetition_output_file_path(
+    output_dir: Path,
+    *,
+    event_name: str,
+    thread_id: str,
+    model: str,
+    condition: str,
+    repetition: int,
+) -> Path:
+    """Build event-thread-model-condition-repetitionN output path."""
+    parts = [
+        _safe_stance_filename_part(event_name),
+        _safe_stance_filename_part(thread_id),
+        _safe_stance_filename_part(model),
+        _safe_stance_filename_part(condition),
+        f"repetition{int(repetition)}",
+    ]
+    return Path(output_dir) / f"{'-'.join(parts)}.json"
+
+
 # save_llm_comment_score_outputs 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def save_llm_comment_score_outputs(
     output_path: Path,
