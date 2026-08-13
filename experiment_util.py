@@ -110,6 +110,25 @@ def configure_runtime(
     if reset_call_count:
         call_count = 0
 
+def normalize_chat_api_url(api_url: str) -> str:
+    """Return a chat-completions endpoint for OpenAI-compatible APIs."""
+    clean_url = str(api_url or "").strip().rstrip("/")
+
+    if not clean_url:
+        return clean_url
+
+    if clean_url.endswith("/chat/completions"):
+        return clean_url
+
+    if clean_url.endswith("/cn-sale"):
+        return f"{clean_url}/v1/chat/completions"
+
+    if clean_url.endswith("/v1"):
+        return f"{clean_url}/chat/completions"
+
+    return f"{clean_url}/chat/completions"
+
+
 
 # set_experiment_data 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def set_experiment_data(
@@ -437,24 +456,84 @@ def build_llm_output_file_path(
     return Path(output_dir) / f"{'_'.join(parts)}.json"
 
 
-def build_threshold_repetition_output_file_path(
+def build_threshold_seed_output_file_path(
     output_dir: Path,
     *,
     event_name: str,
     thread_id: str,
     model: str,
     condition: str,
-    repetition: int,
+    seed: int,
 ) -> Path:
-    """Build event-thread-model-condition-repetitionN output path."""
+    """Build event-thread-model-condition-seedN output path."""
     parts = [
         _safe_stance_filename_part(event_name),
         _safe_stance_filename_part(thread_id),
         _safe_stance_filename_part(model),
         _safe_stance_filename_part(condition),
-        f"repetition{int(repetition)}",
+        f"seed{int(seed)}",
     ]
     return Path(output_dir) / f"{'-'.join(parts)}.json"
+
+
+def build_threshold_agent_change_output_file_path(
+    output_dir: Path,
+    *,
+    event_name: str,
+    thread_id: str,
+    model: str,
+    condition: str,
+    seed: int,
+) -> Path:
+    """Build the per-agent before/after threshold summary output path."""
+    parts = [
+        _safe_stance_filename_part(event_name),
+        _safe_stance_filename_part(thread_id),
+        _safe_stance_filename_part(model),
+        _safe_stance_filename_part(condition),
+        f"seed{int(seed)}",
+        "agent-changes",
+    ]
+    return Path(output_dir) / f"{'-'.join(parts)}.json"
+
+
+def sample_threshold_agents_by_repetition(
+    candidate_agent_ids: Sequence[int],
+    *,
+    sample_size: int,
+    repetitions: int,
+    seed: int,
+) -> Dict[int, List[int]]:
+    """Sample a fresh fixed-size target-agent set for each repetition."""
+    candidates = sorted({
+        int(agent_id)
+        for agent_id in candidate_agent_ids
+    })
+    sample_size = int(sample_size)
+    repetitions = int(repetitions)
+
+    if sample_size <= 0:
+        raise ValueError("sample_size must be positive")
+
+    if len(candidates) < sample_size:
+        raise ValueError(
+            f"Need at least {sample_size} eligible target agents, "
+            f"but only found {len(candidates)}."
+        )
+
+    samples: Dict[int, List[int]] = {}
+    for rep in range(repetitions):
+        rng = random.Random(
+            f"{int(seed)}:threshold_agents:{rep}"
+        )
+        samples[rep] = sorted(
+            rng.sample(
+                candidates,
+                sample_size,
+            )
+        )
+
+    return samples
 
 
 # save_llm_comment_score_outputs 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
@@ -488,6 +567,16 @@ def save_llm_comment_score_outputs(
             "agent": result.get("agent"),
             "name": result.get("name"),
             "rep": result.get("rep"),
+            "repetition": result.get(
+                "repetition",
+                (
+                    result.get("rep") + 1
+                    if result.get("rep") is not None
+                    else None
+                ),
+            ),
+            "seed": result.get("seed"),
+            "sample_seed": result.get("sample_seed"),
             "old_score": result.get("old_score"),
             "new_score": result.get("new_score"),
             "classification_score": result.get("new_score"),
@@ -547,6 +636,215 @@ def save_llm_comment_score_outputs(
         )
 
     print(f"[LLM Output] Saved comments and scores: {output_path}")
+    return output_path
+
+
+def save_threshold_agent_change_summary(
+    output_path: Path,
+    *,
+    selected_thread: Path,
+    topic: str,
+    model: str,
+    condition: str,
+    results: Sequence[Dict[str, Any]],
+    sampled_agents_by_repetition: Optional[
+        Dict[int, Sequence[int]]
+    ] = None,
+    config: Optional[Dict[str, Any]] = None,
+    timestamp: Optional[str] = None,
+) -> Path:
+    """Save per-agent before/after changes and final oppshift metrics."""
+    timestamp = timestamp or datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    valid = [
+        result
+        for result in results
+        if (
+            normalize_stance(result.get("old_score")) is not None
+            and normalize_stance(result.get("new_score")) is not None
+        )
+    ]
+
+    agent_changes = []
+    for result in sorted(
+        valid,
+        key=lambda row: (
+            row.get("rep", -1),
+            row.get("agent", -1),
+        ),
+    ):
+        old_stance = normalize_stance(
+            result.get("old_score")
+        )
+        new_stance = normalize_stance(
+            result.get("new_score")
+        )
+        changed = bool(
+            stance_changed(
+                old_stance,
+                new_stance,
+            )
+        )
+        rep = result.get("rep")
+
+        agent_changes.append({
+            "condition": result.get("condition", condition),
+            "agent": result.get("agent"),
+            "name": result.get("name"),
+            "rep": rep,
+            "repetition": (
+                result.get("repetition")
+                or (
+                    rep + 1
+                    if rep is not None
+                    else None
+                )
+            ),
+            "seed": result.get("seed"),
+            "sample_seed": result.get("sample_seed"),
+            "old_stance": old_stance,
+            "new_stance": new_stance,
+            "changed": changed,
+            "oppshift": changed,
+            "transition": f"{old_stance}->{new_stance}",
+            "neighbor_count": result.get("neighbor_count"),
+            "opposite_neighbor_count": result.get(
+                "opposite_neighbor_count"
+            ),
+            "support_neighbor_count": result.get(
+                "support_neighbor_count"
+            ),
+            "neighbor_ids": result.get("neighbor_ids"),
+            "neighbor_sources": result.get("neighbor_sources"),
+            "neighbor_relations": result.get("neighbor_relations"),
+            "direct_stance_response": result.get(
+                "direct_stance_response",
+                result.get(
+                    "classification_response",
+                    result.get("raw_response"),
+                ),
+            ),
+        })
+
+    oppshift_count = sum(
+        1
+        for row in agent_changes
+        if row["oppshift"]
+    )
+    total = len(agent_changes)
+
+    repetitions = sorted({
+        row["rep"]
+        for row in agent_changes
+        if row.get("rep") is not None
+    })
+    by_repetition = []
+    for rep in repetitions:
+        rows = [
+            row
+            for row in agent_changes
+            if row.get("rep") == rep
+        ]
+        rep_oppshift = sum(
+            1
+            for row in rows
+            if row["oppshift"]
+        )
+        by_repetition.append({
+            "rep": rep,
+            "repetition": rep + 1,
+            "agent_count": len(rows),
+            "sampled_agent_ids": (
+                list(
+                    sampled_agents_by_repetition.get(
+                        rep,
+                        [],
+                    )
+                )
+                if sampled_agents_by_repetition
+                else [
+                    row["agent"]
+                    for row in rows
+                ]
+            ),
+            "oppshift_count": rep_oppshift,
+            "oppshift_rate": (
+                rep_oppshift / len(rows)
+                if rows
+                else 0.0
+            ),
+        })
+
+    by_condition = []
+    conditions = sorted({
+        row.get("condition", condition)
+        for row in agent_changes
+    })
+    for condition_name in conditions:
+        rows = [
+            row
+            for row in agent_changes
+            if row.get("condition", condition) == condition_name
+        ]
+        condition_oppshift = sum(
+            1
+            for row in rows
+            if row["oppshift"]
+        )
+        by_condition.append({
+            "condition": condition_name,
+            "agent_count": len(rows),
+            "oppshift_count": condition_oppshift,
+            "oppshift_rate": (
+                condition_oppshift / len(rows)
+                if rows
+                else 0.0
+            ),
+            "final_oppshift": (
+                condition_oppshift / len(rows)
+                if rows
+                else 0.0
+            ),
+        })
+
+    payload = {
+        "timestamp": timestamp,
+        "selected_thread": str(selected_thread),
+        "thread_id": get_selected_thread_id(selected_thread),
+        "topic": topic,
+        "model": model,
+        "condition": condition,
+        "config": config or {},
+        "summary": {
+            "agent_count": total,
+            "oppshift_count": oppshift_count,
+            "oppshift_rate": (
+                oppshift_count / total
+                if total
+                else 0.0
+            ),
+            "final_oppshift": (
+                oppshift_count / total
+                if total
+                else 0.0
+            ),
+        },
+        "by_condition": by_condition,
+        "by_repetition": by_repetition,
+        "agent_changes": agent_changes,
+    }
+
+    with output_path.open("w", encoding="utf-8") as f:
+        json.dump(
+            payload,
+            f,
+            ensure_ascii=False,
+            indent=2,
+        )
+
+    print(f"[LLM Output] Saved agent changes: {output_path}")
     return output_path
 
 
@@ -611,13 +909,14 @@ def llm_call(
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json",
     }
+    request_url = normalize_chat_api_url(API_URL)
 
     last_error = None
 
     for attempt in range(1, max_retries + 1):
         try:
             resp = requests.post(
-                API_URL,
+                request_url,
                 headers=headers,
                 json=payload,
                 timeout=120,
@@ -653,7 +952,21 @@ def llm_call(
                 )
 
             else:
-                data = resp.json()
+                try:
+                    data = resp.json()
+                except ValueError as e:
+                    print(
+                        "  [API Error] Response is not JSON "
+                        f"(HTTP {resp.status_code})"
+                    )
+                    print(f"  [URL] {request_url}")
+                    print(f"  [Model] {selected_model}")
+                    print(
+                        "  [Content-Type] "
+                        f"{resp.headers.get('Content-Type', '')}"
+                    )
+                    print(f"  [Response Head] {resp.text[:500]}")
+                    return "ERROR", {}
 
                 choices = data.get("choices", [])
                 if not choices:
@@ -1998,7 +2311,7 @@ Return only support or oppose."""
 # run_comment_threshold_condition 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def run_comment_threshold_condition(
     condition_name: str,
-    agent_ids: Sequence[int],
+    agent_ids: Sequence[int] | Dict[int, Sequence[int]],
     opinions: Dict[int, str],
     topic: str,
     agent_names: Dict[int, str],
@@ -2011,6 +2324,7 @@ def run_comment_threshold_condition(
     *,
     total_neighbor_count: int = 6,
     repetitions: int = 1,
+    seed: Optional[int] = None,
     temperature: float = 0.0,
 ) -> List[Dict[str, Any]]:
     """
@@ -2096,6 +2410,13 @@ def run_comment_threshold_condition(
             "direct_stance_response": classification_content,
             "raw_response": classification_content,
             "rep": rep,
+            "repetition": rep + 1,
+            "seed": seed,
+            "sample_seed": (
+                f"{seed}:threshold_agents:{rep}"
+                if seed is not None
+                else None
+            ),
             "tokens": classification_tokens,
             "generation_tokens": 0,
             "classification_tokens": classification_tokens,
@@ -2135,10 +2456,42 @@ def run_comment_threshold_condition(
         }
 
     # 每个 Agent 在每次 repetition 中调用一次。
+    if isinstance(agent_ids, dict):
+        agent_ids_by_rep = {
+            int(rep): [
+                int(agent_id)
+                for agent_id in rep_agent_ids
+            ]
+            for rep, rep_agent_ids in agent_ids.items()
+        }
+        repetitions = max(
+            repetitions,
+            (
+                max(agent_ids_by_rep) + 1
+                if agent_ids_by_rep
+                else 0
+            ),
+        )
+    else:
+        shared_agent_ids = [
+            int(agent_id)
+            for agent_id in agent_ids
+        ]
+        agent_ids_by_rep = {
+            rep: shared_agent_ids
+            for rep in range(repetitions)
+        }
+
+    unique_agent_count = len({
+        agent_id
+        for rep_agent_ids in agent_ids_by_rep.values()
+        for agent_id in rep_agent_ids
+    })
+
     tasks = [
         (agent_id, rep)
         for rep in range(repetitions)
-        for agent_id in agent_ids
+        for agent_id in agent_ids_by_rep.get(rep, [])
     ]
 
     total_tasks = len(tasks)
@@ -2149,7 +2502,7 @@ def run_comment_threshold_condition(
     print(
         f"\n[{condition_name}] Starting "
         f"{total_tasks} tasks: "
-        f"{len(agent_ids)} agents × "
+        f"{unique_agent_count} unique agents x "
         f"{repetitions} repetitions"
     )
 
