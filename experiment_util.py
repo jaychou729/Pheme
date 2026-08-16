@@ -1315,34 +1315,130 @@ def load_cleaned_pheme_thread(
 
 
 # build_stance_classification_prompt 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
+THREAD_PROMPT_TOPIC_KEYS = {
+    "500293392060780546": "ferguson_obama_apology",
+    "500298847550472194": "ferguson_robbery_id_doubt",
+    "500307001629745152": "ferguson_character_assassination",
+    "500335355904540674": "ferguson_robbery_video_link",
+    "500361302238564352": "ferguson_wilson_not_aware",
+    "524930851747164160": "greenwald_incident_distinction",
+    "524947030616313856": "us_shooting_normalization",
+    "524947716393414656": "gun_control",
+    "524934142958788608": "anti_muslim_hate",
+    "525046443103354880": "muslim_convert_framing",
+    "525051210349289472": "fox_islam_convert_framing",
+    "544304742743044096": "sydney_collective_blame",
+    "544329935943237632": "uber_sydney_surge_free_rides",
+    "544349042952916993": "sydney_anti_islam_blame",
+    "544445364322197504": "sydney_black_flag_meaning",
+    "544454229960974336": "sydney_isis_flag_framing",
+}
+
+
 def _stance_prompt_topic_key(source_text: str) -> str:
     """Choose the stance rubric from the loaded thread id or source text."""
     thread_id = str(CURRENT_THREAD_ID or "").strip()
     source_lower = str(source_text or "").lower()
 
-    if thread_id == "524947716393414656" or (
+    if thread_id in THREAD_PROMPT_TOPIC_KEYS:
+        return THREAD_PROMPT_TOPIC_KEYS[thread_id]
+
+    if (
+        "president obama's apology" in source_lower
+        and "ferguson pd" in source_lower
+    ):
+        return "ferguson_obama_apology"
+
+    if (
+        "where" in source_lower
+        and "red ball cap" in source_lower
+        and "stolen cigars" in source_lower
+    ):
+        return "ferguson_robbery_id_doubt"
+
+    if (
+        "assassinate mike brown's character" in source_lower
+        or "assassinating mike brown's character" in source_lower
+    ):
+        return "ferguson_character_assassination"
+
+    if (
+        "surveillance video" in source_lower
+        and "linked to michael brown" in source_lower
+    ):
+        return "ferguson_robbery_video_link"
+
+    if (
+        "officer wilson was not aware" in source_lower
+        and "robbery suspect" in source_lower
+    ):
+        return "ferguson_wilson_not_aware"
+
+    if (
+        "my article was about monday's car incident" in source_lower
+        and "not the ottawa shooting" in source_lower
+    ):
+        return "greenwald_incident_distinction"
+
+    if (
         "issues with gun control" in source_lower
         and "ottawa shooting" in source_lower
     ):
         return "gun_control"
 
-    if thread_id == "524947030616313856" or (
+    if (
         "active shooting in canada" in source_lower
         and "america, wednesday" in source_lower
     ):
         return "us_shooting_normalization"
 
-    if thread_id == "524934142958788608" or (
+    if (
         "flurry of muslim hate tweets" in source_lower
         and "we are better than this" in source_lower
     ):
         return "anti_muslim_hate"
 
-    if thread_id == "525046443103354880" or (
+    if (
         "muslim convert michael zehaf-bibeau" in source_lower
         or "identifies muslim convert" in source_lower
     ):
         return "muslim_convert_framing"
+
+    if (
+        "convert to #islam" in source_lower
+        or "convert to islam" in source_lower
+    ):
+        return "fox_islam_convert_framing"
+
+    if (
+        "collective blame" in source_lower
+        and "sydney" in source_lower
+    ):
+        return "sydney_collective_blame"
+
+    if (
+        "uber sydney trips from cbd will be free" in source_lower
+        or "higher rates are still in place" in source_lower
+    ):
+        return "uber_sydney_surge_free_rides"
+
+    if (
+        "religion of cowards" in source_lower
+        or "hostages forced display islamic flag" in source_lower
+    ):
+        return "sydney_anti_islam_blame"
+
+    if (
+        "black flag at #sydneysiege" in source_lower
+        or "black flag at sydneysiege" in source_lower
+    ):
+        return "sydney_black_flag_meaning"
+
+    if (
+        "demanding an #isis flag" in source_lower
+        or "demanding an isis flag" in source_lower
+    ):
+        return "sydney_isis_flag_framing"
 
     return "generic"
 
@@ -1350,6 +1446,253 @@ def _stance_prompt_topic_key(source_text: str) -> str:
 def _stance_prompt_spec(source_text: str) -> Dict[str, str]:
     """Return the topic-specific stance definitions used inside the prompt."""
     topic_key = _stance_prompt_topic_key(source_text)
+
+    if topic_key == "ferguson_obama_apology":
+        return {
+            "discussion": (
+                "the source post's pro-police / anti-Obama framing of the "
+                "Michael Brown robbery allegation and Ferguson PD"
+            ),
+            "important": """- The source post assumes Michael Brown and Dorian Johnson may have been
+  involved in a robbery and asks when President Obama will apologize to the
+  Ferguson Police Department. It frames Brown's alleged conduct as relevant
+  and treats criticism of Ferguson PD as unfair.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source framing by
+  saying Obama need not apologize, the police response was excessive or
+  militarized, due process matters, or an alleged robbery would not justify the
+  shooting.
+- Score 2 (Deny): The comment rejects the source framing less forcefully, for
+  example by questioning the assumption, asking what Obama should apologize
+  for, or saying the robbery allegation does not excuse the police.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks for
+  information, reports facts, jokes/socializes, or does not take a clear
+  position on Obama/Ferguson PD/Brown's alleged robbery.
+- Score 4 (Support): The comment supports the source framing by accepting that
+  Brown's alleged robbery or conduct is materially relevant, defending the
+  Ferguson police response, or agreeing Obama/liberals/media owe police an
+  apology.
+- Score 5 (Strongly Support): The comment STRONGLY supports the source framing
+  by forcefully attacking Obama or Brown's defenders, strongly defending
+  Ferguson PD, or insisting the robbery allegation proves the police criticism
+  was wrong.""",
+            "critical": """- Judge stance toward the source post's framing: Brown's alleged robbery makes
+  Obama/critics owe Ferguson PD an apology or makes the pro-police framing
+  valid.
+- A comment that says Obama need not apologize, asks why Obama should
+  apologize, emphasizes due process, excessive force, militarized policing, or
+  says robbery does not justify shooting is DENY (1-2).
+- A comment that treats Brown's alleged robbery/conduct as relevant, defends
+  police, criticizes Obama/media for defending Brown, or agrees police were
+  unfairly blamed is SUPPORT (4-5).
+- Merely mentioning Obama, robbery, police, race, or Ferguson is not enough.
+  Identify whether the comment accepts or rejects the source framing.
+- If the stance toward that framing is unclear, classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's pro-police / "
+                "anti-Obama framing."
+            ),
+        }
+
+    if topic_key == "ferguson_robbery_id_doubt":
+        return {
+            "discussion": (
+                "the source post's doubt that Mike Brown was the robber, based "
+                "on missing or unclear identifying evidence"
+            ),
+            "important": """- The source post questions whether Mike Brown was the robber by pointing to
+  missing or unclear details such as the red ball cap, sandals, and stolen
+  cigars.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source's doubt by
+  insisting Brown was the robber, saying the video/evidence identifies him, or
+  giving a forceful explanation for the supposedly missing details.
+- Score 2 (Deny): The comment rejects the source's doubt less forcefully, for
+  example by saying the cap/sandals/cigars appear in other footage, Dorian's
+  account explains it, or the source is nitpicking.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks for
+  context, only reports facts, jokes/socializes, insults without a clear stance,
+  or does not clearly judge whether Brown was the robber.
+- Score 4 (Support): The comment supports the source's doubt by agreeing that
+  the identifying evidence is missing, inconsistent, or insufficient, or by
+  arguing the robbery allegation should not distract from Brown's killing.
+- Score 5 (Strongly Support): The comment STRONGLY supports the source's doubt
+  by forcefully arguing the robbery identification is false, fabricated,
+  irrelevant character assassination, or a distraction from an unjustified
+  shooting.""",
+            "critical": """- Judge stance toward the source post's doubt about the robbery
+  identification.
+- A comment that says the missing cap/sandals/cigars matter, the evidence does
+  not prove Brown was the robber, or the robbery is a distraction is SUPPORT
+  (4-5).
+- A comment that says Brown was clearly the robber, points to evidence
+  explaining the missing details, or says the source is wrong to doubt the
+  robbery ID is DENY (1-2).
+- A comment can criticize the shooting while still being neutral if it does not
+  clearly address the robbery-identification doubt.
+- If the position on the source's doubt is unclear, classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's doubt about "
+                "whether Mike Brown was the robber."
+            ),
+        }
+
+    if topic_key == "ferguson_character_assassination":
+        return {
+            "discussion": (
+                "the source post's claim that Ferguson PD tried to assassinate "
+                "Mike Brown's character after killing him"
+            ),
+            "important": """- The source post accuses Ferguson PD of trying to assassinate Mike Brown's
+  character by releasing or emphasizing robbery-related information after the
+  shooting.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the accusation by
+  defending the police release, saying the information was requested or
+  relevant, or strongly arguing Brown's conduct should be considered.
+- Score 2 (Deny): The comment rejects the accusation less forcefully, for
+  example by saying police were just providing information, could not release
+  shooting details yet, or the media asked for it.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks for
+  information, only reports facts, jokes/socializes, or does not clearly judge
+  whether the police release was character assassination.
+- Score 4 (Support): The comment supports the source accusation by saying the
+  released information is irrelevant, a distraction, victim-blaming, or an
+  attempt to smear Brown.
+- Score 5 (Strongly Support): The comment STRONGLY supports the accusation by
+  forcefully condemning Ferguson PD for smearing Brown, covering for the
+  shooting, or using robbery allegations to justify killing an unarmed person.""",
+            "critical": """- Judge stance toward the claim that Ferguson PD used robbery-related
+  information to smear Mike Brown after killing him.
+- A comment that says the information is irrelevant, a distraction, a smear, or
+  victim-blaming is SUPPORT (4-5).
+- A comment that says police were answering media requests, releasing relevant
+  facts, or acting properly is DENY (1-2).
+- Merely mentioning robbery, police procedure, witnesses, or Mike Brown does
+  not determine stance.
+- If the comment does not clearly evaluate the character-assassination claim,
+  classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's character-"
+                "assassination accusation against Ferguson PD."
+            ),
+        }
+
+    if topic_key == "ferguson_robbery_video_link":
+        return {
+            "discussion": (
+                "the source post's framing that surveillance video of a strong-"
+                "arm robbery is linked to Michael Brown"
+            ),
+            "important": """- The source post presents surveillance video of a strong-arm robbery as linked
+  to Michael Brown, implying the video is relevant to how Brown should be
+  viewed in the Ferguson case.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source framing by
+  saying the person in the video is not Brown, the clothing/shoes do not match,
+  the link is misleading, or the alleged shoplifting does not justify killing
+  him.
+- Score 2 (Deny): The comment rejects the framing less forcefully, for example
+  by questioning the video link, calling the act only shoplifting, or saying
+  the video is a distraction from Brown's death.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks for
+  information, only reports facts, shares the video without stance, jokes, or
+  does not clearly judge the video's relevance/link to Brown.
+- Score 4 (Support): The comment supports the source framing by accepting the
+  video as linked to Brown, saying it reveals the truth, or arguing it
+  undermines the innocent/victim narrative.
+- Score 5 (Strongly Support): The comment STRONGLY supports the framing by
+  forcefully calling Brown a robber/thug, emphasizing the video proves bad
+  character, or using it to strongly defend criticism of Brown.""",
+            "critical": """- Judge stance toward the source's claim that the robbery video is linked to
+  Michael Brown and relevant to the Ferguson discussion.
+- A comment that says the video proves Brown's conduct, exposes the truth, or
+  undermines the innocent narrative is SUPPORT (4-5).
+- A comment that questions the identification, notes mismatched clothing/shoes,
+  says it was only shoplifting, or says it does not justify the shooting is
+  DENY (1-2).
+- Merely watching, sharing, or asking about the video is not enough for support.
+- If the position on the video's linkage/relevance is unclear, classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's framing that "
+                "the robbery video is linked to Michael Brown and relevant."
+            ),
+        }
+
+    if topic_key == "ferguson_wilson_not_aware":
+        return {
+            "discussion": (
+                "the source post's claim that Officer Wilson not knowing Brown "
+                "was a robbery suspect is key to Wilson's state of mind"
+            ),
+            "important": """- The source post says Officer Wilson was not aware Mike Brown was a robbery
+  suspect, and that this fact is key for judging Wilson's state of mind. It
+  frames the robbery narrative as weak or irrelevant for justifying Wilson's
+  decision.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source framing by
+  insisting the robbery remains central, Brown's state of mind matters more, or
+  the robbery call/facts still explain the encounter.
+- Score 2 (Deny): The comment rejects the framing less forcefully, for example
+  by saying the robbery may matter to Brown's state of mind, that Wilson may
+  have had other reasons, or that the source is overlooking relevant facts.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks a question,
+  only reports facts, jokes/socializes, or does not clearly judge whether
+  Wilson's lack of awareness makes the robbery irrelevant.
+- Score 4 (Support): The comment supports the source framing by accepting that
+  Wilson's lack of awareness makes the robbery irrelevant or weak as a
+  justification, or by asking why Wilson stopped Brown if not for robbery.
+- Score 5 (Strongly Support): The comment STRONGLY supports the framing by
+  forcefully arguing the robbery narrative cannot justify the shooting because
+  Wilson did not know about it.""",
+            "critical": """- Judge stance toward the claim that Wilson's lack of knowledge about the
+  robbery is key and weakens robbery-based justifications for the shooting.
+- A comment that says Wilson did not know, asks why he stopped Brown, or says
+  robbery cannot justify the shooting is SUPPORT (4-5).
+- A comment that says Brown's own state of mind, the robbery call, or
+  robbery-related facts still matter is DENY (1-2).
+- Merely mentioning state of mind, robbery, or Wilson is not enough.
+- If the comment does not clearly accept or reject the source point, classify
+  as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's point that "
+                "Wilson's lack of robbery knowledge matters."
+            ),
+        }
+
+    if topic_key == "greenwald_incident_distinction":
+        return {
+            "discussion": (
+                "the source post's distinction between Greenwald's article "
+                "about Monday's car incident and the Ottawa shooting"
+            ),
+            "important": """- The source post says Greenwald's article was about Monday's car incident, not
+  the Ottawa shooting that morning. It argues critics are confusing distinct
+  incidents and that facts/motive should not be assumed.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the distinction by
+  saying the incidents are effectively the same, that the same logic applies,
+  or by forcefully accusing Greenwald of defending/minimizing terrorism.
+- Score 2 (Deny): The comment rejects the distinction less forcefully, for
+  example by asking why the same reasoning would not apply, saying the
+  difference is irrelevant, or implying Greenwald is making excuses.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks for
+  information, only reports facts, jokes/socializes, or does not clearly judge
+  the distinction.
+- Score 4 (Support): The comment supports the source framing by accepting the
+  distinction, saying motives/facts were unknown, or saying analyzing causes is
+  not defending violence.
+- Score 5 (Strongly Support): The comment STRONGLY supports Greenwald's
+  distinction by forcefully defending him against critics, emphasizing that the
+  article was misrepresented, or strongly rejecting premature terrorism claims.""",
+            "critical": """- Judge stance toward the source's claim that the article was about a different
+  incident and should not be treated as commentary on the Ottawa shooting.
+- A comment that accepts the distinction, says the shooter/motive was unknown,
+  or says Greenwald was misrepresented is SUPPORT (4-5).
+- A comment that says the incidents are the same, asks why the same logic would
+  not apply, or accuses him of excusing terrorism is DENY (1-2).
+- Merely mentioning terrorism, Ottawa, the car incident, or Greenwald is not
+  enough.
+- If the comment's position on the distinction is unclear, classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's distinction "
+                "between the two incidents."
+            ),
+        }
 
     if topic_key == "gun_control":
         return {
@@ -1527,6 +1870,244 @@ def _stance_prompt_spec(source_text: str) -> Dict[str, str]:
             "support_rule": (
                 "the comment clearly supports the source post's framing that "
                 "Muslim-convert identity is relevant to report."
+            ),
+        }
+
+    if topic_key == "fox_islam_convert_framing":
+        return {
+            "discussion": (
+                "whether the Ottawa shooter's identity as a Canadian convert "
+                "to Islam is relevant to report"
+            ),
+            "important": """- The source post reports that U.S. agencies believed the Ottawa shooter was a
+  Canadian convert to Islam. It frames the Islam/convert identity as relevant
+  context for the attack report.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source framing by
+  calling it Islamophobic, biased, overgeneralizing, or an unfair linkage
+  between Islam and violence.
+- Score 2 (Deny): The comment rejects the framing less forcefully, for example
+  by saying the shooter could be mentally ill, that not every violent person is
+  Muslim, or that media should not emphasize Islam/convert identity.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks for
+  information, only repeats facts, jokes/socializes, or discusses the attack
+  without judging whether the Islam/convert identity is relevant.
+- Score 4 (Support): The comment supports the source framing by accepting that
+  Islam/convert identity is relevant, predictable, or tied to radical Islamist
+  motive.
+- Score 5 (Strongly Support): The comment STRONGLY supports the framing by
+  forcefully linking Islam/Muslims/Islamist extremism to violence, saying the
+  media should identify the connection, or using the report to condemn Islam as
+  a source of the attack.""",
+            "critical": """- Judge whether the comment accepts or rejects the relevance of reporting the
+  shooter's Islam/convert identity.
+- A comment that says the identity is relevant, expected, connected to radical
+  Islam, or evidence of Islamist motive is SUPPORT (4-5).
+- A comment that calls the framing Islamophobic, says the shooter was just a
+  crazy person who happened to claim Islam, warns against generalization, or
+  criticizes Fox/media bias is DENY (1-2).
+- Merely mentioning Islam, Muslims, terrorism, or Fox News is not enough.
+- If the comment does not clearly judge the Islam/convert framing, classify as
+  3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's framing that "
+                "the shooter's Islam/convert identity is relevant to report."
+            ),
+        }
+
+    if topic_key == "sydney_collective_blame":
+        return {
+            "discussion": (
+                "the source post's concern about collective blame against "
+                "Muslims after the Sydney cafe hostage crisis"
+            ),
+            "important": """- The source post prays for the Sydney hostages and says the author is
+  preparing for collective blame. It warns against guilt-by-association or
+  blaming Muslims/Islam broadly for the siege.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source concern by
+  endorsing suspicion or blame toward Muslims/Islam as a group, or arguing that
+  broad religious blame is justified.
+- Score 2 (Deny): The comment rejects the concern less forcefully, for example
+  by saying it is not a phobia to be wary of Muslims/Islam, or by arguing
+  Muslim communities' silence/responsibility makes collective concern valid.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, only expresses
+  concern for hostages, reports facts, asks a question, jokes/socializes, or
+  does not clearly judge collective blame.
+- Score 4 (Support): The comment supports the source concern by criticizing
+  Islamophobic reactions, opposing guilt by association, warning against
+  collective punishment, or separating the attacker from Muslims broadly.
+- Score 5 (Strongly Support): The comment STRONGLY supports the source concern
+  by forcefully condemning Islamophobia, collective blame, or broad anti-Muslim
+  backlash after the siege.""",
+            "critical": """- Judge stance toward collective blame / Islamophobic backlash after the Sydney
+  siege.
+- A comment that condemns Islamophobia, guilt by association, collective
+  punishment, or blaming Muslims broadly is SUPPORT (4-5).
+- A comment that defends broad suspicion/blame toward Muslims or Islam, or says
+  collective silence/responsibility justifies blame, is DENY (1-2).
+- Sympathy for hostages alone is not enough for support.
+- If the position toward collective blame is unclear, classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's opposition to "
+                "collective blame."
+            ),
+        }
+
+    if topic_key == "uber_sydney_surge_free_rides":
+        return {
+            "discussion": (
+                "Uber Sydney's explanation that CBD trips would be free for "
+                "riders while higher driver rates remained to attract drivers"
+            ),
+            "important": """- The source post says Uber Sydney trips from the CBD will be free for riders,
+  while higher driver rates remain in place to encourage drivers to enter the
+  CBD during the Sydney siege.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source framing by
+  accusing Uber of profiteering, exploiting the siege, surge pricing during a
+  crisis, or saying the policy is unacceptable.
+- Score 2 (Deny): The comment rejects the framing less forcefully, for example
+  by saying Uber should stop the swarm/surge model, questioning why prices were
+  high, or saying free rides/higher driver rates do not fix the issue.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks logistical
+  questions, reports boundaries or wait times, jokes/socializes, compares taxis
+  without clear judgment, or does not take a stance on Uber's policy.
+- Score 4 (Support): The comment supports the source framing by thanking Uber,
+  accepting the fix, saying free rider trips are appropriate, or agreeing that
+  higher driver pay is needed to attract drivers.
+- Score 5 (Strongly Support): The comment STRONGLY supports Uber's response by
+  forcefully praising the policy, defending the driver incentive, or saying the
+  free-rides correction properly solved the crisis-pricing problem.""",
+            "critical": """- Judge stance toward Uber's policy/explanation in the source post, not toward
+  the Sydney siege generally.
+- A comment that thanks Uber, says the fix is better, or defends paying drivers
+  more while riders go free is SUPPORT (4-5).
+- A comment that accuses Uber of price-gouging, exploiting the crisis, or says
+  the surge/swarm model should stop is DENY (1-2).
+- Pure logistics questions about where rides are free or how long to wait are
+  NEUTRAL (3).
+- If the stance toward Uber's source-post policy is unclear, classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports Uber Sydney's free-rides / "
+                "driver-incentive explanation."
+            ),
+        }
+
+    if topic_key == "sydney_anti_islam_blame":
+        return {
+            "discussion": (
+                "the source post's anti-Islam / religion-wide blame framing of "
+                "the Sydney siege"
+            ),
+            "important": """- The source post frames the Sydney siege through a broad anti-Islam claim,
+  calling the religion cowardly and linking the hostage crisis, Islamic flag,
+  and use of women as shields to Islam as a whole.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source framing by
+  saying extremists do not represent the whole religion, criticizing broad
+  anti-Islam blame, or forcefully defending Muslims/Islam from collective
+  blame.
+- Score 2 (Deny): The comment rejects the framing less forcefully, for example
+  by saying one attacker or group should not stand for the religion, or asking
+  the author to be fair.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, jokes without a
+  clear stance, only reports facts, asks for information, shares links, or does
+  not clearly judge the anti-Islam framing.
+- Score 4 (Support): The comment supports the source framing by agreeing that
+  Islam/religion broadly is implicated, linking the siege to Muslim/Islamic
+  patterns, or endorsing the source's religion-wide criticism.
+- Score 5 (Strongly Support): The comment STRONGLY supports the source framing
+  by forcefully condemning Islam as a religion, sarcastically emphasizing
+  Muslim/Islamic violence, or strongly arguing the siege reflects Islam itself.""",
+            "critical": """- Judge stance toward the source's broad anti-Islam / religion-wide blame
+  framing.
+- A comment that says the whole religion should not be blamed, extremists do
+  not represent Islam, or criticizes broad anti-Muslim logic is DENY (1-2).
+- A comment that agrees Islam/religion broadly is responsible, mocks Islam as
+  violent, or endorses collective religious blame is SUPPORT (4-5).
+- Merely mentioning flags, hostages, Hamas, women as shields, or Islam is not
+  enough.
+- If the stance toward broad anti-Islam framing is unclear, classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's broad anti-"
+                "Islam framing of the Sydney siege."
+            ),
+        }
+
+    if topic_key == "sydney_black_flag_meaning":
+        return {
+            "discussion": (
+                "the source post's black-flag / Islam-or-terrorism framing in "
+                "the Sydney siege"
+            ),
+            "important": """- The source post asks what the black flag at the Sydney siege stands for and
+  frames the flag as meaningful context for interpreting the siege. Discussion
+  centers on whether the flag should be understood as ordinary religious text,
+  distinct from ISIS, or as evidence of broader Islamic/terrorist threat.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects alarmist terrorism or
+  broad Islam-blame framing by saying the flag is innocuous religious text, not
+  ISIS, not the same thing, or likely a disconnected individual.
+- Score 2 (Deny): The comment rejects that framing less forcefully, for example
+  by clarifying that similar flags differ from ISIS, cautioning against
+  over-reading the flag, or separating the flag from broad Muslim blame.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, asks what the
+  flag means, only shares a link or fact, jokes/socializes, or does not clearly
+  accept/reject the flag's terrorism/Islam framing.
+- Score 4 (Support): The comment supports alarmist flag/Islam-terror framing by
+  treating the flag as evidence of Muslim/Islamic threat, terrorist ideology,
+  or broader concern about Islam.
+- Score 5 (Strongly Support): The comment STRONGLY supports that framing by
+  forcefully linking the flag to dangerous Islamic doctrine, broad Muslim
+  threat, or hate-speech/violent ideology.""",
+            "critical": """- Judge stance toward whether the black flag should be treated as evidence of
+  terrorism/broader Islamic threat versus clarified as religious/not ISIS.
+- A comment that says the flag is innocuous, just religious text, not ISIS, or
+  probably a disconnected individual is DENY (1-2).
+- A comment that says the flag shows Muslims/Islam broadly are the concern, or
+  links it to dangerous Islamic doctrine/terror threat, is SUPPORT (4-5).
+- A pure question asking what the flag means is NEUTRAL (3).
+- If the stance toward the flag framing is unclear, classify as 3.""",
+            "support_rule": (
+                "the comment clearly supports treating the black flag as "
+                "evidence of terrorism or broader Islamic threat."
+            ),
+        }
+
+    if topic_key == "sydney_isis_flag_framing":
+        return {
+            "discussion": (
+                "the source post's claim that the Sydney cafe gunman was "
+                "demanding an ISIS flag"
+            ),
+            "important": """- The source post reports that a gunman holding hostages in a Sydney cafe was
+  said to be demanding an ISIS flag. It frames the siege as tied to ISIS,
+  Islamist terrorism, jihadism, or related extremist networks.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source framing by
+  saying the flag/report is wrong, it is not an ISIS flag, the media is
+  misreporting, or the story is false-flag/mainstream-media propaganda.
+- Score 2 (Deny): The comment rejects the framing less forcefully, for example
+  by correcting the flag as Shahada rather than ISIS, separating the gunman
+  from ISIS, or questioning whether the siege is terrorism.
+- Score 3 (Neutral/Question): The comment is neutral, unclear, only reports
+  facts, jokes without a clear stance, asks for information, expresses concern
+  for hostages, or does not clearly judge the ISIS/terrorism framing.
+- Score 4 (Support): The comment supports the source framing by accepting,
+  repeating, or extending the claim that the siege is tied to ISIS, Islamist
+  terrorism, jihadism, or extremist networks.
+- Score 5 (Strongly Support): The comment STRONGLY supports the framing by
+  forcefully calling the gunman an Islamist/ISIS terrorist, arguing armed
+  citizens should kill Islamist attackers, or strongly linking the siege to
+  jihadist threat.""",
+            "critical": """- Judge stance toward the ISIS/terrorism framing in the source post.
+- A comment that repeats or extends ISIS/Islamist-terrorism framing is SUPPORT
+  (4-5).
+- A comment that says the flag is not ISIS, the report is wrong, the media is
+  misframing it, or explicitly separates the gunman/flag from ISIS is DENY
+  (1-2).
+- Merely mentioning hostages, Sydney, guns, Islam, or flags does not determine
+  stance.
+- If the comment's position on the ISIS/terrorism framing is unclear, classify
+  as 3.""",
+            "support_rule": (
+                "the comment clearly supports the source post's ISIS / "
+                "terrorism framing of the Sydney siege."
             ),
         }
 
@@ -2218,10 +2799,6 @@ def build_comment_threshold_prompt(
         agent_id,
         f"agent_{agent_id}",
     )
-    current_stance = normalize_stance(
-        opinions.get(agent_id)
-    ) or "oppose"
-
     raw_own_comment = str(
         agent_texts.get(agent_id, "")
     ).strip()
@@ -2288,23 +2865,23 @@ Source post:
 Your previously posted comment:
 "{own_comment}"
 
-Your current stance is: {current_stance}
-
 The following original comments are currently visible to you:
 {neighbor_text}
 
-Decide your final stance after reading the source post, your previous comment,
-and the visible original comments.
+After reading the source post, your previous comment, and the visible original
+comments, state your stance now in this conversation.
 
 Important rules:
 - Output only one label: support or oppose.
 - Do not write a natural-language reply.
 - Do not explain your reasoning.
-- Keep your current stance unless the visible comments give a concrete reason
-  that would plausibly change your mind.
-- If the visible comments conflict with each other, you may keep your current
-  stance rather than seeking artificial compromise.
-- If the evidence is unclear, keep your current stance.
+- Use support if your stance accepts, agrees with, or supports the source
+  post's main claim or framing.
+- Use oppose if your stance rejects, disagrees with, or pushes back against
+  the source post's main claim or framing.
+- Treat your previous comment as context.
+- Treat the visible original comments as conversation context.
+- Choose the label that best represents your stance after seeing this context.
 
 Return only support or oppose."""
 
