@@ -11,8 +11,8 @@
   "selection_rule": "Strict explicit stance only. Support means the comment accepts that mentioning Muslim convert/Islamist identity is relevant to the report or possible motive. Oppose means the comment rejects that framing as stereotyping, selective wording, bias, or harmful linkage between Islam and violence.",
   "note": "Selected 30 explicit comments with balanced stances. Ambiguous, pure link-only, non-English unclear, and off-topic side-thread comments were excluded.",
   "counts": {
-    "support": 15,
-    "oppose": 15,
+    "support": 14,
+    "oppose": 16,
     "total": 30
   },
   "comments": [
@@ -102,7 +102,7 @@
       "user": "stp_han",
       "created_at": "Thu Oct 23 00:12:19 +0000 2014",
       "text": "@shenyueadam @cnni but are there \"christian converts\" going on a shooting spree?",
-      "stance": "support",
+      "stance": "oppose",
       "in_reply_to_status_id": "525048717066661890",
       "in_reply_to_user": "shenyueadam"
     },
