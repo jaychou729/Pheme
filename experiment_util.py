@@ -230,106 +230,6 @@ def stance_change_value(old_stance: Any, new_stance: Any) -> Optional[int]:
     return int(changed)
 
 
-# build_stance_file_path 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
-def build_stance_file_path(
-    stance_dir: Path,
-    *,
-    selected_thread: Path,
-) -> Path:
-    """Build the canonical data-stance cache path from thread id."""
-    thread_id = _safe_stance_filename_part(
-        _selected_thread_cache_key(selected_thread)
-    )
-    filename = f"{thread_id}_data_stances.json"
-    return Path(stance_dir) / filename
-
-
-# find_stance_file_path 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
-def find_stance_file_path(
-    stance_dir: Path,
-    *,
-    selected_thread: Path,
-) -> Optional[Path]:
-    """Find the data-stance cache file for a selected thread."""
-    stance_dir = Path(stance_dir)
-    canonical_path = build_stance_file_path(
-        stance_dir,
-        selected_thread=selected_thread,
-    )
-
-    if canonical_path.exists():
-        return canonical_path
-
-    return None
-
-
-# save_initial_opinions 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
-def save_initial_opinions(
-    output_path: Path,
-    *,
-    selected_thread: Path,
-    topic: str,
-    agent_names: Dict[int, str],
-    agent_texts: Dict[int, str],
-    initial_opinions: Dict[int, str],
-    config: Optional[Dict[str, Any]] = None,
-) -> Path:
-    """Save initialized stance scores for deterministic reuse."""
-    output_path = Path(output_path)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    payload = {
-        "selected_thread": str(selected_thread),
-        "topic": topic,
-        "config": config or {},
-        "initial_opinions": {
-            str(agent_id): normalize_stance(stance)
-            for agent_id, stance in sorted(initial_opinions.items())
-            if normalize_stance(stance) is not None
-        },
-        "agent_names": {
-            str(agent_id): name
-            for agent_id, name in sorted(agent_names.items())
-        },
-        "agent_texts": {
-            str(agent_id): text
-            for agent_id, text in sorted(agent_texts.items())
-        },
-    }
-
-    with output_path.open("w", encoding="utf-8") as f:
-        json.dump(
-            payload,
-            f,
-            ensure_ascii=False,
-            indent=2,
-        )
-
-    print(f"[Stance Cache] Saved initial stances: {output_path}")
-    return output_path
-
-
-# load_initial_opinions 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
-def load_initial_opinions(
-    input_path: Path,
-) -> Dict[int, str]:
-    """Load initialized stances from a stance-cache JSON file."""
-    input_path = Path(input_path)
-
-    with input_path.open("r", encoding="utf-8-sig") as f:
-        payload = json.load(f)
-
-    raw_opinions = payload.get("initial_opinions", payload)
-    opinions = {}
-    for agent_id, raw_stance in raw_opinions.items():
-        stance = normalize_stance(raw_stance)
-        if stance is not None:
-            opinions[int(agent_id)] = stance
-
-    print(f"[Stance Cache] Loaded initial stances: {input_path}")
-    return opinions
-
-
 # load_and_set_pheme_thread 函数，供 PHEME 实验加载数据、构造 prompt、运行 LLM 或统计结果时调用。
 def load_and_set_pheme_thread(
     event_dir: Path,
@@ -337,9 +237,8 @@ def load_and_set_pheme_thread(
     thread_id: Optional[str] = None,
     min_reactions: int = 10,
     max_agents: int = 200,
-    stance_dir: Optional[Path] = None,
 ) -> Tuple[Path, Dict[int, List[int]], Dict[int, str], Dict[int, str], Dict[int, str], str]:
-    """Select, load, register, and optionally cache data-provided PHEME stances."""
+    """Select, load, and register a PHEME thread using data-file stances."""
     global CURRENT_THREAD_ID
 
     selected_thread = select_pheme_thread(
@@ -349,49 +248,10 @@ def load_and_set_pheme_thread(
     )
     CURRENT_THREAD_ID = get_selected_thread_id(selected_thread)
 
-    stance_path: Optional[Path] = None
-    cached_opinions: Optional[Dict[int, str]] = None
-
-    if stance_dir is not None:
-        canonical_stance_path = build_stance_file_path(
-            Path(stance_dir),
-            selected_thread=selected_thread,
-        )
-        matched_stance_path = find_stance_file_path(
-            Path(stance_dir),
-            selected_thread=selected_thread,
-        )
-        stance_path = canonical_stance_path
-
-        if matched_stance_path is not None:
-            cached_opinions = load_initial_opinions(
-                matched_stance_path,
-            )
-            stance_path = matched_stance_path
-
     graph, names, texts, opinions, topic = load_pheme_thread(
         selected_thread,
         max_agents=max_agents,
-        initial_opinions_override=cached_opinions,
     )
-
-    if stance_dir is not None and cached_opinions is None:
-        stance_path = build_stance_file_path(
-            Path(stance_dir),
-            selected_thread=selected_thread,
-        )
-        save_initial_opinions(
-            stance_path,
-            selected_thread=selected_thread,
-            topic=topic,
-            agent_names=names,
-            agent_texts=texts,
-            initial_opinions=opinions,
-            config={
-                "max_agents": max_agents,
-                "stance_source": "data",
-            },
-        )
 
     set_experiment_data(graph, names, texts, opinions, topic)
     return selected_thread, graph, names, texts, opinions, topic
@@ -1143,7 +1003,6 @@ def _build_pheme_graph_from_tweets(
     source_id: str,
     edges: List[Tuple[str, str]],
     max_agents: int,
-    initial_opinions_override: Optional[Dict[int, str]] = None,
     cleaned_stance_scores: Optional[Dict[str, str]] = None,
 ):
     reaction_ids = [tid for tid in tweets if tid != source_id]
@@ -1188,20 +1047,7 @@ def _build_pheme_graph_from_tweets(
 
         agent_texts[i] = get_tweet_text(tw)
 
-        if (
-            initial_opinions_override is not None
-            and i in initial_opinions_override
-        ):
-            initial_opinions[i] = normalize_stance(
-                initial_opinions_override[i]
-            ) or "oppose"
-            print(
-                "[Init Opinion] LLM not called | "
-                "reason=stance_cache | "
-                f"stance={initial_opinions[i]} | "
-                f"agent={i}"
-            )
-        elif tid in cleaned_stance_scores:
+        if tid in cleaned_stance_scores:
             initial_opinions[i] = cleaned_stance_scores[tid]
             print(
                 "[Init Opinion] LLM not called | "
@@ -1272,7 +1118,6 @@ def _build_pheme_graph_from_tweets(
 def load_cleaned_pheme_thread(
     thread_path: Path,
     max_agents: int = 30,
-    initial_opinions_override: Optional[Dict[int, str]] = None,
 ):
     """Convert event/thread_id_cleaned.json into the standard experiment graph."""
     thread_path = Path(thread_path)
@@ -1308,7 +1153,6 @@ def load_cleaned_pheme_thread(
         source_id=source_id,
         edges=edges,
         max_agents=max_agents,
-        initial_opinions_override=initial_opinions_override,
         cleaned_stance_scores=cleaned_stance_scores,
     )
 
@@ -2374,7 +2218,6 @@ def select_pheme_thread(event_dir: Path, min_reactions: int = 10, thread_id: Opt
 def load_pheme_thread(
     thread_dir: Path,
     max_agents: int = 30,
-    initial_opinions_override: Optional[Dict[int, str]] = None,
 ):
     """Convert a PHEME thread into graph, names, texts, initial opinions, and topic."""
     thread_dir = Path(thread_dir)
@@ -2382,7 +2225,6 @@ def load_pheme_thread(
         return load_cleaned_pheme_thread(
             thread_dir,
             max_agents=max_agents,
-            initial_opinions_override=initial_opinions_override,
         )
 
     source_dir = thread_dir / "source-tweet"
@@ -2415,7 +2257,6 @@ def load_pheme_thread(
         source_id=source_id,
         edges=edges,
         max_agents=max_agents,
-        initial_opinions_override=initial_opinions_override,
     )
 
 
@@ -2794,7 +2635,7 @@ def build_comment_threshold_prompt(
     opinions: Dict[int, str],
     topic: str,
 ) -> str:
-    """Build a prompt that directly asks for support/oppose classification."""
+    """Build a thread-rubric prompt for threshold stance decisions."""
     agent_name = agent_names.get(
         agent_id,
         f"agent_{agent_id}",
@@ -2817,6 +2658,10 @@ def build_comment_threshold_prompt(
         .replace('"', "'")
         .replace("\n", " ")
         .strip()
+    )
+
+    prompt_spec = _stance_prompt_spec(
+        clean_topic
     )
 
     if neighbor_items:
@@ -2859,6 +2704,9 @@ def build_comment_threshold_prompt(
 
     return f"""You are @{agent_name}, a participant in a social media discussion.
 
+Determine your stance toward the discussion about
+{prompt_spec["discussion"]}.
+
 Source post:
 "{clean_topic}"
 
@@ -2871,16 +2719,23 @@ The following original comments are currently visible to you:
 After reading the source post, your previous comment, and the visible original
 comments, state your stance now in this conversation.
 
+Binary stance labels:
+{STANCE_SCORE_GUIDE}
+
+IMPORTANT - how support/oppose map for THIS thread:
+{prompt_spec["important"]}
+
+CRITICAL disambiguation rules:
+{prompt_spec["critical"]}
+
 Important rules:
 - Output only one label: support or oppose.
 - Do not write a natural-language reply.
 - Do not explain your reasoning.
-- Use support if your stance accepts, agrees with, or supports the source
-  post's main claim or framing.
-- Use oppose if your stance rejects, disagrees with, or pushes back against
-  the source post's main claim or framing.
 - Treat your previous comment as context.
 - Treat the visible original comments as conversation context.
+- Do not classify the visible original comments by themselves.
+- Classify as support only when {prompt_spec["support_rule"]}
 - Choose the label that best represents your stance after seeing this context.
 
 Return only support or oppose."""
