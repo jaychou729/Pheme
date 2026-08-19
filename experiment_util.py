@@ -50,6 +50,7 @@ THINKING_CONTROL_MODELS = {
     "deepseek-v3.2",
     "deepseek-v3.2-exp",
     "deepseek-v3.1",
+    "qwen3.6-flash",
 }
 
 OPINION_LABELS = {
@@ -336,23 +337,19 @@ def build_threshold_seed_output_file_path(
     return Path(output_dir) / f"{'-'.join(parts)}.json"
 
 
-def build_threshold_agent_change_output_file_path(
+def build_threshold_agent_stance_sequence_output_file_path(
     output_dir: Path,
     *,
     event_name: str,
     thread_id: str,
-    model: str,
-    condition: str,
     seed: int,
 ) -> Path:
-    """Build the per-agent before/after threshold summary output path."""
+    """Build the compact per-agent T0-T6 stance-sequence output path."""
     parts = [
         _safe_stance_filename_part(event_name),
         _safe_stance_filename_part(thread_id),
-        _safe_stance_filename_part(model),
-        _safe_stance_filename_part(condition),
         f"seed{int(seed)}",
-        "agent-changes",
+        "agent-stance-sequences",
     ]
     return Path(output_dir) / f"{'-'.join(parts)}.json"
 
@@ -364,7 +361,7 @@ def sample_threshold_agents_by_repetition(
     repetitions: int,
     seed: int,
 ) -> Dict[int, List[int]]:
-    """Sample a fresh fixed-size target-agent set for each repetition."""
+    """Sample one fixed-size target-agent set and reuse it for every repetition."""
     candidates = sorted({
         int(agent_id)
         for agent_id in candidate_agent_ids
@@ -381,17 +378,19 @@ def sample_threshold_agents_by_repetition(
             f"but only found {len(candidates)}."
         )
 
+    rng = random.Random(
+        f"{int(seed)}:threshold_agents"
+    )
+    sampled_agents = sorted(
+        rng.sample(
+            candidates,
+            sample_size,
+        )
+    )
+
     samples: Dict[int, List[int]] = {}
     for rep in range(repetitions):
-        rng = random.Random(
-            f"{int(seed)}:threshold_agents:{rep}"
-        )
-        samples[rep] = sorted(
-            rng.sample(
-                candidates,
-                sample_size,
-            )
-        )
+        samples[rep] = list(sampled_agents)
 
     return samples
 
@@ -499,174 +498,112 @@ def save_llm_comment_score_outputs(
     return output_path
 
 
-def save_threshold_agent_change_summary(
+def stance_to_binary_code(stance: Any) -> Optional[str]:
+    """Return 1 for support, 0 for oppose, and None for unknown stances."""
+    norm = normalize_stance(stance)
+    if norm == "support":
+        return "1"
+    if norm == "oppose":
+        return "0"
+    return None
+
+
+def save_threshold_agent_stance_sequences(
     output_path: Path,
     *,
     selected_thread: Path,
     topic: str,
     model: str,
-    condition: str,
+    seed: int,
     results: Sequence[Dict[str, Any]],
-    sampled_agents_by_repetition: Optional[
-        Dict[int, Sequence[int]]
-    ] = None,
+    conditions: Sequence[str],
     config: Optional[Dict[str, Any]] = None,
     timestamp: Optional[str] = None,
 ) -> Path:
-    """Save per-agent before/after changes and final oppshift metrics."""
+    """Save compact per-agent initial stance and T0-T6 final stance sequences."""
     timestamp = timestamp or datetime.now().strftime("%Y%m%d_%H%M%S")
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    valid = [
-        result
-        for result in results
-        if (
-            normalize_stance(result.get("old_score")) is not None
-            and normalize_stance(result.get("new_score")) is not None
-        )
+    condition_order = [
+        str(condition)
+        for condition in conditions
     ]
+    condition_rank = {
+        condition: i
+        for i, condition in enumerate(condition_order)
+    }
 
-    agent_changes = []
-    for result in sorted(
-        valid,
-        key=lambda row: (
-            row.get("rep", -1),
-            row.get("agent", -1),
-        ),
-    ):
-        old_stance = normalize_stance(
-            result.get("old_score")
-        )
-        new_stance = normalize_stance(
-            result.get("new_score")
-        )
-        changed = bool(
-            stance_changed(
-                old_stance,
-                new_stance,
-            )
-        )
+    grouped: Dict[int, Dict[int, Dict[str, Any]]] = {}
+    for result in results:
+        agent_id = result.get("agent")
         rep = result.get("rep")
+        raw_condition = str(result.get("condition", ""))
+        condition = raw_condition.split("_", 1)[0]
 
-        agent_changes.append({
-            "condition": result.get("condition", condition),
-            "agent": result.get("agent"),
-            "name": result.get("name"),
-            "rep": rep,
-            "repetition": (
-                result.get("repetition")
-                or (
-                    rep + 1
-                    if rep is not None
-                    else None
-                )
-            ),
-            "seed": result.get("seed"),
-            "sample_seed": result.get("sample_seed"),
-            "old_stance": old_stance,
-            "new_stance": new_stance,
-            "changed": changed,
-            "oppshift": changed,
-            "transition": f"{old_stance}->{new_stance}",
-            "neighbor_count": result.get("neighbor_count"),
-            "opposite_neighbor_count": result.get(
-                "opposite_neighbor_count"
-            ),
-            "support_neighbor_count": result.get(
-                "support_neighbor_count"
-            ),
-            "neighbor_ids": result.get("neighbor_ids"),
-            "neighbor_sources": result.get("neighbor_sources"),
-            "neighbor_relations": result.get("neighbor_relations"),
-            "direct_stance_response": result.get(
-                "direct_stance_response",
-                result.get(
-                    "classification_response",
-                    result.get("raw_response"),
-                ),
-            ),
-        })
+        if (
+            agent_id is None
+            or rep is None
+            or condition not in condition_rank
+        ):
+            continue
 
-    oppshift_count = sum(
-        1
-        for row in agent_changes
-        if row["oppshift"]
-    )
-    total = len(agent_changes)
+        old_stance = normalize_stance(result.get("old_score"))
+        new_stance = normalize_stance(result.get("new_score"))
+        if old_stance is None or new_stance is None:
+            continue
 
-    repetitions = sorted({
-        row["rep"]
-        for row in agent_changes
-        if row.get("rep") is not None
-    })
-    by_repetition = []
-    for rep in repetitions:
-        rows = [
-            row
-            for row in agent_changes
-            if row.get("rep") == rep
-        ]
-        rep_oppshift = sum(
-            1
-            for row in rows
-            if row["oppshift"]
+        agent_id = int(agent_id)
+        rep = int(rep)
+
+        by_rep = grouped.setdefault(agent_id, {})
+        row = by_rep.setdefault(
+            rep,
+            {
+                "rep": rep,
+                "repetition": result.get("repetition", rep + 1),
+                "initial_stance": old_stance,
+                "initial_stance_code": stance_to_binary_code(old_stance),
+                "stances": {},
+            },
         )
-        by_repetition.append({
-            "rep": rep,
-            "repetition": rep + 1,
-            "agent_count": len(rows),
-            "sampled_agent_ids": (
-                list(
-                    sampled_agents_by_repetition.get(
-                        rep,
-                        [],
-                    )
-                )
-                if sampled_agents_by_repetition
-                else [
-                    row["agent"]
-                    for row in rows
-                ]
-            ),
-            "oppshift_count": rep_oppshift,
-            "oppshift_rate": (
-                rep_oppshift / len(rows)
-                if rows
-                else 0.0
-            ),
-        })
+        row["stances"][condition] = new_stance
 
-    by_condition = []
-    conditions = sorted({
-        row.get("condition", condition)
-        for row in agent_changes
-    })
-    for condition_name in conditions:
-        rows = [
-            row
-            for row in agent_changes
-            if row.get("condition", condition) == condition_name
-        ]
-        condition_oppshift = sum(
-            1
-            for row in rows
-            if row["oppshift"]
+    agents = []
+    for agent_id, reps in sorted(grouped.items()):
+        rep_rows = []
+        for rep, row in sorted(reps.items()):
+            stance_codes = [
+                stance_to_binary_code(row["stances"].get(condition))
+                for condition in condition_order
+            ]
+            spaced_stance_codes = " ".join(
+                code if code is not None else "NA"
+                for code in stance_codes
+            )
+            rep_rows.append({
+                "repetition": row["repetition"],
+                "T0_T6_stances": spaced_stance_codes,
+            })
+
+        initial_stances = {
+            row["initial_stance"]
+            for row in reps.values()
+        }
+        initial_stance = (
+            next(iter(initial_stances))
+            if len(initial_stances) == 1
+            else "mixed"
         )
-        by_condition.append({
-            "condition": condition_name,
-            "agent_count": len(rows),
-            "oppshift_count": condition_oppshift,
-            "oppshift_rate": (
-                condition_oppshift / len(rows)
-                if rows
-                else 0.0
+        agents.append({
+            "agent_id": agent_id,
+            "initial_stance": initial_stance,
+            "initial_stance_code": (
+                stance_to_binary_code(initial_stance)
+                if initial_stance != "mixed"
+                else None
             ),
-            "final_oppshift": (
-                condition_oppshift / len(rows)
-                if rows
-                else 0.0
-            ),
+            "repetitions": rep_rows,
         })
 
     payload = {
@@ -675,25 +612,15 @@ def save_threshold_agent_change_summary(
         "thread_id": get_selected_thread_id(selected_thread),
         "topic": topic,
         "model": model,
-        "condition": condition,
-        "config": config or {},
-        "summary": {
-            "agent_count": total,
-            "oppshift_count": oppshift_count,
-            "oppshift_rate": (
-                oppshift_count / total
-                if total
-                else 0.0
-            ),
-            "final_oppshift": (
-                oppshift_count / total
-                if total
-                else 0.0
-            ),
+        "seed": int(seed),
+        "codebook": {
+            "1": "support",
+            "0": "oppose",
+            "NA": "missing_or_unknown",
         },
-        "by_condition": by_condition,
-        "by_repetition": by_repetition,
-        "agent_changes": agent_changes,
+        "conditions": condition_order,
+        "config": config or {},
+        "agents": agents,
     }
 
     with output_path.open("w", encoding="utf-8") as f:
@@ -704,7 +631,7 @@ def save_threshold_agent_change_summary(
             indent=2,
         )
 
-    print(f"[LLM Output] Saved agent changes: {output_path}")
+    print(f"[LLM Output] Saved agent stance sequences: {output_path}")
     return output_path
 
 
@@ -728,7 +655,7 @@ def llm_call(
     if not API_KEY:
         raise RuntimeError(
             "API key is empty. Please run: "
-            "export DEEPSEEK_API_KEY='your_deepseek_key' or pass --api-key."
+            "set DASHSCOPE_API_KEY or API_KEY before running API cells."
         )
 
     selected_model = model or MODEL
@@ -756,7 +683,15 @@ def llm_call(
         "stream": False,
     }
 
-    if selected_model in THINKING_CONTROL_MODELS and "dashscope" in API_URL:
+    lower_api_url = API_URL.lower()
+    lower_model = selected_model.lower()
+    uses_enable_thinking_flag = (
+        "dashscope" in lower_api_url
+        or "/ali/" in lower_api_url
+        or lower_model.startswith("qwen")
+    )
+
+    if lower_model.startswith("qwen") and uses_enable_thinking_flag:
         payload["enable_thinking"] = False
     elif selected_model in THINKING_CONTROL_MODELS:
         payload["thinking"] = {
@@ -2845,7 +2780,7 @@ def run_comment_threshold_condition(
             "repetition": rep + 1,
             "seed": seed,
             "sample_seed": (
-                f"{seed}:threshold_agents:{rep}"
+                f"{seed}:threshold_agents"
                 if seed is not None
                 else None
             ),
