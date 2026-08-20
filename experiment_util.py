@@ -1813,39 +1813,47 @@ def _stance_prompt_spec(source_text: str) -> Dict[str, str]:
     if topic_key == "sydney_black_flag_meaning":
         return {
             "discussion": (
-                "the source post's black-flag / Islam-or-terrorism framing in "
-                "the Sydney siege"
+                "the source post's attempt to clarify what the black flag at "
+                "the Sydney siege stood for, and whether that clarification "
+                "should be accepted rather than treating the flag as evidence "
+                "of broader Islamic or terrorist threat"
             ),
             "important": """- The source post asks what the black flag at the Sydney siege stands for and
-  frames the flag as meaningful context for interpreting the siege. Discussion
-  centers on whether the flag should be understood as ordinary religious text,
-  distinct from ISIS, or as evidence of broader Islamic/terrorist threat.
-- Score 1 (Strongly Deny): The comment STRONGLY rejects alarmist terrorism or
-  broad Islam-blame framing by saying the flag is innocuous religious text, not
-  ISIS, not the same thing, or likely a disconnected individual.
-- Score 2 (Deny): The comment rejects that framing less forcefully, for example
-  by clarifying that similar flags differ from ISIS, cautioning against
-  over-reading the flag, or separating the flag from broad Muslim blame.
+  presents the flag's meaning as context. Discussion centers on whether the
+  explanation/clarification is useful, whether the flag should be distinguished
+  from ISIS or Muslims generally, or whether it still points to Islam, jihad,
+  or broader terrorist threat.
+- Score 1 (Strongly Deny): The comment STRONGLY rejects the source post's
+  clarification by arguing that the flag still shows Islam, jihad, Muslims
+  generally, or dangerous Islamic doctrine are the real issue.
+- Score 2 (Deny): The comment rejects the clarification less forcefully, for
+  example by saying the flag is not ISIS but is still a jihad/Islamist symbol,
+  or by criticizing attempts to separate the flag from Islamic threat.
 - Score 3 (Neutral/Question): The comment is neutral, unclear, asks what the
   flag means, only shares a link or fact, jokes/socializes, or does not clearly
-  accept/reject the flag's terrorism/Islam framing.
-- Score 4 (Support): The comment supports alarmist flag/Islam-terror framing by
-  treating the flag as evidence of Muslim/Islamic threat, terrorist ideology,
-  or broader concern about Islam.
-- Score 5 (Strongly Support): The comment STRONGLY supports that framing by
-  forcefully linking the flag to dangerous Islamic doctrine, broad Muslim
-  threat, or hate-speech/violent ideology.""",
-            "critical": """- Judge stance toward whether the black flag should be treated as evidence of
-  terrorism/broader Islamic threat versus clarified as religious/not ISIS.
-- A comment that says the flag is innocuous, just religious text, not ISIS, or
-  probably a disconnected individual is DENY (1-2).
+  accept/reject the source post's clarification.
+- Score 4 (Support): The comment supports the source post's clarification by
+  accepting that the flag is ordinary religious text, not ISIS, similar but not
+  the same as ISIS, or by cautioning against broad Muslim/Islam blame.
+- Score 5 (Strongly Support): The comment STRONGLY supports the clarification
+  by forcefully rejecting alarmist terrorism/Islam-blame interpretations,
+  emphasizing misinformation, or strongly separating the flag/attacker from
+  Muslims generally.""",
+            "critical": """- Judge stance toward the source post's clarification of the black flag's
+  meaning, not toward Islam or terrorism in general.
+- A comment that says the flag is innocuous, just religious text, not ISIS,
+  similar but not the same, or probably a disconnected individual is SUPPORT
+  (4-5).
 - A comment that says the flag shows Muslims/Islam broadly are the concern, or
-  links it to dangerous Islamic doctrine/terror threat, is SUPPORT (4-5).
+  links it to jihad, dangerous Islamic doctrine, or terrorist threat is DENY
+  (1-2).
 - A pure question asking what the flag means is NEUTRAL (3).
-- If the stance toward the flag framing is unclear, classify as 3.""",
+- If the stance toward the source post's clarification is unclear, classify as
+  3.""",
             "support_rule": (
-                "the comment clearly supports treating the black flag as "
-                "evidence of terrorism or broader Islamic threat."
+                "the comment clearly accepts the source post's clarification "
+                "or treats the flag as ordinary religious text, not ISIS, or "
+                "not evidence for blaming Muslims or Islam broadly."
             ),
         }
 
